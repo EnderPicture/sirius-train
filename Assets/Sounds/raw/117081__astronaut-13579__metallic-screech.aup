@@ -1,0 +1,57 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="117081__astronaut-13579__metallic-screech_data" version="1.3.0" audacityversion="2.1.2" sel0="0.8796503034" sel1="0.8796503034" vpos="160" h="0.0000000000" zoom="104.5870155923" rate="96000.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags/>
+	<wavetrack name="117081__astronaut-13579__metallic-screech" channel="0" linked="1" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="96000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="705862">
+				<waveblock start="0">
+					<simpleblockfile filename="e00002e4.au" len="262144" min="-0.964172" max="0.915741" rms="0.161923"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0000b0e.au" len="262144" min="-0.86026" max="0.879181" rms="0.149613"/>
+				</waveblock>
+				<waveblock start="524288">
+					<simpleblockfile filename="e00001ed.au" len="181574" min="-0.927338" max="0.792969" rms="0.135559"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="117081__astronaut-13579__metallic-screech" channel="1" linked="0" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="96000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="705862">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000020.au" len="262144" min="-0.838379" max="0.864349" rms="0.132825"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0000413.au" len="262144" min="-0.884857" max="0.866425" rms="0.151452"/>
+				</waveblock>
+				<waveblock start="524288">
+					<simpleblockfile filename="e000078a.au" len="181574" min="-0.859314" max="0.753662" rms="0.126998"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="117081__astronaut-13579__metallic-screech" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="96000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="153289">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000e8d.au" len="153289" min="-0.964172" max="0.915741" rms="0.159396"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="117081__astronaut-13579__metallic-screech" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="96000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="153289">
+				<waveblock start="0">
+					<simpleblockfile filename="e00003b6.au" len="153289" min="-0.838379" max="0.864349" rms="0.136721"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
