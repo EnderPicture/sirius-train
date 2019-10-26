@@ -18,7 +18,7 @@ public class Throttle : Module
     void Update()
     {
         if (base.Active) {
-            TrainScript.SetThrottle(TrainScript.GetThrottle()+Input.GetAxis("HorizontalArrow")*Time.deltaTime);
+            TrainScript.SetThrottle(TrainScript.GetThrottle()+Input.GetAxis("HorizontalArrow")*Time.deltaTime*.1f);
         }
         float rotation = Mathf.Lerp(20,160,TrainScript.GetThrottleRatio());
         Lever.transform.localRotation = Quaternion.Euler(rotation,90,-90);
