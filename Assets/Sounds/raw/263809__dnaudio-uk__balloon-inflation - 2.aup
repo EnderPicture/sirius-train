@@ -1,0 +1,55 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="263809__dnaudio-uk__balloon-inflation - 2_data" version="1.3.0" audacityversion="2.1.2" sel0="0.0000000000" sel1="2.2376417234" vpos="160" h="0.0000000000" zoom="290.4819824064" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags/>
+	<wavetrack name="263809__dnaudio-uk__balloon-inflation" channel="0" linked="1" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="98680">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000695.au" len="98680" min="-0.3703" max="0.411957" rms="0.063381"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="4">
+				<controlpoint t="1.766030360128" val="0.950704216957"/>
+				<controlpoint t="1.900289978150" val="0.838028192520"/>
+				<controlpoint t="2.082745356487" val="0.640845060349"/>
+				<controlpoint t="2.124056008186" val="0.556338012218"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="263809__dnaudio-uk__balloon-inflation" channel="1" linked="0" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="98680">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000544.au" len="98680" min="-0.339264" max="0.368652" rms="0.055487"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="4">
+				<controlpoint t="1.766030360128" val="0.950704216957"/>
+				<controlpoint t="1.900289978150" val="0.838028192520"/>
+				<controlpoint t="2.082745356487" val="0.640845060349"/>
+				<controlpoint t="2.124056008186" val="0.556338012218"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="263809__dnaudio-uk__balloon-inflation" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="98680">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000eec.au" len="98680" min="-0.472762" max="0.47838" rms="0.076254"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="263809__dnaudio-uk__balloon-inflation" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="98680">
+				<waveblock start="0">
+					<simpleblockfile filename="e00004ef.au" len="98680" min="-0.523866" max="0.52453" rms="0.075377"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
