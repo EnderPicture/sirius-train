@@ -5,7 +5,6 @@ using UnityEngine;
 public class Train : MonoBehaviour
 {
     public float Speed = 0;
-    float Momentum;
 
     public float DragCoefficient = .3f;
 
@@ -14,9 +13,13 @@ public class Train : MonoBehaviour
     float TBreak = 0;
     float MaxTBreak = 1;
 
+    float LastSpeed;
+    float DeltaSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
+        LastSpeed = Speed;
     }
 
     // Update is called once per frame
@@ -36,6 +39,14 @@ public class Train : MonoBehaviour
         Vector3 position = transform.position;
         position.x += Speed * Time.deltaTime;
         transform.position = position;
+
+
+    }
+
+    private void FixedUpdate() {
+        DeltaSpeed = Speed - LastSpeed;
+        Debug.Log(DeltaSpeed);
+        LastSpeed = Speed;
     }
 
     public void SetThrottle(float throttle)

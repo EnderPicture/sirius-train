@@ -18,7 +18,7 @@ public class Break : Module
     void Update()
     {
         if (base.Active) {
-            TrainScript.SetBreak(TrainScript.GetBreak()+Input.GetAxis("HorizontalArrow")*Time.deltaTime);
+            TrainScript.SetBreak(TrainScript.GetBreak()+Input.GetAxis("HorizontalArrow")*Time.deltaTime*.1f);
         }
         float rotation = Mathf.Lerp(20,160,TrainScript.GetBreakRatio());
         Lever.transform.localRotation = Quaternion.Euler(rotation,90,-90);
