@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Throttle : Module
+public class Break : Module
 {
     Train TrainScript;
     Transform Lever;
@@ -18,9 +18,9 @@ public class Throttle : Module
     void Update()
     {
         if (base.Active) {
-            TrainScript.SetThrottle(TrainScript.GetThrottle()+Input.GetAxis("HorizontalArrow")*Time.deltaTime);
+            TrainScript.SetBreak(TrainScript.GetBreak()+Input.GetAxis("HorizontalArrow")*Time.deltaTime);
         }
-        float rotation = Mathf.Lerp(20,160,TrainScript.GetThrottleRatio());
+        float rotation = Mathf.Lerp(20,160,TrainScript.GetBreakRatio());
         Lever.transform.localRotation = Quaternion.Euler(rotation,90,-90);
     }
 }
