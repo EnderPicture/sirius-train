@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Module
   - Coal
+  - AudioManager
   layers:
   - Default
   - TransparentFX
