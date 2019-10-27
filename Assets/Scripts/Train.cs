@@ -6,13 +6,12 @@ public class Train : MonoBehaviour
 {
     public float Speed = 0;
 
-    public float DragCoefficient = .3f;
+    public float DragCoefficient = 013f;
 
     float TThrottle = 0;
     float MaxTThrottle = 1;
     float TBreak = 0;
     float MaxTBreak = 1;
-
     float LastSpeed;
     float DeltaSpeed;
 
@@ -24,8 +23,13 @@ public class Train : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-
+    {   
+        if (DeltaSpeed > 0.005f) {
+            Debug.Log("start too fast");
+        }
+        if (DeltaSpeed < -0.005f) {
+            Debug.Log("break too fast");
+        }
         Speed += TThrottle * Time.deltaTime;
         if (Speed > 0) {
             Speed -= TBreak * Time.deltaTime;
@@ -45,7 +49,6 @@ public class Train : MonoBehaviour
 
     private void FixedUpdate() {
         DeltaSpeed = Speed - LastSpeed;
-        Debug.Log(DeltaSpeed);
         LastSpeed = Speed;
     }
 

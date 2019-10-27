@@ -505,7 +505,7 @@ GameObject:
   - component: {fileID: 1205635111}
   - component: {fileID: 1205635113}
   - component: {fileID: 1205635112}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -583,9 +583,10 @@ GameObject:
   - component: {fileID: 1536006147}
   - component: {fileID: 1536006149}
   - component: {fileID: 1536006148}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
+  - component: {fileID: 1536006150}
+  m_Layer: 9
+  m_Name: Coal
+  m_TagString: Coal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -602,6 +603,7 @@ Transform:
   m_LocalScale: {x: 0.4827409, y: 0.4827409, z: 0.4827409}
   m_Children:
   - {fileID: 2031113728}
+  - {fileID: 2003428700}
   m_Father: {fileID: 1836091882}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -635,6 +637,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
+--- !u!114 &1536006150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536006146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2bc18a48d554169478bf20c43de036ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  smoothFactor: 10
+  offset: {x: 0, y: 0, z: 0}
 --- !u!4 &1678759905 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7922800444051182148, guid: 7c6b809d87a0403469fe57eb1c49fbc4,
@@ -653,7 +670,7 @@ GameObject:
   - component: {fileID: 1836091881}
   - component: {fileID: 1836091880}
   - component: {fileID: 1836091883}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Train
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -735,7 +752,7 @@ GameObject:
   - component: {fileID: 1912594420}
   - component: {fileID: 1912594421}
   - component: {fileID: 1912594422}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -799,7 +816,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac85fcb63be36c84f9fee2e1f4e17282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedMultiplier: 0.5
+  SpeedMultiplier: 0.5
+--- !u!1 &2003428699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2003428700}
+  - component: {fileID: 2003428701}
+  m_Layer: 10
+  m_Name: Trigger
+  m_TagString: Coal
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2003428700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003428699}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1536006147}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2003428701
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003428699}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2031113727
 GameObject:
   m_ObjectHideFlags: 0
@@ -811,7 +872,7 @@ GameObject:
   - component: {fileID: 2031113728}
   - component: {fileID: 2031113731}
   - component: {fileID: 2031113730}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -896,10 +957,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Break
       objectReference: {fileID: 0}
+    - target: {fileID: 4022654038822019183, guid: 12882f0bf49c1474e9890d2b5e8a9d13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4022654038822019168, guid: 12882f0bf49c1474e9890d2b5e8a9d13,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.58
+      value: -2.83
       objectReference: {fileID: 0}
     - target: {fileID: 4022654038822019168, guid: 12882f0bf49c1474e9890d2b5e8a9d13,
         type: 3}
@@ -950,6 +1016,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022654040251824998, guid: 12882f0bf49c1474e9890d2b5e8a9d13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022654039237675046, guid: 12882f0bf49c1474e9890d2b5e8a9d13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4022654039525791053, guid: 12882f0bf49c1474e9890d2b5e8a9d13,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12882f0bf49c1474e9890d2b5e8a9d13, type: 3}
@@ -1034,6 +1115,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trottle
       objectReference: {fileID: 0}
+    - target: {fileID: 7133906905388954192, guid: 1d1510cdaec5d5f4bb3cc3593f3d7784,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7133906905388954193, guid: 1d1510cdaec5d5f4bb3cc3593f3d7784,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1088,6 +1174,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133906907242861482, guid: 1d1510cdaec5d5f4bb3cc3593f3d7784,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133906906527035957, guid: 1d1510cdaec5d5f4bb3cc3593f3d7784,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7133906905412889369, guid: 1d1510cdaec5d5f4bb3cc3593f3d7784,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d1510cdaec5d5f4bb3cc3593f3d7784, type: 3}
