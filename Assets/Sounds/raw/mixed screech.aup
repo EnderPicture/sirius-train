@@ -1,0 +1,79 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="mixed screech_data" version="1.3.0" audacityversion="2.1.2" sel0="6.0104282618" sel1="6.0104282618" vpos="240" h="0.0000000000" zoom="24.2911143167" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags/>
+	<wavetrack name="254064__doctor-jekyll__metal-scraping" channel="0" linked="1" mute="0" solo="0" height="111" minimized="0" isSelected="0" rate="44100" gain="0.630957" pan="0.0">
+		<waveclip offset="0.98800454">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="141892">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000f36.au" len="141892" min="-0.721558" max="0.68692" rms="0.121596"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="254064__doctor-jekyll__metal-scraping" channel="1" linked="0" mute="0" solo="0" height="111" minimized="0" isSelected="0" rate="44100" gain="0.630957" pan="0.0">
+		<waveclip offset="0.98800454">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="141892">
+				<waveblock start="0">
+					<simpleblockfile filename="e000053f.au" len="141892" min="-0.721558" max="0.68689" rms="0.121597"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="366603__jittels__grinding-wood" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="48000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="223292">
+				<waveblock start="0">
+					<simpleblockfile filename="e00000cc.au" len="223292" min="-0.22223" max="0.204328" rms="0.0293"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="4.651895833333" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+		<waveclip offset="4.65191667">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="244">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000d68.au" len="244" min="-0.000105" max="0.000137" rms="0.000001"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="0.000000000000" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="366603__jittels__grinding-wood" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="48000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="223292">
+				<waveblock start="0">
+					<simpleblockfile filename="e00005b0.au" len="223292" min="-0.191687" max="0.18223" rms="0.028391"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="4.651895833333" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+		<waveclip offset="4.65191667">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="244">
+				<waveblock start="0">
+					<simpleblockfile filename="e00007b6.au" len="244" min="-0.000094" max="0.000123" rms="0.000001"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="0.000000000000" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="127910__hero-of-the-winds__hero-of-the-winds-grinding-coffee" channel="2" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="0.354813" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="205150">
+				<waveblock start="0">
+					<simpleblockfile filename="e00000a8.au" len="205150" min="-0.638263" max="0.631621" rms="0.087518"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

@@ -1,0 +1,57 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="screech - short - 2_data" version="1.3.0" audacityversion="2.1.2" sel0="3.2438714471" sel1="3.2438714471" vpos="0" h="0.0000000000" zoom="110.6702302632" rate="48000.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="ENCODER" value="Sound Grinder 3.5.2"/>
+	</tags>
+	<wavetrack name="453333__kyles__metal-crank-groan" channel="0" linked="1" mute="0" solo="0" height="111" minimized="0" isSelected="0" rate="48000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="119068">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000902.au" len="119068" min="-0.269404" max="0.337833" rms="0.059657"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="453333__kyles__metal-crank-groan" channel="1" linked="0" mute="0" solo="0" height="111" minimized="0" isSelected="0" rate="48000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="119068">
+				<waveblock start="0">
+					<simpleblockfile filename="e00004c0.au" len="119068" min="-0.563172" max="0.572024" rms="0.140553"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="95376__tiredoldwhiteman__squeaky-brakes" channel="0" linked="1" mute="0" solo="0" height="111" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="109579">
+				<waveblock start="0">
+					<simpleblockfile filename="e000080b.au" len="109579" min="-0.132659" max="0.131833" rms="0.027446"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="4">
+				<controlpoint t="0.198788779491" val="0.684466004372"/>
+				<controlpoint t="0.650581460152" val="1.189320325851"/>
+				<controlpoint t="1.563202675088" val="1.169902920723"/>
+				<controlpoint t="1.807170722645" val="0.742718458176"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="95376__tiredoldwhiteman__squeaky-brakes" channel="1" linked="0" mute="0" solo="0" height="111" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="109579">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000bd6.au" len="109579" min="-0.203337" max="0.202605" rms="0.050576"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="4">
+				<controlpoint t="0.198788779491" val="0.684466004372"/>
+				<controlpoint t="0.650581460152" val="1.189320325851"/>
+				<controlpoint t="1.563202675088" val="1.169902920723"/>
+				<controlpoint t="1.807170722645" val="0.742718458176"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+</project>

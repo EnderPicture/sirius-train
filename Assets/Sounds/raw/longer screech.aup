@@ -1,0 +1,77 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="longer screech_data" version="1.3.0" audacityversion="2.1.2" sel0="5.9441648628" sel1="5.9441648628" vpos="0" h="0.0000000000" zoom="85.9222230949" rate="48000.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags/>
+	<wavetrack name="254064__doctor-jekyll__metal-scraping" channel="0" linked="1" mute="0" solo="0" height="106" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.58170068">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="117924">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000027.au" len="117924" min="-0.721558" max="0.68692" rms="0.145438"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="3.25570681">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="118561">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000efc.au" len="118561" min="-0.721558" max="0.68692" rms="0.139239"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="254064__doctor-jekyll__metal-scraping" channel="1" linked="0" mute="0" solo="0" height="106" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.58170068">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="117924">
+				<waveblock start="0">
+					<simpleblockfile filename="e00001b8.au" len="117924" min="-0.721558" max="0.68689" rms="0.145438"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="3.25570681">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="118561">
+				<waveblock start="0">
+					<simpleblockfile filename="e00005ad.au" len="118561" min="-0.721558" max="0.68689" rms="0.139239"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="127910__hero-of-the-winds__hero-of-the-winds-grinding-coffee" channel="2" linked="0" mute="0" solo="0" height="106" minimized="0" isSelected="0" rate="44100" gain="0.281838" pan="0.0">
+		<waveclip offset="0.00902494">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="261740">
+				<waveblock start="0">
+					<simpleblockfile filename="e000035a.au" len="261740" min="-0.77702" max="0.780398" rms="0.101522"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="95376__tiredoldwhiteman__squeaky-brakes" channel="0" linked="1" mute="0" solo="0" height="106" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00902494">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="286042">
+				<waveblock start="0">
+					<simpleblockfile filename="e00006e6.au" len="262144" min="-0.130931" max="0.130027" rms="0.033199"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0000785.au" len="23898" min="-0.018934" max="0.016102" rms="0.00183"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="95376__tiredoldwhiteman__squeaky-brakes" channel="1" linked="0" mute="0" solo="0" height="106" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00902494">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="286042">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000995.au" len="262144" min="-0.208008" max="0.205862" rms="0.061385"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0000dc9.au" len="23898" min="-0.018355" max="0.015139" rms="0.001874"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
