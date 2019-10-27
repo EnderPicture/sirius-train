@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     List<GameObject> Modules = new List<GameObject>();
     List<GameObject> Coals = new List<GameObject>();
 
+    Animator animator;
+
 
     Rigidbody rb;
 
@@ -18,6 +20,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = transform.Find("Graphics").GetComponent<Animator>(); ;
     }
 
     // Update is called once per frame
@@ -27,6 +30,34 @@ public class Player : MonoBehaviour
         Vector3 velocity = rb.velocity;
         velocity.x = input * SpeedMultiplier;
         rb.velocity = velocity;
+
+        if (velocity.x > 0)
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            {
+                animator.Play("Walk");
+            }
+            Vector3 scale = animator.gameObject.transform.localScale;
+            scale.x = 1;
+            animator.gameObject.transform.localScale = scale;
+        }
+        else if (velocity.x < 0)
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            {
+                animator.Play("Walk");
+            }
+            Vector3 scale = animator.gameObject.transform.localScale;
+            scale.x = -1;
+            animator.gameObject.transform.localScale = scale;
+        }
+        else
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                animator.Play("Idle");
+            }
+        }
 
         if (ObjectInHand == null)
         {
@@ -65,15 +96,20 @@ public class Player : MonoBehaviour
                     }
                 }
 
-                if (shortest != null) {
+                if (shortest != null)
+                {
                     ObjectInHand = shortest;
                     shortest.GetComponent<Coal>().target = transform;
                 }
             }
 
-        } else {
-            if (Input.GetKeyDown("space")) {
-                if (ObjectInHand.tag == "Coal") {
+        }
+        else
+        {
+            if (Input.GetKeyDown("space"))
+            {
+                if (ObjectInHand.tag == "Coal")
+                {
                     ObjectInHand.GetComponent<Coal>().target = null;
                     ObjectInHand = null;
                 }
