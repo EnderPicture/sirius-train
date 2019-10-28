@@ -20,8 +20,8 @@ public class Sound
 
 	public AudioMixerGroup group;
 
-	[HideInInspector]
-	public bool isPlaying;
+	//[HideInInspector]
+	//public bool isPlaying;
 
 
 }
