@@ -19,7 +19,54 @@ public class AudioTester : MonoBehaviour
 		}
 
 		if (Input.GetKeyDown(KeyCode.Keypad0)){
-			FindObjectOfType<AudioManager>().Play("ambient1");
+			AudioManager audioManager = GameObject.FindGameObjectWithTag("AudioManager").GetComponent<AudioManager>();
+			AudioSource[] allSources = audioManager.GetComponents<AudioSource>();
+			
+			foreach (AudioSource audioSource in allSources) {
+				if (audioSource.clip.name == "ambient1") {	
+					if (audioSource.isPlaying) {
+						Debug.Log("it's playing already, stopping now");
+						//audioManager.fadeAway("ambient1");
+						//audioManager.fadeAway(audioSource);
+						audioSource.volume -= 0.05f * Time.deltaTime;
+					} else {
+						Debug.Log("it's not playing, playing now");
+						FindObjectOfType<AudioManager>().Play("ambient1");
+					}
+					//correct audio clip was found
+					//bool isPlaying = audioManager.checkIfPlaying("ambient1");
+					//if (!isPlaying) {
+						//FindObjectOfType<AudioManager>().Play("ambient1");
+					//}
+				}
+			}
+
+			
+
+			/*
+
+			foreach (AudioSource audioSource in allSources) {
+				if (audioSource.clip.name == name) {
+					Debug.Log("success, fading away audio");
+					while (audioSource.volume > 0) {
+						Debug.Log("audioSource.volume: " + audioSource.volume);
+						audioSource.volume -= fadeSpeed * Time.deltaTime;
+					}
+					audioSource.Stop();
+					Sound s = Array.Find(sounds, sound => sound.name == name);
+					audioSource.volume = s.source.volume;
+				} else {
+					Debug.Log ("Couldn't find audioSource with that name");
+				}
+				//Debug.Log(audioSource.clip);
+			}
+			
+			if (notPlaying) {
+				FindObjectOfType<AudioManager>().Play("ambient1");
+			} else {
+				fadeaway;
+			}
+			*/
 		}
 
 		if (Input.GetKeyDown(KeyCode.Keypad1)){

@@ -90,16 +90,28 @@ public class AudioManager : MonoBehaviour
 
 	public void fadeAway(string name) {
 		//HAVE TO FIND THE ADDED AUDIO SOURCE WITH THE MATCHING SOUND AND ADJUST THAT INSTEAD
+		Debug.Log("fading away " + name);
 
+	
 		AudioSource[] allSources = this.GetComponents<AudioSource>();
 		foreach (AudioSource audioSource in allSources) {
 			if (audioSource.clip.name == name) {
-				Debug.Log("success");
+				Debug.Log("success, fading away audio");
+				while (audioSource.volume > 0) {
+					Debug.Log("audioSource.volume: " + audioSource.volume);
+					audioSource.volume -= fadeSpeed * Time.deltaTime;
+				}
+				audioSource.Stop();
+				Sound s = Array.Find(sounds, sound => sound.name == name);
+				audioSource.volume = s.source.volume;
+			} else {
+				Debug.Log ("Couldn't find audioSource with that name");
 			}
-			Debug.Log(audioSource.clip);
+			//Debug.Log(audioSource.clip);
 		}
+	
 
-
+		/*
 		Sound s = Array.Find(sounds, sound => sound.name == name);
 		while (s.volume > 0) {
 			//Debug.Log(name + " s.volume: " + s.volume);
@@ -113,7 +125,30 @@ public class AudioManager : MonoBehaviour
 		s.source.Stop();
 		s.volume = s.source.volume;
 		//Debug.Log("s.volume reset: " + s.volume);
+		*/
 	
+	}
+
+	public void fadeAway(AudioSource audioSource) {
+		Debug.Log("fading away by audioSource " + name);
+		audioSource.volume -= fadeSpeed * Time.deltaTime;
+	}
+
+	public bool checkIfPlaying(string name) {
+		AudioSource[] allSources = this.GetComponents<AudioSource>();
+		foreach (AudioSource audioSource in allSources) {
+			if (audioSource.clip.name == name) {
+				Debug.Log("successfully found audio source");
+				if (audioSource.isPlaying) 
+					return true;
+			} else {
+				Debug.Log ("Couldn't find audioSource with that name");
+				return false;
+			}
+		//Debug.Log(audioSource.clip);
+		} 
+		Debug.Log("something fucked up");
+		return false;
 	}
 
     // Start is called before the first frame update
