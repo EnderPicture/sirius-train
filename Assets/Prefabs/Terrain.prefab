@@ -337,6 +337,11 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: -269882377397797261, guid: d23081b0ffb3a004aa72a52f292af8cf,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.53333336
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: d23081b0ffb3a004aa72a52f292af8cf,
     type: 3}
@@ -509,6 +514,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.4404566
       objectReference: {fileID: 0}
+    - target: {fileID: -6821296064093853239, guid: 32222be22d6605d4784e3f0e8705aea6,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 32222be22d6605d4784e3f0e8705aea6,
     type: 3}
@@ -584,11 +594,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Front
-      objectReference: {fileID: 0}
-    - target: {fileID: 4862243214296046980, guid: 0f8841332cda6a246a16f77a6e3c385d,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 0f8841332cda6a246a16f77a6e3c385d,
@@ -684,7 +689,7 @@ PrefabInstance:
     - target: {fileID: -3554686999940751203, guid: 354d29919deaad54f8ae0c393a1ba824,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 2
+      value: -10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 354d29919deaad54f8ae0c393a1ba824,
@@ -765,7 +770,7 @@ PrefabInstance:
     - target: {fileID: -290753196835827884, guid: a59530be1a7400e41a83327cf4fe130f,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: -20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: a59530be1a7400e41a83327cf4fe130f,

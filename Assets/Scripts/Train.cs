@@ -18,20 +18,37 @@ public class Train : MonoBehaviour
     float LastSpeed;
     float DeltaSpeed;
 
+    // Heat
     float Heat;
+    float MaxHeat = 10;
+    public GameObject HeatBar;
+
+
     float Pressure;
+    float MaxPressure = 10;
+    float BoilPoint = 2.5f;
+    float PressureUsefulMax = 7.5f;
+    float PressureUsefulMin = 2.5f;
+    public GameObject PressureNeedle;
 
     GameObject BreakText;
     GameObject ThrottleText;
 
     AudioManager2 AudioMan;
 
+    bool TrainStartInStation = false;
+    bool TrainEndInStation = false;
+
+    float DistFromStation = 0;
+
+    int CoalUsed = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         LastTThrottle = TThrottle;
         LastTBreak = TBreak;
-        
+
         BreakText = GameObject.Find("BadBreaking");
         ThrottleText = GameObject.Find("BadThrottle");
         LastSpeed = Speed;
@@ -42,9 +59,35 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Heat -= 0.01f*Time.deltaTime;
-        if (Heat < 0) {
-            Heat = 0;
+        // Heat stuff
+        Heat -= 0.03f * Time.deltaTime;
+        Heat = Mathf.Clamp(Heat, 0, MaxHeat);
+        Vector3 barScale = HeatBar.transform.localScale;
+        barScale.y = Heat / MaxHeat;
+        HeatBar.transform.localScale = barScale;
+        // 
+
+
+        // Pressure stuff
+        if (Heat > BoilPoint)
+        {
+            // add the additional heat
+            Pressure += (Heat - BoilPoint) * 0.2f * Time.deltaTime;
+        }
+        else
+        {
+            // pressure cooling
+            Pressure -= .03f * Time.deltaTime;
+        }
+        Pressure -= TThrottle * Time.deltaTime;
+        Pressure = Mathf.Clamp(Pressure, 0, MaxPressure);
+        Vector3 needleAngle = new Vector3(0, 0, Mathf.Lerp(90, -90, Pressure / MaxPressure));
+        PressureNeedle.transform.localEulerAngles = needleAngle;
+
+
+        if (TrainStartInStation && TrainEndInStation && Speed == 0)
+        {
+            // TODO: win state
         }
 
         // Debug.Log(Heat);
@@ -64,7 +107,17 @@ public class Train : MonoBehaviour
         {
             BreakText.SetActive(false);
         }
-        Speed += TThrottle * Time.deltaTime;
+
+        // throttle control
+        float usefulValue = 0;
+        if (Pressure > PressureUsefulMin && Pressure < PressureUsefulMin) {
+            usefulValue = 1; 
+        } else if (Pressure <= PressureUsefulMin && Pressure > 0) {
+            usefulValue = .2f;
+        } else if (Pressure >= PressureUsefulMin ) {
+            usefulValue = 1.6f;
+        }
+        Speed += (TThrottle * usefulValue) * Time.deltaTime;
         if (Speed > 0)
         {
             Speed -= TBreak * Time.deltaTime;
@@ -144,7 +197,22 @@ public class Train : MonoBehaviour
         return MaxTBreak;
     }
 
-    public void AddHeat(float AdditionalHeat) {
+    public void AddHeat(float AdditionalHeat)
+    {
         Heat += AdditionalHeat;
+        CoalUsed++;
+    }
+
+    public void SetTrainStartInStation(bool value)
+    {
+        TrainStartInStation = value;
+    }
+    public void SetTrainEndInStation(bool value)
+    {
+        TrainEndInStation = value;
+    }
+    public void SetDistFromStation(float value)
+    {
+        DistFromStation = value;
     }
 }
