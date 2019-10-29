@@ -11,6 +11,8 @@ public class EndTrainStation : MonoBehaviour
     {
         Train = GameObject.Find("Train");
         TrainScript = Train.GetComponent<Train>();
+        float DistFromTrain = transform.position.x-Train.transform.position.x;
+        TrainScript.SetDistFromStationInit(DistFromTrain);
     }
 
     // Update is called once per frame

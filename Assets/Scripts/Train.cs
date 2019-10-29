@@ -39,9 +39,14 @@ public class Train : MonoBehaviour
     bool TrainStartInStation = false;
     bool TrainEndInStation = false;
 
+    float DistFromStationInit = 0;
     float DistFromStation = 0;
 
     int CoalUsed = 0;
+
+    public GameObject Menu;
+
+    public GameObject TrainIcon;
 
     // Start is called before the first frame update
     void Start()
@@ -53,12 +58,18 @@ public class Train : MonoBehaviour
         ThrottleText = GameObject.Find("BadThrottle");
         LastSpeed = Speed;
         AudioMan = GameObject.Find("AudioManager2").GetComponent<AudioManager2>();
-        AudioMan.Play("ambient", 0);
+        AudioMan.Play("ambient", 0); 
     }
 
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(DistFromStation/DistFromStationInit);
+        Vector3 iconPos = TrainIcon.transform.localPosition;
+        iconPos.x = Lerp(0.9836f,-1.1119f, DistFromStation/DistFromStationInit);
+        iconPos.x = Mathf.Clamp(iconPos.x, -1.715f, 1.715f);
+        TrainIcon.transform.localPosition = iconPos;
+
         // Heat stuff
         Heat -= 0.03f * Time.deltaTime;
         Heat = Mathf.Clamp(Heat, 0, MaxHeat);
@@ -132,6 +143,10 @@ public class Train : MonoBehaviour
         Vector3 position = transform.position;
         position.x += Speed * Time.deltaTime;
         transform.position = position;
+    }
+
+    private float Lerp(float a, float b, float t) {
+        return a + (b-a) * t;
     }
 
     private void FixedUpdate()
@@ -214,5 +229,13 @@ public class Train : MonoBehaviour
     public void SetDistFromStation(float value)
     {
         DistFromStation = value;
+    }
+    public void SetDistFromStationInit(float value)
+    {
+        DistFromStationInit = value;
+    }
+    public void ReleasePressure(float delta) {
+        Pressure -= delta;
+        Pressure = Mathf.Clamp(Pressure, 0, MaxPressure);
     }
 }
