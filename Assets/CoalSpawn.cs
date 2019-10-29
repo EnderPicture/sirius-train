@@ -11,9 +11,11 @@ public class CoalSpawn : MonoBehaviour
 
     int itemCount = 0;
 
+    public GameObject train;
+
     void Start()
     {
-
+        train = GameObject.Find("Train");
     }
 
     private void FixedUpdate()
@@ -21,6 +23,7 @@ public class CoalSpawn : MonoBehaviour
         if (itemCount == 0)
         {
             GameObject newCoal = Instantiate(coal, transform.position, Quaternion.identity);
+            newCoal.GetComponent<Coal>().train = train;
             newCoal.transform.parent = transform;
         }
         Spawning = true;

@@ -80,6 +80,7 @@ MonoBehaviour:
   target: {fileID: 0}
   smoothFactor: 10
   offset: {x: 0, y: 0, z: 0}
+  train: {fileID: 0}
 --- !u!1 &9142118425629341671
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +226,7 @@ PrefabInstance:
     - target: {fileID: -8847025570780555685, guid: 9eef50dae2f2bba40a47b3df5346400d,
         type: 3}
       propertyPath: m_SortingOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 9eef50dae2f2bba40a47b3df5346400d,

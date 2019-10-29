@@ -86,6 +86,17 @@ public class Player : MonoBehaviour
                 shortestDist = float.MaxValue;
                 shortest = null;
 
+
+                for (int c = 0; c < Coals.Count; c++)
+                {
+                    GameObject coal = Coals[c];
+                    if (coal == null)
+                    {
+                        Coals.Remove(coal);
+                        c--;
+                    }
+
+                }
                 foreach (GameObject coal in Coals)
                 {
                     float coalDist = Vector3.Distance(transform.position, coal.transform.position);

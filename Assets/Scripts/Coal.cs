@@ -13,6 +13,8 @@ public class Coal : MonoBehaviour
     float targetAlpha = 1;
     bool die = false;
 
+    public GameObject train = null;
+
     Rigidbody rb;
     private void Start()
     {
@@ -56,7 +58,10 @@ public class Coal : MonoBehaviour
     {
         if (other.gameObject.name == "InsideFurnace")
         {
-            die = true;
+            if (!die) {
+                die = true;
+                train.GetComponent<Train>().AddHeat(1);
+            }
         }
     }
 }

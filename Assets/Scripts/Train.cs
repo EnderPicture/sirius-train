@@ -18,6 +18,9 @@ public class Train : MonoBehaviour
     float LastSpeed;
     float DeltaSpeed;
 
+    float Heat;
+    float Pressure;
+
     GameObject BreakText;
     GameObject ThrottleText;
 
@@ -39,6 +42,12 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Heat -= 0.01f*Time.deltaTime;
+        if (Heat < 0) {
+            Heat = 0;
+        }
+
+        // Debug.Log(Heat);
         if (DeltaSpeed > 0.01f)
         {
             ThrottleText.SetActive(true);
@@ -133,5 +142,9 @@ public class Train : MonoBehaviour
     public float GetMaxBreak()
     {
         return MaxTBreak;
+    }
+
+    public void AddHeat(float AdditionalHeat) {
+        Heat += AdditionalHeat;
     }
 }
