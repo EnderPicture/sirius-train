@@ -7,13 +7,13 @@ public class Camera : MonoBehaviour
     public Transform target;
     public float smoothFactor = 10f;
     float zoom = 1;
-    float MinZoom = 10f;
+    float MinZoom = 30f;
     float maxZoom = 3.46f;
     public Vector3 offset;
     private void LateUpdate()
     {
 
-        zoom += Input.GetAxis("VerticalArrow") * Time.deltaTime;
+        zoom += Input.GetAxis("VerticalArrow") * Time.deltaTime * .5f;
         if (zoom > 1)
         {
             zoom = 1;

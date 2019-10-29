@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Train : MonoBehaviour
 {
@@ -9,45 +10,70 @@ public class Train : MonoBehaviour
     public float DragCoefficient = 013f;
 
     float TThrottle = 0;
-    float MaxTThrottle = 1;
-    float TBreak = 0;
-    float MaxTBreak = 1;
+    float LastTThrottle = 0;
+    float MaxTThrottle = .5f;
+    float TBreak = .5f;
+    float LastTBreak = 0;
+    float MaxTBreak = .5f;
     float LastSpeed;
     float DeltaSpeed;
+
+    GameObject BreakText;
+    GameObject ThrottleText;
+
+    AudioManager2 AudioMan;
 
     // Start is called before the first frame update
     void Start()
     {
+        LastTThrottle = TThrottle;
+        LastTBreak = TBreak;
+        
+        BreakText = GameObject.Find("BadBreaking");
+        ThrottleText = GameObject.Find("BadThrottle");
         LastSpeed = Speed;
+        AudioMan = GameObject.Find("AudioManager2").GetComponent<AudioManager2>();
+        AudioMan.Play("ambient", 0);
     }
 
     // Update is called once per frame
     void Update()
-    {   
-        if (DeltaSpeed > 0.01f) {
-            Debug.Log("start too fast");
+    {
+        if (DeltaSpeed > 0.01f)
+        {
+            ThrottleText.SetActive(true);
         }
-        if (DeltaSpeed < -0.01f) {
-            Debug.Log("break too fast");
+        else
+        {
+            ThrottleText.SetActive(false);
+        }
+        if (DeltaSpeed < -0.01f)
+        {
+            BreakText.SetActive(true);
+        }
+        else
+        {
+            BreakText.SetActive(false);
         }
         Speed += TThrottle * Time.deltaTime;
-        if (Speed > 0) {
+        if (Speed > 0)
+        {
             Speed -= TBreak * Time.deltaTime;
         }
-        if (Speed < 0) {
+        if (Speed < 0)
+        {
             Speed = 0;
         }
 
-        Speed -= ((DragCoefficient/1000)*Speed*Speed/2)*Time.deltaTime;
+        Speed -= ((DragCoefficient / 1000) * Speed * Speed / 2) * Time.deltaTime;
 
         Vector3 position = transform.position;
         position.x += Speed * Time.deltaTime;
         transform.position = position;
-
-
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         DeltaSpeed = Speed - LastSpeed;
         LastSpeed = Speed;
     }
@@ -73,8 +99,9 @@ public class Train : MonoBehaviour
         return MaxTThrottle;
     }
 
-    public float GetThrottleRatio() {
-        return TThrottle/MaxTThrottle;
+    public float GetThrottleRatio()
+    {
+        return TThrottle / MaxTThrottle;
     }
 
 
@@ -84,18 +111,24 @@ public class Train : MonoBehaviour
         if (TBreak > MaxTBreak)
         {
             TBreak = MaxTBreak;
+            if (LastTBreak < MaxTBreak)
+            {
+                AudioMan.Play("pressure", 5);
+            }
         }
         if (TBreak < 0)
         {
             TBreak = 0;
         }
+        LastTBreak = TBreak;
     }
     public float GetBreak()
     {
         return TBreak;
     }
-    public float GetBreakRatio() {
-        return TBreak/MaxTBreak;
+    public float GetBreakRatio()
+    {
+        return TBreak / MaxTBreak;
     }
     public float GetMaxBreak()
     {
