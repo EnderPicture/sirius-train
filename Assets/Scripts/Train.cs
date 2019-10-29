@@ -24,10 +24,10 @@ public class Train : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (DeltaSpeed > 0.005f) {
+        if (DeltaSpeed > 0.01f) {
             Debug.Log("start too fast");
         }
-        if (DeltaSpeed < -0.005f) {
+        if (DeltaSpeed < -0.01f) {
             Debug.Log("break too fast");
         }
         Speed += TThrottle * Time.deltaTime;

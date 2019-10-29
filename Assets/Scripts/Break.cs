@@ -20,7 +20,7 @@ public class Break : Module
         if (base.Active) {
             TrainScript.SetBreak(TrainScript.GetBreak()+Input.GetAxis("HorizontalArrow")*Time.deltaTime*.1f);
         }
-        float rotation = Mathf.Lerp(20,160,TrainScript.GetBreakRatio());
-        Lever.transform.localRotation = Quaternion.Euler(rotation,90,-90);
+        float rotation = Mathf.Lerp(70,-70,TrainScript.GetBreakRatio());
+        Lever.transform.localRotation = Quaternion.Euler(0,0,rotation);
     }
 }
