@@ -13,7 +13,7 @@ public class Camera : MonoBehaviour
     private void LateUpdate()
     {
 
-        zoom += Input.GetAxis("VerticalArrow") * Time.deltaTime * .5f;
+        zoom += Input.GetAxisRaw("VerticalArrow") * Time.deltaTime * .5f;
         if (zoom > 1)
         {
             zoom = 1;

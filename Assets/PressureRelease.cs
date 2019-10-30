@@ -18,8 +18,8 @@ public class PressureRelease : Module
     void Update()
     {
         if (base.Active) {
-            if (Input.GetAxis("HorizontalArrow") < 0) {
-                TrainScript.ReleasePressure(-Input.GetAxis("HorizontalArrow")*Time.deltaTime*2);
+            if (Input.GetAxisRaw("HorizontalArrow") < 0) {
+                TrainScript.ReleasePressure(-Input.GetAxisRaw("HorizontalArrow")*Time.deltaTime*2);
             }
         }
     }

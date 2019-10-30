@@ -8,7 +8,7 @@ public class ClipBoard : MonoBehaviour
     public float smoothFactor = 10f;
     Vector3 offset;
 
-    public float offRot = 50;
+    public float offRot = 90;
     public float onRot = 7.83f;
 
     public bool show = false;

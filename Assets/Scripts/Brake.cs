@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Break : Module
+public class Brake : Module
 {
     Train TrainScript;
     Transform Lever;
@@ -23,10 +23,10 @@ public class Break : Module
     void Update()
     {
         if (base.Active) {
-            TrainScript.SetBreak(TrainScript.GetBreak()+Input.GetAxis("HorizontalArrow")*Time.deltaTime*.4f);
+            TrainScript.SetBrake(TrainScript.GetBrake()+Input.GetAxisRaw("HorizontalArrow")*Time.deltaTime*.4f);
         }
-        StateText.SetText(Mathf.Round(TrainScript.GetBreakRatio()*100)+"%");
-        float rotation = Mathf.Lerp(70,-70,TrainScript.GetBreakRatio());
+        StateText.SetText(Mathf.Round(TrainScript.GetBrakeRatio()*100)+"%");
+        float rotation = Mathf.Lerp(70,-70,TrainScript.GetBrakeRatio());
         Lever.transform.localRotation = Quaternion.Euler(0,0,rotation);
     }
 }

@@ -23,7 +23,7 @@ public class Throttle : Module
     void Update()
     {
         if (base.Active) {
-            TrainScript.SetThrottle(TrainScript.GetThrottle()+Input.GetAxis("HorizontalArrow")*Time.deltaTime*.4f);
+            TrainScript.SetThrottle(TrainScript.GetThrottle()+Input.GetAxisRaw("HorizontalArrow")*Time.deltaTime*.4f);
         }
         StateText.SetText(Mathf.Round(TrainScript.GetThrottleRatio()*100)+"%");
         float rotation = Mathf.Lerp(70,-70,TrainScript.GetThrottleRatio());

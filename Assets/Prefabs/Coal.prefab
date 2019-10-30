@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  smoothFactor: 10
+  smoothFactor: 20
   offset: {x: 0, y: 0, z: 0}
   train: {fileID: 0}
 --- !u!1 &9142118425629341671
