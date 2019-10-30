@@ -54,7 +54,13 @@ public class Train : MonoBehaviour
 
     public TextMeshPro SpeedText;
 
+    public TextMeshPro StationText;
+
     public bool Playing = false;
+
+    int NextStationID = -1;
+    public List<EndTrainStation> Stations;
+    EndTrainStation nextStation = null;
 
     // Start is called before the first frame update
     void Start()
@@ -72,23 +78,60 @@ public class Train : MonoBehaviour
 
         HeatSmooth = Heat;
 
+        NextStation();
+    }
+
+    void NextStation()
+    {
+        NextStationID++;
+
+        if (Stations[NextStationID] != null)
+        {
+            nextStation = Stations[NextStationID];
+            float dist = nextStation.transform.position.x - transform.position.x;
+            DistFromStationInit = dist;
+            DistFromStation = dist;
+            StationText.SetText("Station " + (NextStationID + 1) + "/" + Stations.Count);
+        }
+    }
+
+    void StationCheck()
+    {
+        float dist = nextStation.transform.position.x - transform.position.x;
+        DistFromStation = dist;
+
+        Vector3 iconPos = TrainIcon.transform.localPosition;
+        iconPos.x = Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
+        iconPos.x = Mathf.Clamp(iconPos.x, -1.715f, 1.715f);
+        TrainIcon.transform.localPosition = iconPos;
+
+    }
+
+
+    void WinCheck()
+    {
+        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0)
+        {
+            if (NextStationID + 1 == Stations.Count)
+            {
+                Menu.ShowWin();
+            } else {
+                Menu.ShowMidWin();
+                NextStation();
+            }
+            Playing = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TrainStartInStation && TrainEndInStation && Speed == 0)
-        {
-            Menu.ShowWin();
-            Playing = false;
-        }
+        StationCheck();
+        WinCheck();
+
         if (Playing)
         {
 
-            Vector3 iconPos = TrainIcon.transform.localPosition;
-            iconPos.x = Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
-            iconPos.x = Mathf.Clamp(iconPos.x, -1.715f, 1.715f);
-            TrainIcon.transform.localPosition = iconPos;
 
             // Heat stuff
             Heat -= 0.15f * Time.deltaTime;
@@ -112,7 +155,7 @@ public class Train : MonoBehaviour
                 // pressure cooling
                 Pressure -= .03f * Time.deltaTime;
             }
-            Pressure -= TThrottle * Time.deltaTime;
+            Pressure -= TThrottle * Time.deltaTime * 2;
             Pressure = Mathf.Clamp(Pressure, 0, MaxPressure);
             Vector3 needleAngle = new Vector3(0, 0, Mathf.Lerp(90, -90, Pressure / MaxPressure));
             PressureNeedle.transform.localEulerAngles = needleAngle;

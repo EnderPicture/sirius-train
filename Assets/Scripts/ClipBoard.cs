@@ -13,6 +13,7 @@ public class ClipBoard : MonoBehaviour
 
     public bool show = false;
 
+    public GameObject MidWinScreen;
     public GameObject WinScreen;
     public GameObject MenuScreen;
 
@@ -38,6 +39,13 @@ public class ClipBoard : MonoBehaviour
 
     public void ShowWin() {
         WinScreen.SetActive(true);
+        MidWinScreen.SetActive(false);
+        MenuScreen.SetActive(false);
+        show = true;
+    }
+    public void ShowMidWin() {
+        WinScreen.SetActive(false);
+        MidWinScreen.SetActive(true);
         MenuScreen.SetActive(false);
         show = true;
     }
