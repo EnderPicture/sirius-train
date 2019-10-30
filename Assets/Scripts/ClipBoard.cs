@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ClipBoard : MonoBehaviour
 {
@@ -16,10 +17,15 @@ public class ClipBoard : MonoBehaviour
     public GameObject MidWinScreen;
     public GameObject WinScreen;
     public GameObject MenuScreen;
+    public GameObject DieScreen;
 
 
     private void Start() {
         offset = transform.position - target.transform.position;
+        MidWinScreen.SetActive(false);
+        WinScreen.SetActive(false);
+        DieScreen.SetActive(false);
+        MenuScreen.SetActive(true);
     }
     private void LateUpdate()
     {
@@ -41,16 +47,30 @@ public class ClipBoard : MonoBehaviour
         WinScreen.SetActive(true);
         MidWinScreen.SetActive(false);
         MenuScreen.SetActive(false);
+        DieScreen.SetActive(false);
         show = true;
     }
     public void ShowMidWin() {
         WinScreen.SetActive(false);
         MidWinScreen.SetActive(true);
         MenuScreen.SetActive(false);
+        DieScreen.SetActive(false);
+        show = true;
+    }
+
+    public void ShowDieScreen() {
+        WinScreen.SetActive(false);
+        MidWinScreen.SetActive(false);
+        MenuScreen.SetActive(false);
+        DieScreen.SetActive(true);
         show = true;
     }
 
     public void ClickedPlay() {
         show = false;
+    }
+
+    public void Restart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -62,6 +62,10 @@ public class Train : MonoBehaviour
     public List<EndTrainStation> Stations;
     EndTrainStation nextStation = null;
 
+
+    float MaxAcceleration;
+    float TimeStarted;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -115,10 +119,17 @@ public class Train : MonoBehaviour
             if (NextStationID + 1 == Stations.Count)
             {
                 Menu.ShowWin();
-            } else {
+            }
+            else
+            {
                 Menu.ShowMidWin();
                 NextStation();
             }
+            Playing = false;
+        }
+        if ((!nextStation.GetTrainInStart() || !nextStation.GetTrainInEnd()) && DistFromStation < 0)
+        {
+            Menu.ShowDieScreen();
             Playing = false;
         }
     }
@@ -131,8 +142,6 @@ public class Train : MonoBehaviour
 
         if (Playing)
         {
-
-
             // Heat stuff
             Heat -= 0.15f * Time.deltaTime;
             Heat = Mathf.Clamp(Heat, 0, MaxHeat);
@@ -192,6 +201,9 @@ public class Train : MonoBehaviour
             {
                 usefulValue = 1.6f;
             }
+
+
+            // speed calc
             Speed += (TThrottle * usefulValue) * Time.deltaTime;
             if (Speed > 0)
             {
@@ -309,6 +321,11 @@ public class Train : MonoBehaviour
         AudioMan.Play("pressure", 2);
     }
     public void StartGame()
+    {
+        Playing = true;
+        TimeStarted = Time.realtimeSinceStartup;
+    }
+    public void ResumeGame()
     {
         Playing = true;
     }
