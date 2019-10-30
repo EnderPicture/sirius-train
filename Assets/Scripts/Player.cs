@@ -26,30 +26,40 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float input = Input.GetAxis("Horizontal");
-        Vector3 velocity = rb.velocity;
-        velocity.x = input * SpeedMultiplier;
-        rb.velocity = velocity;
 
-        if (velocity.x > 0)
+        if (Input.GetAxisRaw("HorizontalArrow") == 0)
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            float input = Input.GetAxisRaw("Horizontal");
+            Vector3 velocity = rb.velocity;
+            velocity.x = input * SpeedMultiplier;
+            rb.velocity = velocity;
+            if (velocity.x > 0)
             {
-                animator.Play("Walk");
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+                {
+                    animator.Play("Walk");
+                }
+                Vector3 scale = animator.gameObject.transform.localScale;
+                scale.x = 1;
+                animator.gameObject.transform.localScale = scale;
             }
-            Vector3 scale = animator.gameObject.transform.localScale;
-            scale.x = 1;
-            animator.gameObject.transform.localScale = scale;
-        }
-        else if (velocity.x < 0)
-        {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+            else if (velocity.x < 0)
             {
-                animator.Play("Walk");
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+                {
+                    animator.Play("Walk");
+                }
+                Vector3 scale = animator.gameObject.transform.localScale;
+                scale.x = -1;
+                animator.gameObject.transform.localScale = scale;
             }
-            Vector3 scale = animator.gameObject.transform.localScale;
-            scale.x = -1;
-            animator.gameObject.transform.localScale = scale;
+            else
+            {
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                {
+                    animator.Play("Idle");
+                }
+            }
         }
         else
         {

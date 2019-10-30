@@ -62,9 +62,12 @@ public class Train : MonoBehaviour
     public List<EndTrainStation> Stations;
     EndTrainStation nextStation = null;
 
-
+    // score system values
     float MaxAcceleration;
     float TimeStarted;
+    List<float> ParkingJobScore = new List<float>();
+
+    bool GameDone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -114,15 +117,19 @@ public class Train : MonoBehaviour
 
     void WinCheck()
     {
-        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0)
+        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone)
         {
             if (NextStationID + 1 == Stations.Count)
             {
-                Menu.ShowWin();
+                Debug.Log("InWinState");
+                GameDone = true;
+                float timeUsed = Time.realtimeSinceStartup - TimeStarted;
+                Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScore);
             }
             else
             {
                 Menu.ShowMidWin();
+                ParkingJobScore.Add(DistFromStation);
                 NextStation();
             }
             Playing = false;
@@ -145,11 +152,12 @@ public class Train : MonoBehaviour
             // Heat stuff
             Heat -= 0.15f * Time.deltaTime;
             Heat = Mathf.Clamp(Heat, 0, MaxHeat);
+            HeatSmooth = Mathf.Lerp(HeatSmooth, Heat, Time.deltaTime);
+
             Vector3 barScale = HeatBar.transform.localScale;
-            barScale.y = Heat / MaxHeat;
+            barScale.y = HeatSmooth / MaxHeat;
             HeatBar.transform.localScale = barScale;
 
-            HeatSmooth = Mathf.Lerp(HeatSmooth, Heat, Time.deltaTime);
             TempText.SetText("Temperature\n" + Mathf.Round(20 + (HeatSmooth * 19.5f * 1.2f)) + "°C");
             // 
 
@@ -204,18 +212,26 @@ public class Train : MonoBehaviour
 
 
             // speed calc
-            Speed += (TThrottle * usefulValue) * Time.deltaTime;
+            float acc = 0;
+            
+            acc += (TThrottle * usefulValue) * Time.deltaTime;
             if (Speed > 0)
             {
-                Speed -= TBrake * Time.deltaTime;
+                acc -= TBrake * Time.deltaTime;
             }
             if (Speed < 0)
             {
                 Speed = 0;
             }
 
-            Speed -= ((DragCoefficient / 100) * Speed * Speed / 2) * Time.deltaTime;
+            acc -= ((DragCoefficient / 100) * Speed * Speed / 2) * Time.deltaTime;
+            Speed += acc;
 
+            float absAcc = Mathf.Abs(acc);
+            if (absAcc > MaxAcceleration) {
+                MaxAcceleration = absAcc;
+            }
+            
             Vector3 position = transform.position;
             position.x += Speed * Time.deltaTime;
             transform.position = position;
