@@ -54,7 +54,20 @@ public class Train : MonoBehaviour
 
     public TextMeshPro SpeedText;
 
+    public TextMeshPro StationText;
+
     public bool Playing = false;
+
+    int NextStationID = -1;
+    public List<EndTrainStation> Stations;
+    EndTrainStation nextStation = null;
+
+    // score system values
+    float MaxAcceleration;
+    float TimeStarted;
+    List<float> ParkingJobScore = new List<float>();
+
+    bool GameDone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -72,32 +85,79 @@ public class Train : MonoBehaviour
 
         HeatSmooth = Heat;
 
+        NextStation();
+    }
+
+    void NextStation()
+    {
+        NextStationID++;
+
+        if (Stations[NextStationID] != null)
+        {
+            nextStation = Stations[NextStationID];
+            float dist = nextStation.transform.position.x - transform.position.x;
+            DistFromStationInit = dist;
+            DistFromStation = dist;
+            StationText.SetText("Station " + (NextStationID + 1) + "/" + Stations.Count);
+        }
+    }
+
+    void StationCheck()
+    {
+        float dist = nextStation.transform.position.x - transform.position.x;
+        DistFromStation = dist;
+
+        Vector3 iconPos = TrainIcon.transform.localPosition;
+        iconPos.x = Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
+        iconPos.x = Mathf.Clamp(iconPos.x, -1.715f, 1.715f);
+        TrainIcon.transform.localPosition = iconPos;
+
+    }
+
+
+    void WinCheck()
+    {
+        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone)
+        {
+            if (NextStationID + 1 == Stations.Count)
+            {
+                Debug.Log("InWinState");
+                GameDone = true;
+                float timeUsed = Time.realtimeSinceStartup - TimeStarted;
+                Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScore);
+            }
+            else
+            {
+                Menu.ShowMidWin();
+                ParkingJobScore.Add(DistFromStation);
+                NextStation();
+            }
+            Playing = false;
+        }
+        if ((!nextStation.GetTrainInStart() || !nextStation.GetTrainInEnd()) && DistFromStation < 0)
+        {
+            Menu.ShowDieScreen();
+            Playing = false;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (TrainStartInStation && TrainEndInStation && Speed == 0)
-        {
-            Menu.ShowWin();
-            Playing = false;
-        }
+        StationCheck();
+        WinCheck();
+
         if (Playing)
         {
-
-            Vector3 iconPos = TrainIcon.transform.localPosition;
-            iconPos.x = Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
-            iconPos.x = Mathf.Clamp(iconPos.x, -1.715f, 1.715f);
-            TrainIcon.transform.localPosition = iconPos;
-
             // Heat stuff
             Heat -= 0.15f * Time.deltaTime;
             Heat = Mathf.Clamp(Heat, 0, MaxHeat);
+            HeatSmooth = Mathf.Lerp(HeatSmooth, Heat, Time.deltaTime);
+
             Vector3 barScale = HeatBar.transform.localScale;
-            barScale.y = Heat / MaxHeat;
+            barScale.y = HeatSmooth / MaxHeat;
             HeatBar.transform.localScale = barScale;
 
-            HeatSmooth = Mathf.Lerp(HeatSmooth, Heat, Time.deltaTime);
             TempText.SetText("Temperature\n" + Mathf.Round(20 + (HeatSmooth * 19.5f * 1.2f)) + "°C");
             // 
 
@@ -112,7 +172,7 @@ public class Train : MonoBehaviour
                 // pressure cooling
                 Pressure -= .03f * Time.deltaTime;
             }
-            Pressure -= TThrottle * Time.deltaTime;
+            Pressure -= TThrottle * Time.deltaTime * 2;
             Pressure = Mathf.Clamp(Pressure, 0, MaxPressure);
             Vector3 needleAngle = new Vector3(0, 0, Mathf.Lerp(90, -90, Pressure / MaxPressure));
             PressureNeedle.transform.localEulerAngles = needleAngle;
@@ -149,18 +209,29 @@ public class Train : MonoBehaviour
             {
                 usefulValue = 1.6f;
             }
-            Speed += (TThrottle * usefulValue) * Time.deltaTime;
+
+
+            // speed calc
+            float acc = 0;
+            
+            acc += (TThrottle * usefulValue) * Time.deltaTime;
             if (Speed > 0)
             {
-                Speed -= TBrake * Time.deltaTime;
+                acc -= TBrake * Time.deltaTime;
             }
             if (Speed < 0)
             {
                 Speed = 0;
             }
 
-            Speed -= ((DragCoefficient / 100) * Speed * Speed / 2) * Time.deltaTime;
+            acc -= ((DragCoefficient / 100) * Speed * Speed / 2) * Time.deltaTime;
+            Speed += acc;
 
+            float absAcc = Mathf.Abs(acc);
+            if (absAcc > MaxAcceleration) {
+                MaxAcceleration = absAcc;
+            }
+            
             Vector3 position = transform.position;
             position.x += Speed * Time.deltaTime;
             transform.position = position;
@@ -266,6 +337,11 @@ public class Train : MonoBehaviour
         AudioMan.Play("pressure", 2);
     }
     public void StartGame()
+    {
+        Playing = true;
+        TimeStarted = Time.realtimeSinceStartup;
+    }
+    public void ResumeGame()
     {
         Playing = true;
     }
