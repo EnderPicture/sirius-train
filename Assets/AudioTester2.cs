@@ -58,6 +58,7 @@ public class AudioTester2 : MonoBehaviour
 			FindObjectOfType<AudioManager2>().Play("ambient", 2);
 		}
 
+		/*
 		if (Input.GetKeyDown(KeyCode.Alpha1)){
 			FindObjectOfType<AudioManager2>().Play("ambient", 3);
 		}
@@ -65,6 +66,7 @@ public class AudioTester2 : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Alpha2)){
 			FindObjectOfType<AudioManager2>().Play("ambient", 4);
 		}
+		*/
 
 
 		if (Input.GetKeyDown(KeyCode.DownArrow)) {
@@ -76,11 +78,13 @@ public class AudioTester2 : MonoBehaviour
 		}
 
 
-		/*
-		if (Input.GetKeyDown(KeyCode.Alpha1)) {
-			FindObjectOfType<AudioManager2>().fade("pressure");
+		if (Input.GetKeyDown(KeyCode.Alpha1)){
+			FindObjectOfType<AudioManager2>().Play("ambient",3);
 		}
-		*/
+
+		if (Input.GetKeyDown(KeyCode.Alpha2)){
+			//FindObjectOfType<AudioManager2>().fade()
+		}
         
     }
 }

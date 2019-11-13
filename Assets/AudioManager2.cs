@@ -21,7 +21,10 @@ public class AudioManager2 : MonoBehaviour
 					pressureSources[number].pitch = Random.Range(0.8f, 1.1f);
 					pressureSources[number].Play();
 				} else {
-					pressureSources[number].Stop();
+					//IF it's already playing, fade away the sound
+					fade("pressure", number, 0.35f);
+					//StartCoroutine(FadeAudioSource.StartFade(pressureSources[number], 0.35f, 0));
+					//pressureSources[number].Stop();
 				}
 				
 			} else {
@@ -36,9 +39,13 @@ public class AudioManager2 : MonoBehaviour
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!trainSources[number].isPlaying) {
+					trainSources[number].volume = 1f;
 					trainSources[number].Play();
 				} else {
-					trainSources[number].Stop(); 
+					//IF it's already playing, fade away the sound
+					fade("train", number, 1.0f);
+					//StartCoroutine(FadeAudioSource.StartFade(trainSources[number], 0.35f, 0));
+					//trainSources[number].Stop(); 
 				}
 				
 			} else {
@@ -53,9 +60,13 @@ public class AudioManager2 : MonoBehaviour
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!playerSources[number].isPlaying) {
+					playerSources[number].volume = 1f;
 					playerSources[number].Play();
 				} else {
-					playerSources[number].Stop();
+					//IF it's already playing, fade away the sound
+					fade("player", number, 0.35f);
+					//StartCoroutine(FadeAudioSource.StartFade(playerSources[number], 0.35f, 0));
+					//playerSources[number].Stop();
 				}
 		
 			} else {
@@ -70,11 +81,15 @@ public class AudioManager2 : MonoBehaviour
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!ambientSources[number].isPlaying) {
+					ambientSources[number].volume = 1f;
 					ambientSources[number].Play();
-					ambientSources[number].loop = true;
+					//ambientSources[number].loop = true;
 				} else {
-					ambientSources[number].loop = false;
-					ambientSources[number].Stop();
+					//IF it's already playing, fade away the sound
+					fade("ambient", number, 1.0f);
+					//StartCoroutine(FadeAudioSource.StartFade(ambientSources[number], 0.35f, 0));
+					//ambientSources[number].loop = false;
+					//ambientSources[number].Stop();
 				}
 			} else {
 				Debug.Log("ambientSources = null!");
@@ -83,20 +98,25 @@ public class AudioManager2 : MonoBehaviour
 
 	}
 
-	/*
-	public void fade (string name) {
+	public void fade(string name, int number, float durationToFade){
+		
 		if (name == "pressure") {
 			AudioSource[] pressureSources = this.transform.Find("aPressureManager").GetComponents<AudioSource>();
-			AudioSource pressureSource = pressureSources[0];
-			AudioMixer mixer = pressureSource.outputAudioMixer;
-			//Audio.AudioMixerGroup mixerGroup = GetComponent<pressureSources[0]>().outputAudioMixerGroup;
-			float decayingVolume = 1.0f;
-			decayingVolume -= (Time.deltaTime*0.2f);
-			mixer.SetFloat("volume", decayingVolume);
-
+			StartCoroutine(FadeAudioSource.StartFade(pressureSources[number], durationToFade, 0));
+		} else if (name == "train") {
+			AudioSource[] trainSources = this.transform.Find("aTrainManager").GetComponents<AudioSource>();
+			StartCoroutine(FadeAudioSource.StartFade(trainSources[number], durationToFade, 0));		
+		} else if (name == "ambient") {
+			AudioSource[] ambientSources = this.transform.Find("aAmbientManager").GetComponents<AudioSource>();
+			StartCoroutine(FadeAudioSource.StartFade(ambientSources[number], durationToFade, 0));		
+		} else if (name == "player") {
+			AudioSource[] playerSources = this.transform.Find("aPlayerManager").GetComponents<AudioSource>();
+			StartCoroutine(FadeAudioSource.StartFade(playerSources[number], durationToFade, 0));				
+		} else {
+			Debug.Log("Something happened in fade() of AudioManager2");
 		}
+	
 	}
-	*/
 	
 	// Start is called before the first frame update
     void Start()
