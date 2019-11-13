@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     List<GameObject> Modules = new List<GameObject>();
     List<GameObject> Coals = new List<GameObject>();
 
+    Animator animator;
+
 
     Rigidbody rb;
 
@@ -18,15 +20,54 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        animator = transform.Find("Graphics").GetComponent<Animator>(); ;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float input = Input.GetAxis("Horizontal");
-        Vector3 velocity = rb.velocity;
-        velocity.x = input * SpeedMultiplier;
-        rb.velocity = velocity;
+
+        if (Input.GetAxisRaw("HorizontalArrow") == 0)
+        {
+            float input = Input.GetAxisRaw("Horizontal");
+            Vector3 velocity = rb.velocity;
+            velocity.x = input * SpeedMultiplier;
+            rb.velocity = velocity;
+            if (velocity.x > 0)
+            {
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+                {
+                    animator.Play("Walk");
+                }
+                Vector3 scale = animator.gameObject.transform.localScale;
+                scale.x = 1;
+                animator.gameObject.transform.localScale = scale;
+            }
+            else if (velocity.x < 0)
+            {
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
+                {
+                    animator.Play("Walk");
+                }
+                Vector3 scale = animator.gameObject.transform.localScale;
+                scale.x = -1;
+                animator.gameObject.transform.localScale = scale;
+            }
+            else
+            {
+                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                {
+                    animator.Play("Idle");
+                }
+            }
+        }
+        else
+        {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+            {
+                animator.Play("Idle");
+            }
+        }
 
         if (ObjectInHand == null)
         {
@@ -55,6 +96,17 @@ public class Player : MonoBehaviour
                 shortestDist = float.MaxValue;
                 shortest = null;
 
+
+                for (int c = 0; c < Coals.Count; c++)
+                {
+                    GameObject coal = Coals[c];
+                    if (coal == null)
+                    {
+                        Coals.Remove(coal);
+                        c--;
+                    }
+
+                }
                 foreach (GameObject coal in Coals)
                 {
                     float coalDist = Vector3.Distance(transform.position, coal.transform.position);
@@ -65,15 +117,20 @@ public class Player : MonoBehaviour
                     }
                 }
 
-                if (shortest != null) {
+                if (shortest != null)
+                {
                     ObjectInHand = shortest;
                     shortest.GetComponent<Coal>().target = transform;
                 }
             }
 
-        } else {
-            if (Input.GetKeyDown("space")) {
-                if (ObjectInHand.tag == "Coal") {
+        }
+        else
+        {
+            if (Input.GetKeyDown("space"))
+            {
+                if (ObjectInHand.tag == "Coal")
+                {
                     ObjectInHand.GetComponent<Coal>().target = null;
                     ObjectInHand = null;
                 }
