@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEditor;
 
 public class Train : MonoBehaviour
 {
+    public static readonly int TRAIN_MODE_BULLET = 1; 
+    public static readonly int TRAIN_MODE_DIESEL = 2; 
+    public static readonly int TRAIN_MODE_STEAM = 3;
+
+    public int mode = TRAIN_MODE_BULLET;
+
+
+    public TrainThrottle Throttle;
+    public TrainBrake Brake;
+  
+
     public float Speed = 0;
-
     public float DragCoefficient = 013f;
-
-    float TThrottle = 0;
-    float LastTThrottle = 0;
-    public float MaxTThrottle = .5f;
-    float TBrake = 0;
-    float LastTBrake = 0;
-    public float MaxTBrake = .5f;
-    float LastSpeed;
-    float DeltaSpeed;
-
+    
     // Heat
     float Heat;
     float HeatSmooth;
@@ -31,9 +33,6 @@ public class Train : MonoBehaviour
     float PressureUsefulMax = 7.5f;
     float PressureUsefulMin = 2.5f;
     public GameObject PressureNeedle;
-
-    GameObject BrakeText;
-    GameObject ThrottleText;
 
     AudioManager2 AudioMan;
 
@@ -72,12 +71,6 @@ public class Train : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        LastTThrottle = TThrottle;
-        LastTBrake = TBrake;
-
-        BrakeText = GameObject.Find("BadBrakeing");
-        ThrottleText = GameObject.Find("BadThrottle");
-        LastSpeed = Speed;
         AudioMan = GameObject.Find("AudioManager2").GetComponent<AudioManager2>();
         AudioMan.Play("ambient", 0);
 
@@ -108,7 +101,7 @@ public class Train : MonoBehaviour
         DistFromStation = dist;
 
         Vector3 iconPos = TrainIcon.transform.localPosition;
-        iconPos.x = Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
+        iconPos.x = Helper.Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
         iconPos.x = Mathf.Clamp(iconPos.x, -1.715f, 1.715f);
         TrainIcon.transform.localPosition = iconPos;
 
@@ -172,28 +165,13 @@ public class Train : MonoBehaviour
                 // pressure cooling
                 Pressure -= .03f * Time.deltaTime;
             }
-            Pressure -= TThrottle * Time.deltaTime * 2;
+            Pressure -= Throttle.GetThrottleValue() * Time.deltaTime * 2;
             Pressure = Mathf.Clamp(Pressure, 0, MaxPressure);
             Vector3 needleAngle = new Vector3(0, 0, Mathf.Lerp(90, -90, Pressure / MaxPressure));
             PressureNeedle.transform.localEulerAngles = needleAngle;
             PressureText.SetText("Pressure\n" + Mathf.Round(Pressure * 131.0f) + " kpa");
 
-            // if (DeltaSpeed > 0.01f)
-            // {
-            //     ThrottleText.SetActive(true);
-            // }
-            // else
-            // {
-            //     ThrottleText.SetActive(false);
-            // }
-            // if (DeltaSpeed < -0.01f)
-            // {
-            //     BrakeText.SetActive(true);
-            // }
-            // else
-            // {
-            //     BrakeText.SetActive(false);
-            // }
+    
 
             // throttle control
             float usefulValue = 0;
@@ -214,10 +192,10 @@ public class Train : MonoBehaviour
             // speed calc
             float acc = 0;
             
-            acc += (TThrottle * usefulValue) * Time.deltaTime;
+            acc += (Throttle.GetThrottleValue() * usefulValue) * Time.deltaTime;
             if (Speed > 0)
             {
-                acc -= TBrake * Time.deltaTime;
+                acc -= Brake.GetBrakeValue() * Time.deltaTime;
             }
             if (Speed < 0)
             {
@@ -240,73 +218,24 @@ public class Train : MonoBehaviour
         }
     }
 
-    private float Lerp(float a, float b, float t)
-    {
-        return a + (b - a) * t;
-    }
-
-    private void FixedUpdate()
-    {
-        DeltaSpeed = Speed - LastSpeed;
-        LastSpeed = Speed;
-    }
-
-    public void SetThrottle(float throttle)
-    {
-        TThrottle = throttle;
-        if (TThrottle > MaxTThrottle)
-        {
-            TThrottle = MaxTThrottle;
-        }
-        if (TThrottle < 0)
-        {
-            TThrottle = 0;
-        }
-    }
-    public float GetThrottle()
-    {
-        return TThrottle;
-    }
-    public float GetMaxThrottle()
-    {
-        return MaxTThrottle;
-    }
-
-    public float GetThrottleRatio()
-    {
-        return TThrottle / MaxTThrottle;
-    }
 
 
-    public void SetBrake(float tBrake)
-    {
-        TBrake = tBrake;
-        if (TBrake > MaxTBrake)
-        {
-            TBrake = MaxTBrake;
-            if (LastTBrake < MaxTBrake)
-            {
-                AudioMan.Play("pressure", 5);
-            }
-        }
-        if (TBrake < 0)
-        {
-            TBrake = 0;
-        }
-        LastTBrake = TBrake;
-    }
-    public float GetBrake()
-    {
-        return TBrake;
-    }
-    public float GetBrakeRatio()
-    {
-        return TBrake / MaxTBrake;
-    }
-    public float GetMaxBrake()
-    {
-        return MaxTBrake;
-    }
+
+
+
+
+
+
+
+
+
+
+
+    // get and set stuff
+
+
+
+
 
     public void AddHeat(float AdditionalHeat)
     {
