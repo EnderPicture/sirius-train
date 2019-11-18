@@ -5,7 +5,6 @@ using TMPro;
 
 public class TrainBrake : Module
 {
-    Train TrainScript;
     Transform Lever;
     TextMeshPro StateText;
 
@@ -18,7 +17,6 @@ public class TrainBrake : Module
     {
         StateText = transform.Find("Panel").Find("StateText").GetComponent<TextMeshPro>();
 
-        TrainScript = GameObject.Find("Train").GetComponent<Train>();
         Lever = transform.Find("Lever");
         base.Start();
     }

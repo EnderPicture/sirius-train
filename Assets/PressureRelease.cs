@@ -5,12 +5,11 @@ using UnityEngine;
 public class PressureRelease : Module
 {
     // Start is called before the first frame update    Train TrainScript;
-    Train TrainScript;
+    public TrainPressure Pressure;
     // Start is called before the first frame update
     new void Start()
     {
 
-        TrainScript = GameObject.Find("Train").GetComponent<Train>();
         base.Start();
     }
 
@@ -19,7 +18,7 @@ public class PressureRelease : Module
     {
         if (base.Active) {
             if (Input.GetAxisRaw("HorizontalArrow") < 0) {
-                TrainScript.ReleasePressure(-Input.GetAxisRaw("HorizontalArrow")*Time.deltaTime*2);
+                Pressure.ReleasePressure(-Input.GetAxisRaw("HorizontalArrow")*Time.deltaTime*2);
             }
         }
     }

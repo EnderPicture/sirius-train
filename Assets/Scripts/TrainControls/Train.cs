@@ -15,24 +15,15 @@ public class Train : MonoBehaviour
 
     public TrainThrottle Throttle;
     public TrainBrake Brake;
-  
+    public TrainTemperature Temperature;
+    public TrainPressure Pressure;
 
     public float Speed = 0;
     public float DragCoefficient = 013f;
     
-    // Heat
-    float Heat;
-    float HeatSmooth;
-    float MaxHeat = 10;
-    public GameObject HeatBar;
 
 
-    float Pressure;
-    float MaxPressure = 10;
-    float BoilPoint = 2.5f;
-    float PressureUsefulMax = 7.5f;
-    float PressureUsefulMin = 2.5f;
-    public GameObject PressureNeedle;
+
 
     AudioManager2 AudioMan;
 
@@ -47,9 +38,7 @@ public class Train : MonoBehaviour
     public ClipBoard Menu;
 
     public GameObject TrainIcon;
-
-    public TextMeshPro PressureText;
-    public TextMeshPro TempText;
+    
 
     public TextMeshPro SpeedText;
 
@@ -74,9 +63,7 @@ public class Train : MonoBehaviour
         AudioMan = GameObject.Find("AudioManager2").GetComponent<AudioManager2>();
         AudioMan.Play("ambient", 0);
 
-        Heat = MaxHeat / 2;
-
-        HeatSmooth = Heat;
+        
 
         NextStation();
     }
@@ -142,57 +129,12 @@ public class Train : MonoBehaviour
 
         if (Playing)
         {
-            // Heat stuff
-            Heat -= 0.15f * Time.deltaTime;
-            Heat = Mathf.Clamp(Heat, 0, MaxHeat);
-            HeatSmooth = Mathf.Lerp(HeatSmooth, Heat, Time.deltaTime);
-
-            Vector3 barScale = HeatBar.transform.localScale;
-            barScale.y = HeatSmooth / MaxHeat;
-            HeatBar.transform.localScale = barScale;
-
-            TempText.SetText("Temperature\n" + Mathf.Round(20 + (HeatSmooth * 19.5f * 1.2f)) + "°C");
-            // 
-
-            // Pressure stuff
-            if (HeatSmooth > BoilPoint)
-            {
-                // add the additional heat
-                Pressure += (HeatSmooth - BoilPoint) * 0.2f * Time.deltaTime;
-            }
-            else
-            {
-                // pressure cooling
-                Pressure -= .03f * Time.deltaTime;
-            }
-            Pressure -= Throttle.GetThrottleValue() * Time.deltaTime * 2;
-            Pressure = Mathf.Clamp(Pressure, 0, MaxPressure);
-            Vector3 needleAngle = new Vector3(0, 0, Mathf.Lerp(90, -90, Pressure / MaxPressure));
-            PressureNeedle.transform.localEulerAngles = needleAngle;
-            PressureText.SetText("Pressure\n" + Mathf.Round(Pressure * 131.0f) + " kpa");
-
-    
-
-            // throttle control
-            float usefulValue = 0;
-            if (Pressure > PressureUsefulMin && Pressure < PressureUsefulMin)
-            {
-                usefulValue = 1;
-            }
-            else if (Pressure <= PressureUsefulMin && Pressure > 0)
-            {
-                usefulValue = .2f;
-            }
-            else if (Pressure >= PressureUsefulMin)
-            {
-                usefulValue = 1.6f;
-            }
 
 
             // speed calc
             float acc = 0;
             
-            acc += (Throttle.GetThrottleValue() * usefulValue) * Time.deltaTime;
+            acc += (Throttle.GetThrottleValue() * Pressure.GetThrottleMultiplier()) * Time.deltaTime;
             if (Speed > 0)
             {
                 acc -= Brake.GetBrakeValue() * Time.deltaTime;
@@ -239,7 +181,7 @@ public class Train : MonoBehaviour
 
     public void AddHeat(float AdditionalHeat)
     {
-        Heat += AdditionalHeat;
+        Temperature.AddHeat(AdditionalHeat);
         CoalUsed++;
     }
 
@@ -258,12 +200,6 @@ public class Train : MonoBehaviour
     public void SetDistFromStationInit(float value)
     {
         DistFromStationInit = value;
-    }
-    public void ReleasePressure(float delta)
-    {
-        Pressure -= delta;
-        Pressure = Mathf.Clamp(Pressure, 0, MaxPressure);
-        AudioMan.Play("pressure", 2);
     }
     public void StartGame()
     {
