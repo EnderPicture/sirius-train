@@ -12,8 +12,14 @@ public class WorldGen : MonoBehaviour
     float longMinDisStation = Config.LongMinDisStation;
     float longMaxDisStation = Config.LongMaxDisStation;
 
+    public Object[] Trees;
+
 
     int Style = 0;
+
+    private void Start() {
+        Trees = Resources.LoadAll("Trees", typeof(GameObject));
+    }
 
 
     public void GenStation(int numberOfStations, int mode, Train train)
@@ -23,8 +29,6 @@ public class WorldGen : MonoBehaviour
         mode 2 = long
         mode 3 = random short long
         */
-
-
 
         GameObject stationCon = new GameObject();
         stationCon.transform.SetParent(transform);
