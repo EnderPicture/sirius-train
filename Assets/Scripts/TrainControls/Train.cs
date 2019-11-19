@@ -18,17 +18,15 @@ public class Train : MonoBehaviour
     public TrainTemperature Temperature;
     public TrainPressure Pressure;
 
+
+
+
+
     public float Speed = 0;
     public float DragCoefficient = 013f;
     
 
-
-
-
     AudioManager2 AudioMan;
-
-    bool TrainStartInStation = false;
-    bool TrainEndInStation = false;
 
     float DistFromStationInit = 0;
     float DistFromStation = 0;
@@ -130,7 +128,10 @@ public class Train : MonoBehaviour
         if (Playing)
         {
 
-
+            Throttle.enabled = true;
+            Brake.enabled = true;
+            Temperature.enabled = true;
+            Pressure.enabled = true;
             // speed calc
             float acc = 0;
             
@@ -157,21 +158,13 @@ public class Train : MonoBehaviour
             transform.position = position;
 
             SpeedText.SetText("Speed\n" + Mathf.Round(Speed * 10) + " KM/H");
+        } else {
+            Throttle.enabled = false;
+            Brake.enabled = false;
+            Temperature.enabled = false;
+            Pressure.enabled = false;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     // get and set stuff
 
@@ -185,22 +178,6 @@ public class Train : MonoBehaviour
         CoalUsed++;
     }
 
-    public void SetTrainStartInStation(bool value)
-    {
-        TrainStartInStation = value;
-    }
-    public void SetTrainEndInStation(bool value)
-    {
-        TrainEndInStation = value;
-    }
-    public void SetDistFromStation(float value)
-    {
-        DistFromStation = value;
-    }
-    public void SetDistFromStationInit(float value)
-    {
-        DistFromStationInit = value;
-    }
     public void StartGame()
     {
         Playing = true;
