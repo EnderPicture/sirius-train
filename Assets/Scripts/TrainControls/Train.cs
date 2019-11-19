@@ -6,25 +6,26 @@ using UnityEditor;
 
 public class Train : MonoBehaviour
 {
-    public static readonly int TRAIN_MODE_BULLET = 1; 
-    public static readonly int TRAIN_MODE_DIESEL = 2; 
+    public static readonly int TRAIN_MODE_BULLET = 1;
+    public static readonly int TRAIN_MODE_DIESEL = 2;
     public static readonly int TRAIN_MODE_STEAM = 3;
 
-    public int mode = TRAIN_MODE_BULLET;
+    int Mode = TRAIN_MODE_BULLET;
 
 
     public TrainThrottle Throttle;
     public TrainBrake Brake;
     public TrainTemperature Temperature;
     public TrainPressure Pressure;
+    public CoalSpawn Coal;
 
 
-
+    public float FuelAmount = 100;
 
 
     public float Speed = 0;
     public float DragCoefficient = 013f;
-    
+
 
     AudioManager2 AudioMan;
 
@@ -36,16 +37,17 @@ public class Train : MonoBehaviour
     public ClipBoard Menu;
 
     public GameObject TrainIcon;
-    
+
+    float NextStationTime;
 
     public TextMeshPro SpeedText;
-
     public TextMeshPro StationText;
+    public TextMeshPro TimeText;
 
     public bool Playing = false;
 
     int NextStationID = -1;
-    public List<EndTrainStation> Stations;
+    List<EndTrainStation> Stations;
     EndTrainStation nextStation = null;
 
     // score system values
@@ -61,9 +63,34 @@ public class Train : MonoBehaviour
         AudioMan = GameObject.Find("AudioManager2").GetComponent<AudioManager2>();
         AudioMan.Play("ambient", 0);
 
-        
+        switch (Mode)
+        {
+            case 1:
+                Temperature.gameObject.SetActive(false);
+                Pressure.gameObject.SetActive(false);
+                Coal.gameObject.SetActive(false);
+                break;
+            case 2:
+                Temperature.gameObject.SetActive(false);
+                Pressure.gameObject.SetActive(false);
+                Coal.gameObject.SetActive(false);
+                break;
+            case 3:
+                break;
+        }
 
+
+    }
+
+    public void SetupStations(List<EndTrainStation> stations)
+    {
+        Stations = stations;
         NextStation();
+    }
+
+    public void SetMode(int mode)
+    {
+        Mode = mode;
     }
 
     void NextStation()
@@ -89,7 +116,6 @@ public class Train : MonoBehaviour
         iconPos.x = Helper.Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
         iconPos.x = Mathf.Clamp(iconPos.x, -1.715f, 1.715f);
         TrainIcon.transform.localPosition = iconPos;
-
     }
 
 
@@ -134,8 +160,30 @@ public class Train : MonoBehaviour
             Pressure.enabled = true;
             // speed calc
             float acc = 0;
-            
-            acc += (Throttle.GetThrottleValue() * Pressure.GetThrottleMultiplier()) * Time.deltaTime;
+
+
+            if (Mode == Config.STEAM)
+            {
+                acc += (Throttle.GetThrottleValue() * Pressure.GetThrottleMultiplier()) * Time.deltaTime;
+            }
+            else if (Mode == Config.DIESEL)
+            {
+                FuelAmount -= Throttle.GetThrottleValue();
+                if (FuelAmount < 0) {
+                    FuelAmount = 0;
+                }
+
+                if (FuelAmount > 0) {
+                    acc += Throttle.GetThrottleValue() * Time.deltaTime;
+                }
+            }
+            else
+            {
+                acc += Throttle.GetThrottleValue() * Time.deltaTime;
+            }
+
+
+
             if (Speed > 0)
             {
                 acc -= Brake.GetBrakeValue() * Time.deltaTime;
@@ -149,16 +197,19 @@ public class Train : MonoBehaviour
             Speed += acc;
 
             float absAcc = Mathf.Abs(acc);
-            if (absAcc > MaxAcceleration) {
+            if (absAcc > MaxAcceleration)
+            {
                 MaxAcceleration = absAcc;
             }
-            
+
             Vector3 position = transform.position;
             position.x += Speed * Time.deltaTime;
             transform.position = position;
 
             SpeedText.SetText("Speed\n" + Mathf.Round(Speed * 10) + " KM/H");
-        } else {
+        }
+        else
+        {
             Throttle.enabled = false;
             Brake.enabled = false;
             Temperature.enabled = false;
@@ -167,9 +218,6 @@ public class Train : MonoBehaviour
     }
 
     // get and set stuff
-
-
-
 
 
     public void AddHeat(float AdditionalHeat)

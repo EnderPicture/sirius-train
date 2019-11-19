@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
             foreach (GameObject module in Modules)
             {
                 module.GetComponent<Module>().SetActive(false);
-                float moduleDist = Vector3.Distance(transform.position, module.transform.position);
+                float moduleDist = Mathf.Abs(transform.position.x - module.transform.position.x);
 
                 if (moduleDist < shortestDist)
                 {

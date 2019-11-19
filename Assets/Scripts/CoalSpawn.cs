@@ -5,13 +5,14 @@ using UnityEngine;
 public class CoalSpawn : MonoBehaviour
 {
     // Start is called before the first frame update
-    bool Spawning = true;
 
     public GameObject coal;
 
+    int fuelAmount = 100;
+
     int itemCount = 0;
 
-    public GameObject train;
+    GameObject train;
 
     void Start()
     {
@@ -20,13 +21,13 @@ public class CoalSpawn : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (itemCount == 0)
+        if (itemCount == 0 && fuelAmount > 0)
         {
             GameObject newCoal = Instantiate(coal, transform.position, Quaternion.identity);
             newCoal.GetComponent<Coal>().train = train;
             newCoal.transform.parent = transform;
+            fuelAmount --;
         }
-        Spawning = true;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -41,5 +42,8 @@ public class CoalSpawn : MonoBehaviour
         {
             itemCount--;
         }
+    }
+    public void SetFuelAmount(int amount) {
+        fuelAmount = amount;
     }
 }
