@@ -207,14 +207,18 @@ public class Train : MonoBehaviour
             transform.position = position;
 
             SpeedText.SetText("Speed\n" + Mathf.Round(Speed * 10) + " KM/H");
+
+            TimeText.SetText((NextStationTime-Time.realtimeSinceStartup)+"");
         }
         else
         {
+            TimeText.SetText("Ready To Go");
             Throttle.enabled = false;
             Brake.enabled = false;
             Temperature.enabled = false;
             Pressure.enabled = false;
         }
+
     }
 
     // get and set stuff
@@ -230,9 +234,23 @@ public class Train : MonoBehaviour
     {
         Playing = true;
         TimeStarted = Time.realtimeSinceStartup;
+        calcTime(true);
     }
     public void ResumeGame()
     {
         Playing = true;
+        calcTime(false);
+    }
+
+    void calcTime(bool startingTrain) {
+        if (startingTrain) {
+            NextStationTime = Time.realtimeSinceStartup + (DistFromStationInit*Config.TrainTimingMultiplierStarting);
+        } else {
+            NextStationTime = Time.realtimeSinceStartup + (DistFromStationInit*Config.TrainTimingMultiplier);
+        }
+    }
+
+    public float GetSpeed() {
+        return Speed;
     }
 }

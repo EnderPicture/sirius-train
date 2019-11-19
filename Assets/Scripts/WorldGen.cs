@@ -6,11 +6,11 @@ public class WorldGen : MonoBehaviour
 {
     public GameObject Station;
 
-    float shortMinDisStation = Config.shortMinDisStation;
-    float shortMaxDisStation = Config.shortMaxDisStation;
+    float shortMinDisStation = Config.ShortMinDisStation;
+    float shortMaxDisStation = Config.ShortMaxDisStation;
 
-    float longMinDisStation = Config.longMinDisStation;
-    float longMaxDisStation = Config.longMaxDisStation;
+    float longMinDisStation = Config.LongMinDisStation;
+    float longMaxDisStation = Config.LongMaxDisStation;
 
 
     int Style = 0;

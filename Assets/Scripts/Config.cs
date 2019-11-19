@@ -14,13 +14,16 @@ public class Config : MonoBehaviour
     public static readonly int CoalToUseP3 = 60;
 
 
-    public static readonly float shortMinDisStation = 200;
-    public static readonly float shortMaxDisStation = 400;
-    public static readonly float longMinDisStation = 600;
-    public static readonly float longMaxDisStation = 800;
+    public static readonly float ShortMinDisStation = 200;
+    public static readonly float ShortMaxDisStation = 400;
+    public static readonly float LongMinDisStation = 600;
+    public static readonly float LongMaxDisStation = 800;
 
 
-
+    // responsible for timing and when should the train arrive at the next station
+    // smaller the number shorter the time the plyer will be given to complete.
+    public static readonly float TrainTimingMultiplierStarting = 1; // the first one, no station to station
+    public static readonly float TrainTimingMultiplier = .5f; // long hops from station to station
 
 
     // DO NOT CHANGE VALUES UNDER HERE ---------------------------------------------
