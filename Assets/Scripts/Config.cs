@@ -14,6 +14,11 @@ public class Config : MonoBehaviour
     public static readonly int CoalToUseP3 = 60;
 
 
+    public static readonly int SpeedLimitBullet = 200;
+    public static readonly int SpeedLimitDiesel = 100;
+    public static readonly int SpeedLimitSteam = 60;
+
+
     public static readonly float ShortMinDisStation = 200;
     public static readonly float ShortMaxDisStation = 400;
     public static readonly float LongMinDisStation = 600;

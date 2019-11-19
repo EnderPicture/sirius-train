@@ -58,6 +58,10 @@ public class Train : MonoBehaviour
 
     bool GameDone = false;
 
+    float SpeedLimit;
+
+    public TextMeshPro SpeedLimitText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,16 +74,19 @@ public class Train : MonoBehaviour
                 Temperature.gameObject.SetActive(false);
                 Pressure.gameObject.SetActive(false);
                 Coal.gameObject.SetActive(false);
+                SpeedLimit = Config.SpeedLimitBullet;
                 break;
             case 2:
                 Temperature.gameObject.SetActive(false);
                 Pressure.gameObject.SetActive(false);
                 Coal.gameObject.SetActive(false);
+                SpeedLimit = Config.SpeedLimitDiesel;
                 break;
             case 3:
+                SpeedLimit = Config.SpeedLimitSteam;
                 break;
         }
-
+        SpeedLimitText.SetText(SpeedLimit + "");
 
     }
 
@@ -121,8 +128,9 @@ public class Train : MonoBehaviour
 
 
     void WinCheck()
-    {   
-        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone) {
+    {
+        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone)
+        {
             // HINT THAT THEY SHOULD USE THE PARKING BREAK
         }
         if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone && Gearbox.GetGear() == Gearbox.P)
@@ -175,11 +183,13 @@ public class Train : MonoBehaviour
             else if (Mode == Config.DIESEL)
             {
                 FuelAmount -= Throttle.GetThrottleValue();
-                if (FuelAmount < 0) {
+                if (FuelAmount < 0)
+                {
                     FuelAmount = 0;
                 }
 
-                if (FuelAmount > 0) {
+                if (FuelAmount > 0)
+                {
                     acc += Throttle.GetThrottleValue() * Time.deltaTime;
                 }
             }
@@ -200,7 +210,10 @@ public class Train : MonoBehaviour
             }
 
             acc -= ((DragCoefficient / 100) * Speed * Speed / 2) * Time.deltaTime;
-            Speed += acc;
+            if (Gearbox.GetGear() != Gearbox.P)
+            {
+                Speed += acc;
+            }
 
             float absAcc = Mathf.Abs(acc);
             if (absAcc > MaxAcceleration)
@@ -210,16 +223,19 @@ public class Train : MonoBehaviour
 
             Vector3 position = transform.position;
 
-            if (Gearbox.GetGear() == Gearbox.R) {
+            if (Gearbox.GetGear() == Gearbox.R)
+            {
                 position.x -= Speed * Time.deltaTime;
-            } else if (Gearbox.GetGear() == Gearbox.D) {
+            }
+            else if (Gearbox.GetGear() == Gearbox.D)
+            {
                 position.x += Speed * Time.deltaTime;
             }
             transform.position = position;
 
             SpeedText.SetText("Speed\n" + Mathf.Round(Speed * 10) + " KM/H");
 
-            TimeText.SetText((NextStationTime-Time.realtimeSinceStartup)+"");
+            TimeText.SetText((NextStationTime - Time.realtimeSinceStartup) + "");
         }
         else
         {
@@ -255,15 +271,20 @@ public class Train : MonoBehaviour
         calcTime(false);
     }
 
-    void calcTime(bool startingTrain) {
-        if (startingTrain) {
-            NextStationTime = Time.realtimeSinceStartup + (DistFromStationInit*Config.TrainTimingMultiplierStarting);
-        } else {
-            NextStationTime = Time.realtimeSinceStartup + (DistFromStationInit*Config.TrainTimingMultiplier);
+    void calcTime(bool startingTrain)
+    {
+        if (startingTrain)
+        {
+            NextStationTime = Time.realtimeSinceStartup + (DistFromStationInit * Config.TrainTimingMultiplierStarting);
+        }
+        else
+        {
+            NextStationTime = Time.realtimeSinceStartup + (DistFromStationInit * Config.TrainTimingMultiplier);
         }
     }
 
-    public float GetSpeed() {
+    public float GetSpeed()
+    {
         return Speed;
     }
 }

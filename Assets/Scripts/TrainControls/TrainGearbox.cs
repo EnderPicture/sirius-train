@@ -22,10 +22,13 @@ public class TrainGearbox : Module
 
     float LeverRotation;
 
-    int Gear = 0;
+
+
+    int Gear;
     // Start is called before the first frame update
     new void Start()
     {
+        Gear = D;
         StateText = transform.Find("Panel").Find("StateText").GetComponent<TextMeshPro>();
 
         Lever = transform.Find("Lever");
@@ -69,7 +72,8 @@ public class TrainGearbox : Module
         }
     }
 
-    public float GetGear() {
+    public float GetGear()
+    {
         return Gear;
     }
 
@@ -77,13 +81,26 @@ public class TrainGearbox : Module
     {
         float rotation = 0;
         if (Gear == 0)
+        {
+            StateText.SetText("P");
             rotation = Mathf.Lerp(20, -20, 1);
+
+        }
         else if (Gear == 1)
+        {
+            StateText.SetText("R");
             rotation = Mathf.Lerp(20, -20, .5f);
+
+        }
         else if (Gear == 2)
+        {
+            StateText.SetText("D");
             rotation = Mathf.Lerp(20, -20, 0);
+
+        }
 
         LeverRotation = Mathf.Lerp(LeverRotation, rotation, Time.deltaTime * 10);
         Lever.transform.localRotation = Quaternion.Euler(0, 0, LeverRotation);
+
     }
 }
