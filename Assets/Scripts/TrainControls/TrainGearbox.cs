@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class TrainGearbox : Module
 {
+    public readonly int P = 0;
+    public readonly int R = 1;
+    public readonly int D = 2;
     TextMeshPro StateText;
 
     bool LastPushed = false;
@@ -66,15 +69,19 @@ public class TrainGearbox : Module
         }
     }
 
+    public float GetGear() {
+        return Gear;
+    }
+
     void LeverControl()
     {
         float rotation = 0;
         if (Gear == 0)
-            rotation = Mathf.Lerp(70, -70, 1);
+            rotation = Mathf.Lerp(20, -20, 1);
         else if (Gear == 1)
-            rotation = Mathf.Lerp(70, -70, .5f);
+            rotation = Mathf.Lerp(20, -20, .5f);
         else if (Gear == 2)
-            rotation = Mathf.Lerp(70, -70, 0);
+            rotation = Mathf.Lerp(20, -20, 0);
 
         LeverRotation = Mathf.Lerp(LeverRotation, rotation, Time.deltaTime * 10);
         Lever.transform.localRotation = Quaternion.Euler(0, 0, LeverRotation);

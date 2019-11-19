@@ -18,6 +18,7 @@ public class Train : MonoBehaviour
     public TrainTemperature Temperature;
     public TrainPressure Pressure;
     public CoalSpawn Coal;
+    public TrainGearbox Gearbox;
 
 
     public float FuelAmount = 100;
@@ -120,8 +121,11 @@ public class Train : MonoBehaviour
 
 
     void WinCheck()
-    {
-        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone)
+    {   
+        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone) {
+            // HINT THAT THEY SHOULD USE THE PARKING BREAK
+        }
+        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone && Gearbox.GetGear() == Gearbox.P)
         {
             if (NextStationID + 1 == Stations.Count)
             {
@@ -158,6 +162,8 @@ public class Train : MonoBehaviour
             Brake.enabled = true;
             Temperature.enabled = true;
             Pressure.enabled = true;
+            Coal.enabled = true;
+            Gearbox.enabled = true;
             // speed calc
             float acc = 0;
 
@@ -203,7 +209,12 @@ public class Train : MonoBehaviour
             }
 
             Vector3 position = transform.position;
-            position.x += Speed * Time.deltaTime;
+
+            if (Gearbox.GetGear() == Gearbox.R) {
+                position.x -= Speed * Time.deltaTime;
+            } else if (Gearbox.GetGear() == Gearbox.D) {
+                position.x += Speed * Time.deltaTime;
+            }
             transform.position = position;
 
             SpeedText.SetText("Speed\n" + Mathf.Round(Speed * 10) + " KM/H");
@@ -217,6 +228,8 @@ public class Train : MonoBehaviour
             Brake.enabled = false;
             Temperature.enabled = false;
             Pressure.enabled = false;
+            Coal.enabled = false;
+            Gearbox.enabled = false;
         }
 
     }
