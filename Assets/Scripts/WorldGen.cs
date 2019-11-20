@@ -13,6 +13,7 @@ public class WorldGen : MonoBehaviour
 
     Chunk[] Chunks = new Chunk[3];
     public Transform Locator;
+    public GameObject Track;
 
     public Color[] scheme1 = {
         new Color(0.213726f,0.117647f,0.072549f),
@@ -22,7 +23,7 @@ public class WorldGen : MonoBehaviour
         new Color(0.482353f,0.239216f,0.070588f),
     };
 
-    public GameObject Track;
+
 
 
     private void Start()
@@ -116,6 +117,7 @@ public class WorldGen : MonoBehaviour
         float[] HillsFrontDepth = { -.5f, -1.5f };
 
 
+        GameObject TracksLayer;
 
 
         float MaxBrightness = 100;
@@ -130,6 +132,7 @@ public class WorldGen : MonoBehaviour
 
         public Chunk(GameObject parent, float width, Color[] color, GameObject track)
         {
+            Track = track;
             Width = width;
 
             ColorScheme = color;
@@ -145,7 +148,7 @@ public class WorldGen : MonoBehaviour
             TreesLayer.transform.parent = Con.transform;
             TreesLayer.transform.position = new Vector3(0, 1.3f, TreesDepth[0]);
             TreesLayer.name = "Trees";
-            
+
             MountainsLayer = new GameObject();
             MountainsLayer.transform.parent = Con.transform;
             MountainsLayer.transform.position = new Vector3(0, 0, MountainsDepth[0]);
@@ -161,10 +164,26 @@ public class WorldGen : MonoBehaviour
             HillsFrontLayer.transform.position = new Vector3(0, -4.75f, HillsFrontDepth[0]);
             HillsFrontLayer.name = "HillsFront";
 
-            Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, ColorScheme[3], new Vector3(3,1,1), "Background");
-            Trees = LoadSprites("Trees", 5, TreesLayer, ColorScheme[2], new Vector3(.5f,.5f,.5f), "Background");
-            Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, ColorScheme[1], new Vector3(3,1,1), "Background");
-            HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, ColorScheme[0], new Vector3(3,1,1), "Foreground");
+            Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, ColorScheme[3], new Vector3(3, 1, 1), "Background");
+            Trees = LoadSprites("Trees", 5, TreesLayer, ColorScheme[2], new Vector3(.5f, .5f, .5f), "Background");
+            Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, ColorScheme[1], new Vector3(3, 1, 1), "Background");
+            HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, ColorScheme[0], new Vector3(3, 1, 1), "Foreground");
+
+
+            TracksLayer = new GameObject();
+            TracksLayer.transform.parent = Con.transform;
+            TracksLayer.transform.position = new Vector3(0, -1.677f, 0);
+            TracksLayer.name = "Tracks";
+
+            for (int c = 0; c < 30; c++)
+            {
+                GameObject newTrack = Object.Instantiate(Track);
+                newTrack.transform.parent = TracksLayer.transform;
+                newTrack.transform.localScale = new Vector3(.2f,.2f,.2f);
+                SpriteRenderer spriteRenderer = newTrack.GetComponent<SpriteRenderer>();
+                spriteRenderer.sortingOrder = 20;
+                newTrack.transform.localPosition = new Vector3(c*4,0,0);
+            }
 
             setPosIndex(0);
         }
