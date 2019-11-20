@@ -167,7 +167,7 @@ public class WorldGen : MonoBehaviour
                 if (random > .3f)
                 {
                     Vector3 treePos = tree.transform.localPosition;
-                    treePos.y = Mathf.PerlinNoise(tree.transform.position.x,0)*5;
+                    treePos.y = Mathf.PerlinNoise(tree.transform.position.x,0);
                     treePos.z = Mathf.Round(Mathf.PerlinNoise(tree.transform.position.x,1000)*5);
                     tree.transform.localPosition = treePos;
 
