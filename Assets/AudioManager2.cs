@@ -135,7 +135,7 @@ public class AudioManager2 : MonoBehaviour
 			//play animation
 			anim.Play("dieselSound");
 
-			Debug.Log("source1.pitch" + source1.pitch);
+				Debug.Log("source1.pitch" + source1.pitch);
 			Debug.Log("source2.pitch" + source2.pitch);
 			Debug.Log("source1.volume " + source1.volume);
 			Debug.Log("source2.volume " + source2.volume);
