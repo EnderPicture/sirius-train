@@ -66,9 +66,10 @@ public class TrainGearbox : Module
                     }
                     Gear = Mathf.Clamp(Gear, 0, 2);
                 }
-                if (!Train.IsInStation())
+                if (!Train.IsInStation() && (Gear == R || Gear == P))
                 {
-                    
+                    Gear = D;
+                    // TODO say that something is wrong
                 }
 
             }

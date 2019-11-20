@@ -14,12 +14,12 @@ public class WorldGen : MonoBehaviour
     Chunk[] Chunks = new Chunk[3];
     public Transform Locator;
 
-    Color[] scheme1 = {
-        new Color(0.427451f,0.235294f,0.145098f),
-        new Color(0.694118f,0.529412f,0.372549f),
-        new Color(0.819608f,0.572549f,0.329412f),
-        new Color(0.960784f,0.584314f,0.231373f),
-        new Color(0.964706f,0.478431f,0.141176f),
+    public Color[] scheme1 = {
+        new Color(0.213726f,0.117647f,0.072549f),
+        new Color(0.347059f,0.264706f,0.186275f),
+        new Color(0.409804f,0.286275f,0.164706f),
+        new Color(0.480392f,0.292157f,0.115687f),
+        new Color(0.482353f,0.239216f,0.070588f),
     };
 
 
@@ -95,25 +95,39 @@ public class WorldGen : MonoBehaviour
 
     class Chunk
     {
-        GameObject[] Trees;
-
         GameObject Con;
-        GameObject TreesLayer;
 
-        float TreesDepth = 10;
+        GameObject[] Trees;
+        GameObject TreesLayer;
+        float[] TreesDepth = { 20, 40 };
+
+        GameObject[] Mountains;
+        GameObject MountainsLayer;
+        float[] MountainsDepth = { 50, 100 };
+
+        GameObject[] Hills;
+        GameObject HillsLayer;
+        float[] HillsDepth = { 10, 19 };
+
+        GameObject[] HillsFront;
+        GameObject HillsFrontLayer;
+        float[] HillsFrontDepth = { -.5f, -1.5f };
+
+
+
 
         float MaxBrightness = 100;
 
         int CurrentIndex = 0;
 
-        Color Color;
+        Color[] ColorScheme;
 
         float Width;
         public Chunk(GameObject parent, float width, Color[] color)
         {
             Width = width;
 
-            Color = color[0];
+            ColorScheme = color;
 
             // main container for the whole chunk
             Con = new GameObject();
@@ -124,32 +138,28 @@ public class WorldGen : MonoBehaviour
             // trees layer inside the chunk
             TreesLayer = new GameObject();
             TreesLayer.transform.parent = Con.transform;
-            TreesLayer.transform.position = new Vector3(0, 0, TreesDepth);
+            TreesLayer.transform.position = new Vector3(0, 1.3f, TreesDepth[0]);
             TreesLayer.name = "Trees";
+            
+            MountainsLayer = new GameObject();
+            MountainsLayer.transform.parent = Con.transform;
+            MountainsLayer.transform.position = new Vector3(0, 0, MountainsDepth[0]);
+            MountainsLayer.name = "Mountains";
 
-            Object[] loadedTrees = Resources.LoadAll("Trees", typeof(GameObject));
-            int duplicateAmount = 5;
-            Trees = new GameObject[loadedTrees.Length * duplicateAmount];
-            for (int i = 0; i < loadedTrees.Length; i++)
-            {
-                for (int j = 0; j < duplicateAmount; j++)
-                {
-                    GameObject newTree = Object.Instantiate((GameObject)loadedTrees[i]);
+            HillsLayer = new GameObject();
+            HillsLayer.transform.parent = Con.transform;
+            HillsLayer.transform.position = new Vector3(0, -3.69f, HillsDepth[0]);
+            HillsLayer.name = "Hills";
 
-                    // set up tree
-                    newTree.transform.parent = TreesLayer.transform;
-                    newTree.transform.localPosition = new Vector3(0, 0, 0);
-                    newTree.transform.localScale = new Vector3(.5f, .5f, .5f);
-                    Vector3 position = newTree.transform.position;
-                    position.x = Random.Range(0f, Width);
-                    newTree.transform.position = position;
-                    SpriteRenderer spriteRenderer = newTree.GetComponent<SpriteRenderer>();
-                    spriteRenderer.sortingOrder = 5;
-                    spriteRenderer.sortingLayerName = "Background";
-                    spriteRenderer.color = Color;
-                    Trees[i * duplicateAmount + j] = newTree;
-                }
-            }
+            HillsFrontLayer = new GameObject();
+            HillsFrontLayer.transform.parent = Con.transform;
+            HillsFrontLayer.transform.position = new Vector3(0, -4.75f, HillsFrontDepth[0]);
+            HillsFrontLayer.name = "HillsFront";
+
+            Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, ColorScheme[3], new Vector3(3,1,1), "Background");
+            Trees = LoadSprites("Trees", 5, TreesLayer, ColorScheme[2], new Vector3(.5f,.5f,.5f), "Background");
+            Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, ColorScheme[1], new Vector3(3,1,1), "Background");
+            HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, ColorScheme[0], new Vector3(3,1,1), "Foreground");
 
             setPosIndex(0);
         }
@@ -161,26 +171,64 @@ public class WorldGen : MonoBehaviour
             position.x = CurrentIndex * Width;
             Con.transform.position = position;
 
-            foreach (GameObject tree in Trees)
+            RandomSpriteMix(Mountains, MountainsDepth, 3, 0);
+            RandomSpriteMix(Trees, TreesDepth, 0, .3f);
+            RandomSpriteMix(Hills, HillsDepth, 0, 0);
+            RandomSpriteMix(HillsFront, HillsFrontDepth, 0, 0);
+        }
+
+        void RandomSpriteMix(GameObject[] sprites, float[] depth, float HeightDeltaMultiplier, float randomChance)
+        {
+            foreach (GameObject sprite in sprites)
             {
-                float random = Random.Range(0f, Mathf.PerlinNoise(tree.transform.position.x, 0));
-                if (random > .3f)
+                float random = Random.Range(0f, Mathf.PerlinNoise(sprite.transform.position.x, 0));
+                if (random > randomChance)
                 {
-                    Vector3 treePos = tree.transform.localPosition;
-                    treePos.y = Mathf.PerlinNoise(tree.transform.position.x,0);
-                    treePos.z = Mathf.Round(Mathf.PerlinNoise(tree.transform.position.x,1000)*5);
-                    tree.transform.localPosition = treePos;
+                    Vector3 spritePos = sprite.transform.localPosition;
+                    spritePos.y = Mathf.PerlinNoise(sprite.transform.position.x, 0) * HeightDeltaMultiplier;
+                    spritePos.z = Mathf.Round(Mathf.PerlinNoise(sprite.transform.position.x, 1000) * (depth[1] - depth[0]));
+                    sprite.transform.localPosition = spritePos;
 
-                    SpriteRenderer spriteRenderer = tree.GetComponent<SpriteRenderer>();
-                    spriteRenderer.sortingOrder = -(int)treePos.z;
-
-
-                    tree.SetActive(true);
-                } else {
-                    tree.SetActive(false);
+                    SpriteRenderer spriteRenderer = sprite.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sortingOrder = -(int)sprite.transform.position.z;
+                    sprite.SetActive(true);
+                }
+                else
+                {
+                    sprite.SetActive(false);
                 }
             }
+
         }
+
+
+        public GameObject[] LoadSprites(string path, int duplicateAmount, GameObject parent, Color color, Vector3 scale, string layer)
+        {
+            Object[] loadedSprites = Resources.LoadAll(path, typeof(GameObject));
+
+            GameObject[] sprites = new GameObject[loadedSprites.Length * duplicateAmount];
+            for (int i = 0; i < loadedSprites.Length; i++)
+            {
+                for (int j = 0; j < duplicateAmount; j++)
+                {
+                    GameObject newTree = Object.Instantiate((GameObject)loadedSprites[i]);
+
+                    // set up sprites
+                    newTree.transform.parent = parent.transform;
+                    newTree.transform.localPosition = new Vector3(0, 0, 0);
+                    newTree.transform.localScale = scale;
+                    Vector3 position = newTree.transform.position;
+                    position.x = Random.Range(0f, Width);
+                    newTree.transform.position = position;
+                    SpriteRenderer spriteRenderer = newTree.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sortingLayerName = layer;
+                    spriteRenderer.color = color;
+                    sprites[i * duplicateAmount + j] = newTree;
+                }
+            }
+            return sprites;
+        }
+
 
         public int GetCurrentIndex()
         {
