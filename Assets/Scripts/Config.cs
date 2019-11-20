@@ -28,7 +28,7 @@ public class Config : MonoBehaviour
     // responsible for timing and when should the train arrive at the next station
     // smaller the number shorter the time the plyer will be given to complete.
     public static readonly float TrainTimingMultiplierStarting = 1; // the first one, no station to station
-    public static readonly float TrainTimingMultiplier = .5f; // long hops from station to station
+    public static readonly float TrainTimingMultiplier = .25f; // long hops from station to station
 
 
     // DO NOT CHANGE VALUES UNDER HERE ---------------------------------------------

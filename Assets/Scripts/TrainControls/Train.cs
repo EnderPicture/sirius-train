@@ -25,6 +25,7 @@ public class Train : MonoBehaviour
 
 
     public float Speed = 0;
+    public float VisualSpeed = 0;
     public float DragCoefficient = 013f;
 
 
@@ -44,6 +45,7 @@ public class Train : MonoBehaviour
     public TextMeshPro SpeedText;
     public TextMeshPro StationText;
     public TextMeshPro TimeText;
+    public TextMeshPro TimeStatusText;
 
     public bool Playing = false;
 
@@ -55,6 +57,7 @@ public class Train : MonoBehaviour
     float MaxAcceleration;
     float TimeStarted;
     List<float> ParkingJobScore = new List<float>();
+    List<float> TimingScore = new List<float>();
 
     bool GameDone = false;
 
@@ -62,6 +65,8 @@ public class Train : MonoBehaviour
 
     public TextMeshPro SpeedLimitText;
     public TextMeshPro FuelText;
+
+    float TimePenalty = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -150,6 +155,15 @@ public class Train : MonoBehaviour
             {
                 Menu.ShowMidWin();
                 ParkingJobScore.Add(DistFromStation);
+                TimingScore.Add(GetTimeRemaining());
+                if (GetTimeRemaining() < 0)
+                {
+                    TimePenalty = -GetTimeRemaining();
+                }
+                else
+                {
+                    TimePenalty = 0;
+                }
                 NextStation();
             }
             Playing = false;
@@ -161,7 +175,8 @@ public class Train : MonoBehaviour
         }
     }
 
-    public bool IsInStation() {
+    public bool IsInStation()
+    {
         return nextStation.GetTrainInStart() && nextStation.GetTrainInEnd();
     }
 
@@ -243,29 +258,76 @@ public class Train : MonoBehaviour
             }
             transform.position = position;
 
-            SpeedText.SetText((Speed * 10).ToString("F2"));
-
-            TimeText.SetText((NextStationTime - Time.realtimeSinceStartup) + "");
-
-            if (Mode == Config.DIESEL) {
-                FuelText.SetText(FuelAmount+"");
-            } else if (Mode == Config.STEAM) {
-                FuelText.SetText(Coal.GetFuelAmount()+"");
+            if (Mode == Config.BULLET)
+            {
+                VisualSpeed = Speed * 20;
             }
+            else if (Mode == Config.BULLET)
+            {
+                VisualSpeed = Speed * 15;
+            }
+            else if (Mode == Config.BULLET)
+            {
+                VisualSpeed = Speed * 10;
+            }
+
+            SpeedText.SetText((VisualSpeed).ToString("F2"));
+
+
+            if (Mode == Config.DIESEL)
+            {
+                FuelText.SetText(FuelAmount + "");
+            }
+            else if (Mode == Config.STEAM)
+            {
+                FuelText.SetText(Coal.GetFuelAmount() + "");
+            }
+            Timing();
         }
         else
         {
-            TimeText.SetText("Ready To Go");
-            Throttle.enabled = false;
-            Brake.enabled = false;
-            Temperature.enabled = false;
-            Pressure.enabled = false;
-            Coal.enabled = false;
-            Gearbox.enabled = false;
+            pause();
         }
 
     }
 
+    void pause()
+    {
+        TimeText.SetText("00.00");
+        TimeStatusText.SetText("ok");
+        Throttle.enabled = false;
+        Brake.enabled = false;
+        Temperature.enabled = false;
+        Pressure.enabled = false;
+        Coal.enabled = false;
+        Gearbox.enabled = false;
+    }
+
+    void Timing()
+    {
+        TimeText.SetText(GetTimeRemaining().ToString("F2") + "");
+        if (GetTimeRemaining() > 50)
+        {
+            TimeStatusText.SetText("Too Early");
+        }
+        else if (GetTimeRemaining() > 20)
+        {
+            TimeStatusText.SetText("Early");
+        }
+        else if (GetTimeRemaining() > 0)
+        {
+            TimeStatusText.SetText("Perfect");
+        }
+        else
+        {
+            TimeStatusText.SetText("Late");
+        }
+    }
+
+    public float GetTimeRemaining()
+    {
+        return NextStationTime - Time.realtimeSinceStartup;
+    }
     // get and set stuff
 
 
@@ -297,6 +359,12 @@ public class Train : MonoBehaviour
         {
             NextStationTime = Time.realtimeSinceStartup + (DistFromStationInit * Config.TrainTimingMultiplier);
         }
+        NextStationTime -= TimePenalty;
+    }
+
+    public int GetMode()
+    {
+        return Mode;
     }
 
     public float GetSpeed()
