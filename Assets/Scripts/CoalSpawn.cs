@@ -8,7 +8,7 @@ public class CoalSpawn : MonoBehaviour
 
     public GameObject coal;
 
-    int fuelAmount = 100;
+    int FuelAmount = 100;
 
     int itemCount = 0;
 
@@ -21,12 +21,12 @@ public class CoalSpawn : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (itemCount == 0 && fuelAmount > 0)
+        if (itemCount == 0 && FuelAmount > 0)
         {
             GameObject newCoal = Instantiate(coal, transform.position, Quaternion.identity);
             newCoal.GetComponent<Coal>().train = train;
             newCoal.transform.parent = transform;
-            fuelAmount --;
+            FuelAmount --;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -44,6 +44,9 @@ public class CoalSpawn : MonoBehaviour
         }
     }
     public void SetFuelAmount(int amount) {
-        fuelAmount = amount;
+        FuelAmount = amount;
+    }
+    public int GetFuelAmount() {
+        return FuelAmount;
     }
 }

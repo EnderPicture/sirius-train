@@ -61,6 +61,7 @@ public class Train : MonoBehaviour
     float SpeedLimit;
 
     public TextMeshPro SpeedLimitText;
+    public TextMeshPro FuelText;
 
     // Start is called before the first frame update
     void Start()
@@ -189,7 +190,7 @@ public class Train : MonoBehaviour
             }
             else if (Mode == Config.DIESEL)
             {
-                FuelAmount -= Throttle.GetThrottleValue();
+                FuelAmount -= Throttle.GetThrottleValue() * Time.deltaTime;
                 if (FuelAmount < 0)
                 {
                     FuelAmount = 0;
@@ -243,6 +244,12 @@ public class Train : MonoBehaviour
             SpeedText.SetText("Speed\n" + Mathf.Round(Speed * 10) + " KM/H");
 
             TimeText.SetText((NextStationTime - Time.realtimeSinceStartup) + "");
+
+            if (Mode == Config.DIESEL) {
+                FuelText.SetText(FuelAmount+"");
+            } else if (Mode == Config.STEAM) {
+                FuelText.SetText(Coal.GetFuelAmount()+"");
+            }
         }
         else
         {
