@@ -99,6 +99,17 @@ public class Train : MonoBehaviour
     public void SetupStations(List<EndTrainStation> stations)
     {
         Stations = stations;
+
+        float maxDis = 0;
+        foreach (EndTrainStation station in Stations)
+        {
+            float dis = distBetweenStation(station);
+            if (dis > maxDis)
+            {
+                maxDis = dis;
+            }
+        }
+
         NextStation();
     }
 
@@ -114,11 +125,16 @@ public class Train : MonoBehaviour
         if (Stations[NextStationID] != null)
         {
             nextStation = Stations[NextStationID];
-            float dist = nextStation.transform.position.x - transform.position.x;
+            float dist = distBetweenStation(nextStation);
             DistFromStationInit = dist;
             DistFromStation = dist;
             StationText.SetText("Station " + (NextStationID + 1) + "/" + Stations.Count);
         }
+    }
+
+    float distBetweenStation(EndTrainStation station)
+    {
+        return station.transform.position.x - transform.position.x;
     }
 
     void StationCheck()
@@ -258,30 +274,19 @@ public class Train : MonoBehaviour
             }
             transform.position = position;
 
-            if (Mode == Config.BULLET)
-            {
-                VisualSpeed = Speed * 20;
-            }
-            else if (Mode == Config.BULLET)
-            {
-                VisualSpeed = Speed * 15;
-            }
-            else if (Mode == Config.BULLET)
-            {
-                VisualSpeed = Speed * 10;
-            }
 
-            SpeedText.SetText((VisualSpeed).ToString("F2"));
 
 
             if (Mode == Config.DIESEL)
             {
-                FuelText.SetText(FuelAmount + "");
+                FuelText.SetText(FuelAmount.ToString("F2") + "");
             }
             else if (Mode == Config.STEAM)
             {
                 FuelText.SetText(Coal.GetFuelAmount() + "");
             }
+
+            ShowSpeed(Speed);
             Timing();
         }
         else
@@ -289,6 +294,24 @@ public class Train : MonoBehaviour
             pause();
         }
 
+    }
+
+    void ShowSpeed(float speed)
+    {
+        if (Mode == Config.BULLET)
+        {
+            VisualSpeed = speed * 20;
+        }
+        else if (Mode == Config.DIESEL)
+        {
+            VisualSpeed = speed * 15;
+        }
+        else if (Mode == Config.STEAM)
+        {
+            VisualSpeed = speed * 10;
+        }
+
+        SpeedText.SetText((VisualSpeed).ToString("F2"));
     }
 
     void pause()
