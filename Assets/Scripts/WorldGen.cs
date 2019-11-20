@@ -22,6 +22,8 @@ public class WorldGen : MonoBehaviour
         new Color(0.482353f,0.239216f,0.070588f),
     };
 
+    public GameObject Track;
+
 
     private void Start()
     {
@@ -30,7 +32,7 @@ public class WorldGen : MonoBehaviour
         Terrain.name = "Terrain";
         for (int i = 0; i < Chunks.Length; i++)
         {
-            Chunks[i] = new Chunk(Terrain, ChunkWidth, scheme1);
+            Chunks[i] = new Chunk(Terrain, ChunkWidth, scheme1, Track);
         }
     }
 
@@ -123,7 +125,10 @@ public class WorldGen : MonoBehaviour
         Color[] ColorScheme;
 
         float Width;
-        public Chunk(GameObject parent, float width, Color[] color)
+
+        GameObject Track;
+
+        public Chunk(GameObject parent, float width, Color[] color, GameObject track)
         {
             Width = width;
 

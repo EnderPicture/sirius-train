@@ -112,4 +112,8 @@ public class ClipBoard : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+    public void LoadScene(string scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
 }
