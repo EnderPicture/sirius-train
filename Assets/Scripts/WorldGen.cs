@@ -23,18 +23,20 @@ public class WorldGen : MonoBehaviour
         new Color(0.482353f,0.239216f,0.070588f),
     };
 
-
+    GameManager Manager;
 
 
     private void Start()
     {
+        Manager = GetComponent<GameManager>();
         GameObject Terrain = new GameObject();
         Terrain.transform.parent = transform;
         Terrain.name = "Terrain";
         for (int i = 0; i < Chunks.Length; i++)
         {
-            Chunks[i] = new Chunk(Terrain, ChunkWidth, scheme1, Track);
+            Chunks[i] = new Chunk(Terrain, ChunkWidth, scheme1, Track, Manager.level);
         }
+        
     }
 
     private void Update()
@@ -130,7 +132,7 @@ public class WorldGen : MonoBehaviour
 
         GameObject Track;
 
-        public Chunk(GameObject parent, float width, Color[] color, GameObject track)
+        public Chunk(GameObject parent, float width, Color[] color, GameObject track, int mode)
         {
             Track = track;
             Width = width;
@@ -172,17 +174,28 @@ public class WorldGen : MonoBehaviour
 
             TracksLayer = new GameObject();
             TracksLayer.transform.parent = Con.transform;
-            TracksLayer.transform.position = new Vector3(0, -1.677f, 0);
+            if (mode == Config.BULLET)
+            {
+                TracksLayer.transform.position = new Vector3(0, -1.5849f, 0);
+            }
+            else if (mode == Config.DIESEL)
+            {
+                TracksLayer.transform.position = new Vector3(0, -1.6183f, 0);
+            }
+            else if (mode == Config.STEAM)
+            {
+                TracksLayer.transform.position = new Vector3(0, -1.677f, 0);
+            }
             TracksLayer.name = "Tracks";
 
             for (int c = 0; c < 30; c++)
             {
                 GameObject newTrack = Object.Instantiate(Track);
                 newTrack.transform.parent = TracksLayer.transform;
-                newTrack.transform.localScale = new Vector3(.2f,.2f,.2f);
+                newTrack.transform.localScale = new Vector3(.2f, .2f, .2f);
                 SpriteRenderer spriteRenderer = newTrack.GetComponent<SpriteRenderer>();
                 spriteRenderer.sortingOrder = 20;
-                newTrack.transform.localPosition = new Vector3(c*4,0,0);
+                newTrack.transform.localPosition = new Vector3(c * 4, 0, 0);
             }
 
             setPosIndex(0);
