@@ -66,7 +66,7 @@ public class Train : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AudioMan = GameObject.Find("AudioManager2").GetComponent<AudioManager2>();
+        AudioMan = GameObject.Find("AudioManager2 Variant").GetComponent<AudioManager2>();
         AudioMan.Play("ambient", 0);
 
         switch (Mode)
@@ -171,6 +171,8 @@ public class Train : MonoBehaviour
         StationCheck();
         WinCheck();
 
+        AudioMan.PlayWheelLoop(Speed);
+
         if (Playing)
         {
 
@@ -241,7 +243,7 @@ public class Train : MonoBehaviour
             }
             transform.position = position;
 
-            SpeedText.SetText("Speed\n" + Mathf.Round(Speed * 10) + " KM/H");
+            SpeedText.SetText((Speed * 10).ToString("F2"));
 
             TimeText.SetText((NextStationTime - Time.realtimeSinceStartup) + "");
 

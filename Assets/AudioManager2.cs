@@ -25,7 +25,7 @@ public class AudioManager2 : MonoBehaviour
 			//check to make sure it's not empty
 			if (pressureSources != null) {
 				if(number > pressureSources.Length) {
-					Debug.Log("Error: number to play > number of sources");
+					// Debug.Log("Error: number to play > number of sources");
 				}
 				//check to see if it's already playing
 				if (!pressureSources[number].isPlaying) {
@@ -40,7 +40,7 @@ public class AudioManager2 : MonoBehaviour
 				}
 				
 			} else {
-				Debug.Log("pressureSources = null!");
+				// Debug.Log("pressureSources = null!");
 			}
 		}
 
@@ -48,7 +48,7 @@ public class AudioManager2 : MonoBehaviour
 			AudioSource[] trainSources = this.transform.Find("aTrainManager").GetComponents<AudioSource>();
 			if (trainSources != null) {
 				if(number > trainSources.Length) {
-					Debug.Log("Error: number to play > number of sources");
+					// Debug.Log("Error: number to play > number of sources");
 				}
 				if (!trainSources[number].isPlaying) {
 					trainSources[number].volume = 1f;
@@ -61,7 +61,7 @@ public class AudioManager2 : MonoBehaviour
 				}
 				
 			} else {
-				Debug.Log("trainSources = null!");
+				// Debug.Log("trainSources = null!");
 			}
 		} 
 
@@ -69,7 +69,7 @@ public class AudioManager2 : MonoBehaviour
 			AudioSource[] playerSources = this.transform.Find("aPlayerManager").GetComponents<AudioSource>();
 			if (playerSources != null) {
 				if(number > playerSources.Length) {
-					Debug.Log("Error: number to play > number of sources");
+					// Debug.Log("Error: number to play > number of sources");
 				}
 				if (!playerSources[number].isPlaying) {
 					playerSources[number].volume = 1f;
@@ -82,7 +82,7 @@ public class AudioManager2 : MonoBehaviour
 				}
 		
 			} else {
-				Debug.Log("playerSources = null!");
+				// Debug.Log("playerSources = null!");
 			}
 		}
 
@@ -90,7 +90,7 @@ public class AudioManager2 : MonoBehaviour
 			AudioSource[] ambientSources = this.transform.Find("aAmbientManager").GetComponents<AudioSource>();
 			if (ambientSources != null) {
 				if (number > ambientSources.Length) {
-					Debug.Log("Error: number to play > number of sources");
+					// Debug.Log("Error: number to play > number of sources");
 				}
 				if (!ambientSources[number].isPlaying) {
 					ambientSources[number].volume = 1f;
@@ -104,7 +104,7 @@ public class AudioManager2 : MonoBehaviour
 					//ambientSources[number].Stop();
 				}
 			} else {
-				Debug.Log("ambientSources = null!");
+				// Debug.Log("ambientSources = null!");
 			}
 		}
 
@@ -114,15 +114,15 @@ public class AudioManager2 : MonoBehaviour
 		
 		trainSpeed = speed;
 		anim.speed = speed;
-		Debug.Log(speed);
+		// Debug.Log(speed);
 
 		//if level 3 (steam train)
 		if(level == 3) {
 			//set animation volume and pitch
-			Debug.Log("source1.pitch" + source1.pitch);
-			Debug.Log("source2.pitch" + source2.pitch);
-			Debug.Log("source1.volume " + source1.volume);
-			Debug.Log("source2.volume " + source2.volume);
+			// Debug.Log("source1.pitch" + source1.pitch);
+			// Debug.Log("source2.pitch" + source2.pitch);
+			// Debug.Log("source1.volume " + source1.volume);
+			// Debug.Log("source2.volume " + source2.volume);
 			//play animation
 			anim.Play("sound");
 		}
@@ -130,15 +130,15 @@ public class AudioManager2 : MonoBehaviour
 		//else if level 2 (diesel train)
 		if (level == 2) {
 			//set animation volume and pitch
-			Debug.Log("source3.pitch " + source3.pitch);
-			Debug.Log("source3.volume " + source3.volume);
+			// Debug.Log("source3.pitch " + source3.pitch);
+			// Debug.Log("source3.volume " + source3.volume);
 			//play animation
 			anim.Play("dieselSound");
 
-				Debug.Log("source1.pitch" + source1.pitch);
-			Debug.Log("source2.pitch" + source2.pitch);
-			Debug.Log("source1.volume " + source1.volume);
-			Debug.Log("source2.volume " + source2.volume);
+				// Debug.Log("source1.pitch" + source1.pitch);
+			// Debug.Log("source2.pitch" + source2.pitch);
+			// Debug.Log("source1.volume " + source1.volume);
+			// Debug.Log("source2.volume " + source2.volume);
 			//play animation
 			anim.Play("sound");
 		}
@@ -147,8 +147,8 @@ public class AudioManager2 : MonoBehaviour
 
 		if (level == 1) {
 			//set animation volume and pitch
-			Debug.Log("source4.pitch " + source4.pitch);
-			Debug.Log("source4.volume " + source4.volume);
+			// Debug.Log("source4.pitch " + source4.pitch);
+			// Debug.Log("source4.volume " + source4.volume);
 			//play animation
 			anim.Play("electricSound");
 		}
@@ -262,7 +262,7 @@ public class AudioManager2 : MonoBehaviour
 			AudioSource[] playerSources = this.transform.Find("aPlayerManager").GetComponents<AudioSource>();
 			StartCoroutine(FadeAudioSource.StartFade(playerSources[number], durationToFade, 0));				
 		} else {
-			Debug.Log("Something happened in fade() of AudioManager2");
+			// Debug.Log("Something happened in fade() of AudioManager2");
 		}
 	
 	}
@@ -299,10 +299,10 @@ public class AudioManager2 : MonoBehaviour
 		
 		//Debug.Log(trainSpeed);
 		if(Input.GetKeyDown("i")) {
-			Debug.Log("speed up");
+			// Debug.Log("speed up");
 			trainSpeed+=0.2f;
 		} else if (Input.GetKeyDown("o")){
-			Debug.Log("speed down");
+			// Debug.Log("speed down");
 			trainSpeed-=0.2f;
 		}
 		
