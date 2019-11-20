@@ -11,17 +11,41 @@ public class Player : MonoBehaviour
 
     Animator animator;
 
+    int Mode;
+
+    string WalkName;
+    string IdleName;
 
     Rigidbody rb;
 
     GameObject ObjectInHand = null;
 
     // Start is called before the first frame update
+    public void SetMode(int mode)
+    {
+        Mode = mode;
+        if (Mode == Config.BULLET)
+        {
+            WalkName = "BWalk";
+            IdleName = "BIdle";
+        }
+        else if (Mode == Config.DIESEL)
+        {
+            WalkName = "DWalk";
+            IdleName = "DIdle";
+        }
+        else if (Mode == Config.STEAM)
+        {
+            WalkName = "SWalk";
+            IdleName = "SIdle";
+        }
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = transform.Find("Graphics").GetComponent<Animator>(); ;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -35,30 +59,17 @@ public class Player : MonoBehaviour
             rb.velocity = velocity;
             if (velocity.x > 0)
             {
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-                {
-                    animator.Play("Walk");
-                }
-                Vector3 scale = animator.gameObject.transform.localScale;
-                scale.x = 1;
-                animator.gameObject.transform.localScale = scale;
+                animator.Play(WalkName);
+                animator.gameObject.GetComponent<SpriteRenderer>().flipX = false;
             }
             else if (velocity.x < 0)
             {
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Walk"))
-                {
-                    animator.Play("Walk");
-                }
-                Vector3 scale = animator.gameObject.transform.localScale;
-                scale.x = -1;
-                animator.gameObject.transform.localScale = scale;
+                animator.Play(WalkName);
+                animator.gameObject.GetComponent<SpriteRenderer>().flipX = true;
             }
             else
             {
-                if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-                {
-                    animator.Play("Idle");
-                }
+                animator.Play(IdleName);
             }
         }
         else

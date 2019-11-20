@@ -129,9 +129,12 @@ public class Train : MonoBehaviour
 
     void WinCheck()
     {
-        if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone)
+        if (IsInStation())
         {
-            // HINT THAT THEY SHOULD USE THE PARKING BREAK
+            if (Speed == 0 && !GameDone)
+            {
+                // HINT THAT THEY SHOULD USE THE PARKING BREAK
+            }
         }
         if (nextStation.GetTrainInStart() && nextStation.GetTrainInEnd() && Speed == 0 && !GameDone && Gearbox.GetGear() == Gearbox.P)
         {
@@ -155,6 +158,10 @@ public class Train : MonoBehaviour
             Menu.ShowDieScreen();
             Playing = false;
         }
+    }
+
+    public bool IsInStation() {
+        return nextStation.GetTrainInStart() && nextStation.GetTrainInEnd();
     }
 
     // Update is called once per frame

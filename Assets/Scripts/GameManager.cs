@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int part = 3;
 
     public Train Train;
+    public Player Player;
 
     WorldGen Gen;
 
@@ -35,15 +36,17 @@ public class GameManager : MonoBehaviour
         if (level == Config.BULLET)
         {
             Train.SetMode(Config.BULLET);
+            Player.SetMode(Config.BULLET);
         }
         else if (level == Config.DIESEL)
         {
             Train.SetMode(Config.DIESEL);
+            Player.SetMode(Config.DIESEL);
         }
         else if (level == Config.STEAM)
         {
-            // coal level train
             Train.SetMode(Config.STEAM);
+            Player.SetMode(Config.STEAM);
             if (part == 1)
             {
                 Train.Coal.SetFuelAmount(Config.CoalToUseP1);
