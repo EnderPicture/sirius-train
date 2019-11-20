@@ -46,20 +46,26 @@ public class testScript : MonoBehaviour
 
     void playSound1()
     {
-        Debug.Log("Playing sound: " + SoundToPlay1);
+        //Debug.Log("Playing sound: " + SoundToPlay1);
         //later connect AudioManager2 to use the play sound function that can adjust the pitch
-        source1.PlayOneShot(SoundToPlay1);
+       // if (!source1.isPlaying) {
+		//	source1.Play();		
+		//}
+		source1.PlayOneShot(SoundToPlay1);
     }
 
     void playSound2()
     {
-        Debug.Log("Playing sound: " + SoundToPlay2);
+       //Debug.Log("Playing sound: " + SoundToPlay2);
         //later connect AudioManager2 to use the play sound function that can adjust the pitch
+		//if (!source2.isPlaying) {
+		//	source2.Play();
+		//}
         source2.PlayOneShot(SoundToPlay2);
     }
 
     void foo()
     {
-		Debug.Log("foo");
+		//Debug.Log("foo");
     }
 }

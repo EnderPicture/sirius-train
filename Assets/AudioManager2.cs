@@ -5,6 +5,18 @@ using UnityEngine;
 
 public class AudioManager2 : MonoBehaviour
 {
+
+	public Animator anim;
+	public Animation wheelLoop;
+
+	private float trainSpeed;
+	//AudioSource[] audioSources = Object.FindObjectsOfType(typeof(AudioSource)) as AudioSource[];
+	public AudioSource source1;
+    public AudioSource source2;
+	public AudioSource source3;
+	public AudioSource source4;
+
+	public int level = 1;
     
 	public void Play(string name, int number) {
 
@@ -98,6 +110,143 @@ public class AudioManager2 : MonoBehaviour
 
 	}
 
+	public void PlayWheelLoop(float speed) {
+		
+		trainSpeed = speed;
+		anim.speed = speed;
+		Debug.Log(speed);
+
+		//if level 3 (steam train)
+		if(level == 3) {
+			//set animation volume and pitch
+			Debug.Log("source1.pitch" + source1.pitch);
+			Debug.Log("source2.pitch" + source2.pitch);
+			Debug.Log("source1.volume " + source1.volume);
+			Debug.Log("source2.volume " + source2.volume);
+			//play animation
+			anim.Play("sound");
+		}
+		
+		//else if level 2 (diesel train)
+		if (level == 2) {
+			//set animation volume and pitch
+			Debug.Log("source3.pitch " + source3.pitch);
+			Debug.Log("source3.volume " + source3.volume);
+			//play animation
+			anim.Play("dieselSound");
+
+			Debug.Log("source1.pitch" + source1.pitch);
+			Debug.Log("source2.pitch" + source2.pitch);
+			Debug.Log("source1.volume " + source1.volume);
+			Debug.Log("source2.volume " + source2.volume);
+			//play animation
+			anim.Play("sound");
+		}
+
+		//else if level 1 (electric train)
+
+		if (level == 1) {
+			//set animation volume and pitch
+			Debug.Log("source4.pitch " + source4.pitch);
+			Debug.Log("source4.volume " + source4.volume);
+			//play animation
+			anim.Play("electricSound");
+		}
+
+	}
+
+	public void playWheel1() {
+		if (!source1.isPlaying) {
+			source1.pitch = trainSpeed*0.55f;
+			source1.volume = trainSpeed*0.75f;
+			//set maximum values on the pitch and volume
+			if (source1.pitch >= 1.4f) {
+				source1.pitch = 1.4f;
+			}
+			if (source1.pitch <= 0.6f) {
+				source1.pitch = 0.6f;
+			}
+
+			if (source1.volume <= 0.5f) {
+				source1.volume = 0.5f;
+			}
+
+			source1.Play();
+		}
+	}
+
+	public void playWheel2() {
+		if (!source2.isPlaying) {
+			source2.pitch = trainSpeed*0.55f;
+			source2.volume = trainSpeed*0.75f;
+			//set maximum values on the pitch and volume
+			if (source2.pitch >= 1.4f) {
+				source2.pitch = 1.4f;
+			}
+			if (source2.pitch <= 0.6f) {
+				source2.pitch = 0.6f;
+			}
+
+			if (source2.volume <= 0.5f) {
+				source2.volume = 0.5f;
+			}
+
+			source2.Play();
+		}
+	}
+
+	public void playDieselLoop() {
+		source3.pitch = trainSpeed*0.55f;
+		source3.volume = trainSpeed*0.75f;
+
+		if (trainSpeed <= 0.0) {
+			source3.volume = 0.0f;
+		} else if (trainSpeed > 0.0) {
+			source3.volume = trainSpeed*0.75f;
+		}
+
+		if (source3.pitch >= 1.4f) {
+			source3.pitch = 1.4f;
+		}
+		if (source3.pitch <= 0.6f) {
+			source3.pitch = 0.6f;
+		}
+
+		if (source3.volume <= 0.5f) {
+			source3.volume = 0.5f;
+		}
+		
+		if(!source3.isPlaying) {
+			source3.Play();
+		}
+	}
+
+	public void playElectricLoop() {
+		source4.pitch = trainSpeed*0.55f;
+		source4.volume = trainSpeed*0.75f;
+
+		if (source4.pitch >= 1.4f) {
+			source4.pitch = 1.4f;
+		}
+		if (source4.pitch <= 0.6f) {
+			source4.pitch = 0.6f;
+		}
+
+		if (source4.volume <= 0.5f) {
+			source4.volume = 0.5f;
+		}
+		
+		if (trainSpeed <= 0.0) {
+			source4.volume = 0.0f;
+		} else if (trainSpeed > 0.0) {
+			source4.volume = trainSpeed*0.75f;
+		}
+		
+		if(!source4.isPlaying) {
+			source4.Play();
+		}
+	}
+
 	public void fade(string name, int number, float durationToFade){
 		
 		if (name == "pressure") {
@@ -117,16 +266,45 @@ public class AudioManager2 : MonoBehaviour
 		}
 	
 	}
+
+	public void setLevel(int levelToSet) {
+		level = levelToSet;
+
+	}
+
+	public void setSpeed(float speedToSet) {
+		trainSpeed = speedToSet;
+	}
+
+	void Awake() {
+		anim = gameObject.GetComponent<Animator>();
+		//source1 = audioSources[0];
+        //source2 = audioSources[1]; 
+		source1.volume = 0.5f;
+		source2.volume = 0.5f;
+
+	}
 	
 	// Start is called before the first frame update
     void Start()
     {
-        
+        trainSpeed = 0.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        PlayWheelLoop(trainSpeed);
+
+		
+		//Debug.Log(trainSpeed);
+		if(Input.GetKeyDown("i")) {
+			Debug.Log("speed up");
+			trainSpeed+=0.2f;
+		} else if (Input.GetKeyDown("o")){
+			Debug.Log("speed down");
+			trainSpeed-=0.2f;
+		}
+		
     }
 }
