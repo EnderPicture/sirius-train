@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float SpeedMultiplier = .1f;
+    public CameraControl Camera;
 
     List<GameObject> Modules = new List<GameObject>();
     List<GameObject> Coals = new List<GameObject>();
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
     Animator animator;
 
     int Mode;
+
+    
 
     string WalkName;
     string IdleName;
@@ -51,7 +54,7 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetAxisRaw("HorizontalArrow") == 0)
+        if (Input.GetAxisRaw("HorizontalArrow") == 0 && Camera.getCameraMode() == CameraControl.MODE_CAMERA)
         {
             float input = Input.GetAxisRaw("Horizontal");
             Vector3 velocity = rb.velocity;
@@ -95,7 +98,7 @@ public class Player : MonoBehaviour
                     shortest = module;
                 }
             }
-            if (shortest != null)
+            if (shortest != null && Camera.getCameraMode() == CameraControl.MODE_CAMERA)
             {
                 shortest.GetComponent<Module>().SetActive(true);
             }

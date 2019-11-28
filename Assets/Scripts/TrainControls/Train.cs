@@ -394,4 +394,12 @@ public class Train : MonoBehaviour
     {
         return Speed;
     }
+    public float GetVisualSpeed()
+    {
+        return VisualSpeed;
+    }
+    public float GetSpeedLimit()
+    {
+        return SpeedLimit;
+    }
 }
