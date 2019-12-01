@@ -104,7 +104,7 @@ public class WorldGen : MonoBehaviour
 
         GameObject[] Trees;
         GameObject TreesLayer;
-        float[] TreesDepth = { 20, 40 };
+        float[] TreesDepth = { 2, 12 };
 
         GameObject[] Mountains;
         GameObject MountainsLayer;
@@ -112,11 +112,11 @@ public class WorldGen : MonoBehaviour
 
         GameObject[] Hills;
         GameObject HillsLayer;
-        float[] HillsDepth = { 10, 19 };
+        float[] HillsDepth = { 13, 49 };
 
         GameObject[] HillsFront;
         GameObject HillsFrontLayer;
-        float[] HillsFrontDepth = { -.5f, -1.5f };
+        float[] HillsFrontDepth = { -.5f, -3.5f };
 
 
         GameObject TracksLayer;
@@ -148,28 +148,28 @@ public class WorldGen : MonoBehaviour
             // trees layer inside the chunk
             TreesLayer = new GameObject();
             TreesLayer.transform.parent = Con.transform;
-            TreesLayer.transform.position = new Vector3(0, 1.3f, TreesDepth[0]);
+            TreesLayer.transform.position = new Vector3(0, -0.96f, TreesDepth[0]);
             TreesLayer.name = "Trees";
 
             MountainsLayer = new GameObject();
             MountainsLayer.transform.parent = Con.transform;
-            MountainsLayer.transform.position = new Vector3(0, 0, MountainsDepth[0]);
+            MountainsLayer.transform.position = new Vector3(0, 2.48f, MountainsDepth[0]);
             MountainsLayer.name = "Mountains";
 
             HillsLayer = new GameObject();
             HillsLayer.transform.parent = Con.transform;
-            HillsLayer.transform.position = new Vector3(0, -3.69f, HillsDepth[0]);
+            HillsLayer.transform.position = new Vector3(0, -1.21f, HillsDepth[0]);
             HillsLayer.name = "Hills";
 
             HillsFrontLayer = new GameObject();
             HillsFrontLayer.transform.parent = Con.transform;
-            HillsFrontLayer.transform.position = new Vector3(0, -4.75f, HillsFrontDepth[0]);
+            HillsFrontLayer.transform.position = new Vector3(0, -0.27f, HillsFrontDepth[0]);
             HillsFrontLayer.name = "HillsFront";
 
-            Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, ColorScheme[3], new Vector3(3, 1, 1), "Background");
-            Trees = LoadSprites("Trees", 5, TreesLayer, ColorScheme[2], new Vector3(.5f, .5f, .5f), "Background");
-            Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, ColorScheme[1], new Vector3(3, 1, 1), "Background");
-            HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, ColorScheme[0], new Vector3(3, 1, 1), "Foreground");
+            Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, new Vector3(3, 1, 1), "Background");
+            Trees = LoadSprites("Trees", 5, TreesLayer, new Vector3(0.6f, 0.6f, 0.6f), "Background");
+            Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, new Vector3(3, 1, 1), "Background");
+            HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, new Vector3(3, 1, 1), "Foreground");
 
 
             TracksLayer = new GameObject();
@@ -208,13 +208,13 @@ public class WorldGen : MonoBehaviour
             position.x = CurrentIndex * Width;
             Con.transform.position = position;
 
-            RandomSpriteMix(Mountains, MountainsDepth, 3, 0);
-            RandomSpriteMix(Trees, TreesDepth, 0, .3f);
-            RandomSpriteMix(Hills, HillsDepth, 0, 0);
-            RandomSpriteMix(HillsFront, HillsFrontDepth, 0, 0);
+            RandomSpriteMix(Mountains, MountainsDepth, 10, .2f, ColorScheme[3]);
+            RandomSpriteMix(Trees, TreesDepth, 0, .2f, ColorScheme[2]);
+            RandomSpriteMix(Hills, HillsDepth, 5, .2f, ColorScheme[1]);
+            RandomSpriteMix(HillsFront, HillsFrontDepth, 0, .2f, ColorScheme[0]);
         }
 
-        void RandomSpriteMix(GameObject[] sprites, float[] depth, float HeightDeltaMultiplier, float randomChance)
+        void RandomSpriteMix(GameObject[] sprites, float[] depth, float HeightDeltaMultiplier, float randomChance, Color color)
         {
             foreach (GameObject sprite in sprites)
             {
@@ -222,11 +222,14 @@ public class WorldGen : MonoBehaviour
                 if (random > randomChance)
                 {
                     Vector3 spritePos = sprite.transform.localPosition;
-                    spritePos.y = Mathf.PerlinNoise(sprite.transform.position.x, 0) * HeightDeltaMultiplier;
-                    spritePos.z = Mathf.Round(Mathf.PerlinNoise(sprite.transform.position.x, 1000) * (depth[1] - depth[0]));
+                    float zRange = depth[1] - depth[0];
+                    spritePos.z = Mathf.Round(Mathf.PerlinNoise(sprite.transform.position.x, 1000) * zRange);
+                    spritePos.y = Mathf.PerlinNoise(sprite.transform.position.x*10, spritePos.z) * HeightDeltaMultiplier ;
                     sprite.transform.localPosition = spritePos;
 
                     SpriteRenderer spriteRenderer = sprite.GetComponent<SpriteRenderer>();
+                    float brightness = .3f*(spritePos.z/zRange);
+                    spriteRenderer.color = new Color(color.r+brightness, color.g+brightness, color.b+brightness);
                     spriteRenderer.sortingOrder = -(int)sprite.transform.position.z;
                     sprite.SetActive(true);
                 }
@@ -239,7 +242,7 @@ public class WorldGen : MonoBehaviour
         }
 
 
-        public GameObject[] LoadSprites(string path, int duplicateAmount, GameObject parent, Color color, Vector3 scale, string layer)
+        public GameObject[] LoadSprites(string path, int duplicateAmount, GameObject parent, Vector3 scale, string layer)
         {
             Object[] loadedSprites = Resources.LoadAll(path, typeof(GameObject));
 
@@ -259,7 +262,6 @@ public class WorldGen : MonoBehaviour
                     newTree.transform.position = position;
                     SpriteRenderer spriteRenderer = newTree.GetComponent<SpriteRenderer>();
                     spriteRenderer.sortingLayerName = layer;
-                    spriteRenderer.color = color;
                     sprites[i * duplicateAmount + j] = newTree;
                 }
             }

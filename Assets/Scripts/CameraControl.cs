@@ -4,28 +4,40 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    [Header("Camera controls")]
     public Transform target;
     public float smoothFactor = 10f;
+    public Vector3 offset;
+    public Vector3 regularPosition;
+    public static readonly int MODE_SHOOT = 1;
+    public static readonly int MODE_CAMERA = 0;
+    public Train train;
+
+    [Header("Shoot Feature")]
+    public Animation AnimationController;
+    public GameObject pointer;
+    public Transform topLeft;
+    public Transform bottomRight;
+
+
     float zoom = 1;
     float MinZoom = 30f;
     float maxZoom = 3.46f;
-    public Vector3 offset;
-    public Vector3 regularPosition;
-    public GameObject pointer;
+    Camera cameraComp;
 
-    public Train train;
 
-    public static readonly int MODE_SHOOT = 1;
-    public static readonly int MODE_CAMERA = 0;
-
-    public Animation AnimationController;
 
     int CameraMode = MODE_CAMERA;
     private void Start() {
+        cameraComp = GetComponent<Camera>();
         regularPosition = transform.position;
     }
     private void LateUpdate()
     {
+        Vector3 screenPos1 = cameraComp.WorldToScreenPoint(topLeft.position);
+        Vector3 screenPos2 = cameraComp.WorldToScreenPoint(bottomRight.position);
+        Debug.Log(screenPos1 +" "+screenPos2);
+
         zoom += Input.GetAxisRaw("VerticalArrow") * Time.deltaTime * .5f;
         if (zoom > 1)
         {
