@@ -59,7 +59,6 @@ public class CameraControl : MonoBehaviour
         if (CameraMode == MODE_SHOOT)
         {
             offset.x += Input.GetAxisRaw("HorizontalArrow") * Time.deltaTime * 2;
-            Debug.Log(offset.x);
             offset.x = Mathf.Clamp(offset.x, -28f,7f);
 
             Vector3 position = pointer.transform.localPosition;

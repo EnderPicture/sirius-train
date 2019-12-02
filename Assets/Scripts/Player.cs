@@ -77,10 +77,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
-                animator.Play("Idle");
-            }
+            animator.Play(IdleName);
         }
 
         if (ObjectInHand == null)

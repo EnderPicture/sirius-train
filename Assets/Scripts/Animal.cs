@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Animal : MonoBehaviour
@@ -26,6 +27,7 @@ public class Animal : MonoBehaviour
     public float baseSpeed;
 
     public SpriteRenderer sprite;
+    public SpriteRenderer arrow;
 
     float randNumber;
 
@@ -35,6 +37,7 @@ public class Animal : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        DOTween.Init();
         randNumber = Random.Range(0, 100);
 
         speed = Random.Range(-2.5f, -.5f);
@@ -81,6 +84,7 @@ public class Animal : MonoBehaviour
         Vector2 tarBR = cameraControl.cursorBottomRight();
 
         if (!scanned &&
+            cameraControl.getCameraMode() == CameraControl.MODE_SHOOT &&
             tarTL.x < myBR.x && tarTL.y > myBR.y &&
             tarBR.x > myTL.x && tarBR.y < myTL.y)
         {
@@ -88,18 +92,19 @@ public class Animal : MonoBehaviour
             {
                 scanned = true;
                 train.addScanScore();
+                arrow.DOFade(0,.25f);
             }
-            sprite.color = new Color(0, .5f, 0);
+            sprite.DOColor(new Color(0, .5f, 0), .25f);
         }
         else
         {
             if (scanned)
             {
-                sprite.color = new Color(0, 1, 0);
+                sprite.DOColor(new Color(0, 1, 0), .25f);
             }
             else
             {
-                sprite.color = new Color(1, 1, 1);
+                sprite.DOColor(new Color(1, 1, 1), .25f);
             }
         }
     }

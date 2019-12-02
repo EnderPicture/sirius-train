@@ -156,11 +156,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53163a12fae74145b60d2b33ed417d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  train: {fileID: 0}
   mainCamera: {fileID: 0}
   animator: {fileID: 6620409287905901495}
   topL: {fileID: 5084168804443404564}
   botR: {fileID: 5025363723693522898}
+  baseSpeed: 0
   sprite: {fileID: 4039564452216239598}
+  arrow: {fileID: 5258129489855161242}
 --- !u!95 &6620409287905901495
 Animator:
   serializedVersion: 3
@@ -402,6 +405,12 @@ GameObject:
 --- !u!4 &9213390814886767609 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1146913356734226971, guid: 9b4ac35384c606f43beeea8337c6ccbf,
+    type: 3}
+  m_PrefabInstance: {fileID: 1137671558670104092}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &5258129489855161242 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 5130007519859185030, guid: 9b4ac35384c606f43beeea8337c6ccbf,
     type: 3}
   m_PrefabInstance: {fileID: 1137671558670104092}
   m_PrefabAsset: {fileID: 0}

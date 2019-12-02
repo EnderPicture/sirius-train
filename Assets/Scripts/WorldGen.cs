@@ -22,6 +22,21 @@ public class WorldGen : MonoBehaviour
         new Color(0.480392f,0.292157f,0.115687f),
         new Color(0.482353f,0.239216f,0.070588f),
     };
+    public Color[] scheme2 = {
+        new Color(0.213726f,0.117647f,0.072549f),
+        new Color(0.347059f,0.264706f,0.186275f),
+        new Color(0.409804f,0.286275f,0.164706f),
+        new Color(0.480392f,0.292157f,0.115687f),
+        new Color(0.482353f,0.239216f,0.070588f),
+    };
+    public Color[] scheme3 = {
+        new Color(0.213726f,0.117647f,0.072549f),
+        new Color(0.347059f,0.264706f,0.186275f),
+        new Color(0.409804f,0.286275f,0.164706f),
+        new Color(0.480392f,0.292157f,0.115687f),
+        new Color(0.482353f,0.239216f,0.070588f),
+    };
+    public Color[] colorScheme;
 
     GameManager Manager;
 
@@ -29,14 +44,27 @@ public class WorldGen : MonoBehaviour
     private void Start()
     {
         Manager = GetComponent<GameManager>();
+        int part = PlayerPrefs.GetInt("Level");
+        if (part == 1)
+        {
+            colorScheme = scheme1;
+        }
+        else if (part == 2)
+        {
+            colorScheme = scheme2;
+        }
+        else if (part == 3)
+        {
+            colorScheme = scheme3;
+        }
         GameObject Terrain = new GameObject();
         Terrain.transform.parent = transform;
         Terrain.name = "Terrain";
         for (int i = 0; i < Chunks.Length; i++)
         {
-            Chunks[i] = new Chunk(Terrain, ChunkWidth, scheme1, Track, Manager.level);
+            Chunks[i] = new Chunk(Terrain, ChunkWidth, colorScheme, Track, Manager.level);
         }
-        
+
     }
 
     private void Update()
@@ -224,12 +252,12 @@ public class WorldGen : MonoBehaviour
                     Vector3 spritePos = sprite.transform.localPosition;
                     float zRange = depth[1] - depth[0];
                     spritePos.z = Mathf.Round(Mathf.PerlinNoise(sprite.transform.position.x, 1000) * zRange);
-                    spritePos.y = Mathf.PerlinNoise(sprite.transform.position.x*10, spritePos.z) * HeightDeltaMultiplier ;
+                    spritePos.y = Mathf.PerlinNoise(sprite.transform.position.x * 10, spritePos.z) * HeightDeltaMultiplier;
                     sprite.transform.localPosition = spritePos;
 
                     SpriteRenderer spriteRenderer = sprite.GetComponent<SpriteRenderer>();
-                    float brightness = .3f*(spritePos.z/zRange);
-                    spriteRenderer.color = new Color(color.r+brightness, color.g+brightness, color.b+brightness);
+                    float brightness = .3f * (spritePos.z / zRange);
+                    spriteRenderer.color = new Color(color.r + brightness, color.g + brightness, color.b + brightness);
                     spriteRenderer.sortingOrder = -(int)sprite.transform.position.z;
                     sprite.SetActive(true);
                 }
