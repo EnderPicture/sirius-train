@@ -36,7 +36,6 @@ public class CameraControl : MonoBehaviour
     {
         Vector3 screenPos1 = cameraComp.WorldToScreenPoint(topLeft.position);
         Vector3 screenPos2 = cameraComp.WorldToScreenPoint(bottomRight.position);
-        Debug.Log(screenPos1 +" "+screenPos2);
 
         zoom += Input.GetAxisRaw("VerticalArrow") * Time.deltaTime * .5f;
         if (zoom > 1)
@@ -90,6 +89,13 @@ public class CameraControl : MonoBehaviour
         }
         Vector3 smoothedPos = Vector3.Lerp(transform.position, target.position + offset, smoothFactor * Time.deltaTime);
         transform.position = smoothedPos + shake;
+    }
+
+    public Vector2 cursorTopRight() {
+        return cameraComp.WorldToScreenPoint(topLeft.position); 
+    }
+    public Vector2 cursorBottomRight() {
+        return cameraComp.WorldToScreenPoint(bottomRight.position); 
     }
 
     public int getCameraMode()

@@ -166,10 +166,10 @@ public class WorldGen : MonoBehaviour
             HillsFrontLayer.transform.position = new Vector3(0, -0.27f, HillsFrontDepth[0]);
             HillsFrontLayer.name = "HillsFront";
 
-            Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, new Vector3(3, 1, 1), "Background");
+            Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, new Vector3(2, 1, 1), "Background");
             Trees = LoadSprites("Trees", 5, TreesLayer, new Vector3(0.6f, 0.6f, 0.6f), "Background");
-            Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, new Vector3(3, 1, 1), "Background");
-            HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, new Vector3(3, 1, 1), "Foreground");
+            Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, new Vector3(2, 1, 1), "Background");
+            HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, new Vector3(2, 1, 1), "Foreground");
 
 
             TracksLayer = new GameObject();
