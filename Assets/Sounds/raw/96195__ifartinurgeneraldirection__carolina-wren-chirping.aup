@@ -1,0 +1,69 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="96195__ifartinurgeneraldirection__carolina-wren-chirping_data" version="1.3.0" audacityversion="2.2.2" sel0="0.0000000000" sel1="2.2325170068" vpos="0" h="0.0000000000" zoom="73.4597021063" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags/>
+	<wavetrack name="96195__ifartinurgeneraldirection__carolina-wren-chirping" channel="0" linked="1" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1050576">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808725.au" len="262144" min="-0.539856" max="0.535919" rms="0.071129"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0808b1b.au" len="262144" min="-0.485509" max="0.476945" rms="0.03812"/>
+				</waveblock>
+				<waveblock start="524288">
+					<simpleblockfile filename="e0808ec6.au" len="262144" min="-0.528015" max="0.518677" rms="0.064421"/>
+				</waveblock>
+				<waveblock start="786432">
+					<simpleblockfile filename="e08083d0.au" len="262144" min="-0.55603" max="0.558441" rms="0.066311"/>
+				</waveblock>
+				<waveblock start="1048576">
+					<simpleblockfile filename="e080837d.au" len="2000" min="-0.022644" max="0.028076" rms="0.007883"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="96195__ifartinurgeneraldirection__carolina-wren-chirping" channel="1" linked="0" mute="1" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1050576">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808790.au" len="262144" min="-0.439575" max="0.483215" rms="0.042811"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0808fed.au" len="262144" min="-0.315559" max="0.315052" rms="0.013122"/>
+				</waveblock>
+				<waveblock start="524288">
+					<simpleblockfile filename="e0808d78.au" len="262144" min="-0.473389" max="0.471313" rms="0.036532"/>
+				</waveblock>
+				<waveblock start="786432">
+					<simpleblockfile filename="e08087d7.au" len="262144" min="-0.502808" max="0.518066" rms="0.037664"/>
+				</waveblock>
+				<waveblock start="1048576">
+					<simpleblockfile filename="e0808aa6.au" len="2000" min="-0.023743" max="0.024139" rms="0.007667"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="96195__ifartinurgeneraldirection__carolina-wren-chirping" channel="0" linked="1" mute="0" solo="1" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="98454">
+				<waveblock start="0">
+					<simpleblockfile filename="e080848b.au" len="98454" min="-0.485509" max="0.476945" rms="0.061469"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="96195__ifartinurgeneraldirection__carolina-wren-chirping" channel="1" linked="0" mute="0" solo="1" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="98454">
+				<waveblock start="0">
+					<simpleblockfile filename="e08086f1.au" len="98454" min="-0.315559" max="0.315052" rms="0.019066"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
