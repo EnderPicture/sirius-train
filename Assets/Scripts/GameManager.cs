@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     level 1 = bullet
     level 1 = diesel
     level 1 = steam
-    
+
     part 1 = 2 short station
     part 1 = 3 long station
     part 1 = 6 long and short station
@@ -37,16 +37,19 @@ public class GameManager : MonoBehaviour
         {
             Train.SetMode(Config.BULLET);
             Player.SetMode(Config.BULLET);
+            FindObjectOfType<AudioManager2>().setLevel(1);
         }
         else if (level == Config.DIESEL)
         {
             Train.SetMode(Config.DIESEL);
             Player.SetMode(Config.DIESEL);
+            FindObjectOfType<AudioManager2>().setLevel(2);
         }
         else if (level == Config.STEAM)
         {
             Train.SetMode(Config.STEAM);
             Player.SetMode(Config.STEAM);
+            FindObjectOfType<AudioManager2>().setLevel(3);
             if (part == 1)
             {
                 Train.Coal.SetFuelAmount(Config.CoalToUseP1);
