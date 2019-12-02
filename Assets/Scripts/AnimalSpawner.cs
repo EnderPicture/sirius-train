@@ -17,6 +17,7 @@ public class AnimalSpawner : MonoBehaviour
 
     public int amountToSpawn;
     List<float> spawnLocations = new List<float>();
+    List<GameObject> animals = new List<GameObject>();
 
     float trainRangePadding = 100;
     float spawnInnerPadding = 0;
@@ -39,13 +40,22 @@ public class AnimalSpawner : MonoBehaviour
             if (location < transform.position.x)
             {
                 GameObject newAnimal = GameObject.Instantiate(animal);
-                newAnimal.transform.parent = transform;
-                newAnimal.transform.localPosition = new Vector3(start, 0, 0);
+                newAnimal.transform.position = transform.TransformPoint(new Vector3(start, 0, 0));
+                animals.Add(newAnimal);
 
                 Animal animalScript = newAnimal.GetComponent<Animal>();
                 animalScript.mainCamera = mainCamera;
+
                 spawnLocations.Remove(location);
                 // lost an item
+                c--;
+            }
+        }
+        for (int c = 0; c < animals.Count; c++) {
+            GameObject animal = animals[c];
+            if (transform.InverseTransformPoint(animal.transform.position).x < end) {
+                animals.Remove(animal);
+                Object.Destroy(animal);
                 c--;
             }
         }
