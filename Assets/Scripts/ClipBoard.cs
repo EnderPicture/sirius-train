@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using DG.Tweening;
 
 public class ClipBoard : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class ClipBoard : MonoBehaviour
 
     public float offRot = 90;
     public float onRot = 7.83f;
-    public float onRotOther = 180 + 7.83f;
+    public float onRotOther = -28.3f;
 
     public int show = 0;
 
@@ -27,6 +28,7 @@ public class ClipBoard : MonoBehaviour
 
     private void Start()
     {
+        DOTween.Init();
         offset = transform.position - target.transform.position;
         MidWinScreen.SetActive(false);
         WinScreen.SetActive(false);
@@ -35,22 +37,26 @@ public class ClipBoard : MonoBehaviour
     }
     private void Update()
     {
-        Vector3 rot = transform.eulerAngles;
-        float rotZ = transform.eulerAngles.z;
+        // Vector3 rot = transform.eulerAngles;
+        // float rotZ = transform.eulerAngles.z;
         if (show == 1)
         {
-            rotZ = Mathf.Lerp(rotZ, onRot, smoothFactor * Time.deltaTime * .5f);
+            // rotZ = Mathf.Lerp(rotZ, onRot, smoothFactor * Time.deltaTime * .5f);
+            transform.DORotate(new Vector3(0,0,onRot), 1);
         }
         else if (show == 2)
         {
-            rotZ = Mathf.Lerp(rotZ, onRotOther, smoothFactor * Time.deltaTime * .5f);
+            // rotZ = Mathf.Lerp(rotZ, onRotOther, smoothFactor * Time.deltaTime * .5f);
+            transform.DORotate(new Vector3(0,0,onRotOther), 1);
         }
         else
         {
-            rotZ = Mathf.Lerp(rotZ, offRot, smoothFactor * Time.deltaTime * .5f);
+            // rotZ = Mathf.Lerp(rotZ, offRot, smoothFactor * Time.deltaTime * .5f);
+            transform.DORotate(new Vector3(0,0,offRot), 1);
         }
-        rot.z = rotZ;
-        transform.eulerAngles = rot;
+        // rot.z = rotZ;
+
+        // transform.eulerAngles = rot;
 
         Vector3 smoothedPos = Vector3.Lerp(transform.position, target.position + offset, smoothFactor * Time.deltaTime);
         transform.position = smoothedPos;
