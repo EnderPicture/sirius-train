@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimalSpawner : MonoBehaviour
 {
-
+    public Train train;
     public Transform trainStart;
     public Transform trainEnd;
 
@@ -45,6 +45,8 @@ public class AnimalSpawner : MonoBehaviour
 
                 Animal animalScript = newAnimal.GetComponent<Animal>();
                 animalScript.mainCamera = mainCamera;
+                animalScript.train = train;
+                animalScript.baseSpeed = train.GetSpeed();
 
                 spawnLocations.Remove(location);
                 // lost an item
@@ -53,7 +55,8 @@ public class AnimalSpawner : MonoBehaviour
         }
         for (int c = 0; c < animals.Count; c++) {
             GameObject animal = animals[c];
-            if (transform.InverseTransformPoint(animal.transform.position).x < end) {
+            float xPos = transform.InverseTransformPoint(animal.transform.position).x;
+            if (xPos - spawnInnerPadding < end || xPos > start + spawnInnerPadding) {
                 animals.Remove(animal);
                 Object.Destroy(animal);
                 c--;

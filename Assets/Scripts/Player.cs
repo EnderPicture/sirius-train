@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
             }
 
             // pick up coal logic
-            if (Input.GetKeyDown("space"))
+            if (Input.GetKeyDown("space") && Camera.getCameraMode() == CameraControl.MODE_CAMERA)
             {
                 // reset those values to be used again
                 shortestDist = float.MaxValue;

@@ -21,6 +21,7 @@ public class ClipBoard : MonoBehaviour
     public GameObject DieScreen;
 
     public TextMeshPro winScreenScoreText;
+    public TextMeshPro midWinScreenScoreText;
 
 
     private void Start()
@@ -85,12 +86,21 @@ public class ClipBoard : MonoBehaviour
         return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
     }
 
-    public void ShowMidWin()
+    public void ShowMidWin(float parkingScore, float accScore, float timeScore, float scanScore)
     {
         WinScreen.SetActive(false);
         MidWinScreen.SetActive(true);
         MenuScreen.SetActive(false);
         DieScreen.SetActive(false);
+
+        midWinScreenScoreText.SetText(
+            $"Time Used: {timeScore}/40\n" +
+            $"Confort Level: {accScore}/30\n" +
+            $"Parking Job: {parkingScore}/30\n" +
+            "\n" +
+            "Final Score: " + (timeScore+accScore+parkingScore) + $"/100 with {scanScore} BONUS"
+        );
+
         show = true;
     }
 

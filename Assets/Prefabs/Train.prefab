@@ -1519,6 +1519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf4fde67284fac546babc17702ae20ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  train: {fileID: 8263062041757355633}
   trainStart: {fileID: 8263062041124238845}
   trainEnd: {fileID: 8263062041451614173}
   mainCamera: {fileID: 8263062041892312946}

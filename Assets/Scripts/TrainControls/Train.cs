@@ -79,8 +79,12 @@ public class Train : MonoBehaviour
     // score system values
     float MaxAcceleration;
     float TimeStarted;
-    List<float> ParkingJobScore = new List<float>();
-    List<float> TimingScore = new List<float>();
+
+    float scanScore;
+    List<float> MaxAccelerationScores = new List<float>();
+    List<float> ParkingJobScores = new List<float>();
+    List<float> TimingScores = new List<float>();
+    List<float> ScanScores = new List<float>();
 
     bool GameDone = false;
 
@@ -114,6 +118,10 @@ public class Train : MonoBehaviour
         }
         SpeedLimitText.SetText(SpeedLimit + "");
 
+    }
+
+    public void addScanScore() {
+        scanScore++;
     }
 
     public void SetupStations(List<EndTrainStation> stations)
@@ -188,22 +196,12 @@ public class Train : MonoBehaviour
                 Debug.Log("InWinState");
                 GameDone = true;
                 float timeUsed = Time.realtimeSinceStartup - TimeStarted;
-                Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScore);
+                Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScores);
             }
             else
             {
-                Menu.ShowMidWin();
-                ParkingJobScore.Add(DistFromStation);
-                TimingScore.Add(GetTimeRemaining());
-                if (GetTimeRemaining() < 0)
-                {
-                    TimePenalty = -GetTimeRemaining();
-                }
-                else
-                {
-                    TimePenalty = 0;
-                }
-                NextStation();
+                Menu.ShowMidWin(DistFromStation, MaxAcceleration, GetTimeRemaining(), scanScore);
+                StationDone();
             }
             Playing = false;
         }
@@ -212,6 +210,26 @@ public class Train : MonoBehaviour
             Menu.ShowDieScreen();
             Playing = false;
         }
+    }
+
+    void StationDone()
+    {
+        ParkingJobScores.Add(DistFromStation);
+        MaxAccelerationScores.Add(MaxAcceleration);
+        MaxAcceleration = 0;
+        TimingScores.Add(GetTimeRemaining());
+        ScanScores.Add(scanScore);
+        scanScore = 0;
+
+        if (GetTimeRemaining() < 0)
+        {
+            TimePenalty = -GetTimeRemaining();
+        }
+        else
+        {
+            TimePenalty = 0;
+        }
+        NextStation();
     }
 
     public bool IsInStation()
