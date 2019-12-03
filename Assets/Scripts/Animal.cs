@@ -58,7 +58,7 @@ public class Animal : MonoBehaviour
         }
         else
         {
-            sprite.flipY = false;
+            sprite.flipX = false;
         }
 
         birdId = Random.Range(1, 5);
