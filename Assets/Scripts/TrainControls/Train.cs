@@ -167,7 +167,6 @@ public class Train : MonoBehaviour
 
     float distBetweenStation(EndTrainStation station)
     {
-        Debug.Log(MaxAcceleration);
         return station.GetPos() - PerfectStopPos.transform.position.x;
     }
 
@@ -207,7 +206,8 @@ public class Train : MonoBehaviour
                 Debug.Log("InWinState");
                 GameDone = true;
                 float timeUsed = Time.realtimeSinceStartup - TimeStarted;
-                // Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScores);
+                StationDone();
+                Menu.ShowWin(MaxAccelerationScores, ParkingJobScores, TimingScores, ScanScores);
             }
             else
             {

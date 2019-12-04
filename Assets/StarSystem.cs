@@ -12,7 +12,7 @@ public class StarSystem : MonoBehaviour
     public SpriteRenderer star5;
 
     float delay = 1;
-    float delayBetween = .25f; 
+    float delayBetween = .25f;
 
     public void setScore(int score)
     {
@@ -30,36 +30,41 @@ public class StarSystem : MonoBehaviour
         StartCoroutine(showStars4(score));
         StartCoroutine(showStars5(score));
     }
-    IEnumerator showStars1(int score){
+    IEnumerator showStars1(int score)
+    {
         yield return new WaitForSeconds(delay);
         if (score > 0)
         {
             star1.DOFade(1, 1f);
         }
     }
-    IEnumerator showStars2(int score){
-        yield return new WaitForSeconds(delay+delayBetween);
+    IEnumerator showStars2(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween);
         if (score > 1)
         {
             star2.DOFade(1, 1f);
         }
     }
-    IEnumerator showStars3(int score){
-        yield return new WaitForSeconds(delay+delayBetween*2);
+    IEnumerator showStars3(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween * 2);
         if (score > 2)
         {
             star3.DOFade(1, 1f);
         }
     }
-    IEnumerator showStars4(int score){
-        yield return new WaitForSeconds(delay+delayBetween*3);
+    IEnumerator showStars4(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween * 3);
         if (score > 3)
         {
             star4.DOFade(1, 1f);
         }
     }
-    IEnumerator showStars5(int score){
-        yield return new WaitForSeconds(delay+delayBetween*4);
+    IEnumerator showStars5(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween * 4);
         if (score > 4)
         {
             star5.DOFade(1, 1f);
