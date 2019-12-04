@@ -215,6 +215,7 @@ public class Train : MonoBehaviour
 
                 Menu.ShowMidWin(GetParkingScore(), GetConfortScore(), TimingScore(), scanScore, GetTimingText());
                 StationDone();
+                NextStation();
             }
             Playing = false;
         }
@@ -231,7 +232,7 @@ public class Train : MonoBehaviour
     }
 
     void StationDone()
-    {
+    {        
         ParkingJobScores.Add(GetParkingScore());
         MaxAccelerationScores.Add(GetConfortScore());
         MaxAcceleration = 0;
@@ -247,7 +248,6 @@ public class Train : MonoBehaviour
         {
             TimePenalty = 0;
         }
-        NextStation();
     }
 
     public bool IsInStation()
