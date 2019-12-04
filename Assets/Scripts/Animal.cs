@@ -91,6 +91,8 @@ public class Animal : MonoBehaviour
             if (Input.GetKeyDown("space"))
             {
                 scanned = true;
+                //player camera shutter sound
+                FindObjectOfType<AudioManager2>().Play("player", 2);
                 train.addScanScore();
                 arrow.DOFade(0,.25f);
             }

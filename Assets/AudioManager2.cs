@@ -17,6 +17,8 @@ public class AudioManager2 : MonoBehaviour
 	public AudioSource source4;
 
 	public int level = 1;
+	int timePassed = 0;
+	int timeInterval = 1000;
 
 	public void Play(string name, int number) {
 
@@ -54,7 +56,9 @@ public class AudioManager2 : MonoBehaviour
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!trainSources[number].isPlaying) {
-					trainSources[number].volume = 1f;
+					// trainSources[number].volume = 1f;
+					trainSources[number].volume = Random.Range(0.8f, 1.0f);
+					trainSources[number].pitch = Random.Range(0.95f, 1.1f);
 					trainSources[number].Play();
 				} else {
 					//IF it's already playing, fade away the sound
@@ -75,7 +79,8 @@ public class AudioManager2 : MonoBehaviour
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!playerSources[number].isPlaying) {
-					playerSources[number].volume = 1f;
+					playerSources[number].volume = Random.Range(0.8f, 1.0f);
+					playerSources[number].pitch = Random.Range(0.8f, 1.1f);
 					playerSources[number].Play();
 				} else {
 					//IF it's already playing, fade away the sound
@@ -96,6 +101,7 @@ public class AudioManager2 : MonoBehaviour
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!ambientSources[number].isPlaying) {
+					Debug.Log("Playing ambient " + number);
 					ambientSources[number].volume = 1f;
 					ambientSources[number].Play();
 					//ambientSources[number].loop = true;
@@ -160,6 +166,10 @@ public class AudioManager2 : MonoBehaviour
 			anim.Play("sound 1");
 		}
 
+	}
+
+	public void bellLoop() {
+		
 	}
 
 	public void playWheel1() {
@@ -338,6 +348,10 @@ public class AudioManager2 : MonoBehaviour
 
 	}
 
+	public int getLevel() {
+		return level;
+	}
+
 	public void setSpeed(float speedToSet) {
 		trainSpeed = speedToSet;
 	}
@@ -362,15 +376,35 @@ public class AudioManager2 : MonoBehaviour
     {
         PlayWheelLoop(trainSpeed);
 
+				timePassed++;
+				// Debug.Log(timePassed);
 
-		//Debug.Log(trainSpeed);
-		if(Input.GetKeyDown("i")) {
-			// Debug.Log("speed up");
-			trainSpeed+=0.2f;
-		} else if (Input.GetKeyDown("o")){
-			// Debug.Log("speed down");
-			trainSpeed-=0.2f;
+				if ((level == 1 || level == 2) && timePassed >= timeInterval) {
+					timePassed = 0;
+					timeInterval = Random.Range(700, 1500);
+					int pressureSound = Random.Range(0, 4);
+					if (pressureSound == 0) {
+						// Debug.Log("pressure 0");
+						FindObjectOfType<AudioManager2>().Play("pressure", 0);
+					}
+					if (pressureSound == 1) {
+						FindObjectOfType<AudioManager2>().Play("pressure", 1);
+					}
+					if (pressureSound == 2) {
+						FindObjectOfType<AudioManager2>().Play("pressure", 3);
+					}
+					if (pressureSound == 3) {
+						FindObjectOfType<AudioManager2>().Play("pressure", 5);
+					}
+				}
+
+		// //Debug.Log(trainSpeed);
+		// if(Input.GetKeyDown("i")) {
+		// 	// Debug.Log("speed up");
+		// 	trainSpeed+=0.2f;
+		// } else if (Input.GetKeyDown("o")){
+		// 	// Debug.Log("speed down");
+		// 	trainSpeed-=0.2f;
 		}
 
-    }
 }

@@ -92,6 +92,10 @@ public class Train : MonoBehaviour
 
     float TimePenalty = 0;
 
+    //for sound in stationCheck();
+    bool whistleAlreadyPlayed = false;
+    bool bellsAlreadyPlayed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -161,6 +165,10 @@ public class Train : MonoBehaviour
 
             animalSpawner.ActivateSpawn(transform.position, nextStation.transform.position);
         }
+
+        //for sound, to reset the "halfway" whistle and 3/4 way bells
+        whistleAlreadyPlayed = false;
+        bellsAlreadyPlayed = false;
     }
 
     float distBetweenStation(EndTrainStation station)
@@ -172,6 +180,31 @@ public class Train : MonoBehaviour
     {
         float dist = nextStation.transform.position.x - transform.position.x;
         DistFromStation = dist;
+
+        //play a sound if the player is halfway between stations
+        if (DistFromStation < DistFromStationInit/2 && whistleAlreadyPlayed == false) {
+          whistleAlreadyPlayed = true;
+          // Debug.Log(DistFromStation);
+          // Debug.Log(DistFromStationInit/2);
+          int level = FindObjectOfType<AudioManager2>().getLevel();
+          if (level == 1 || level == 2) {
+            FindObjectOfType<AudioManager2>().Play("train", 1);
+          }
+
+          if (level == 3) {
+            // FindObjectOfType<AudioManager2>().Play("train", 5);
+          }
+        }
+
+      // Debug.Log("Dist from next station: " + DistFromStation);
+      if ((DistFromStationInit > 200) && DistFromStation <= 100 && bellsAlreadyPlayed == false) {
+        bellsAlreadyPlayed = true;
+        FindObjectOfType<AudioManager2>().Play("ambient", 3);
+      }
+      if ((DistFromStationInit < 200) && DistFromStation < DistFromStationInit/4 && bellsAlreadyPlayed == false) {
+        bellsAlreadyPlayed = true;
+        FindObjectOfType<AudioManager2>().Play("ambient", 3);
+      }
 
         Vector3 iconPos = TrainIcon.transform.localPosition;
         iconPos.x = Helper.Lerp(0.9836f, -1.1119f, DistFromStation / DistFromStationInit);
@@ -201,6 +234,16 @@ public class Train : MonoBehaviour
             else
             {
                 Menu.ShowMidWin(DistFromStation, MaxAcceleration, GetTimeRemaining(), scanScore);
+
+                //play a sound if the player just parked
+                int level = FindObjectOfType<AudioManager2>().getLevel();
+                if (level == 1 || level == 2) {
+                  FindObjectOfType<AudioManager2>().Play("train", 2);
+                }
+
+                if (level == 3) {
+                  FindObjectOfType<AudioManager2>().Play("train", 5);
+                }
                 StationDone();
             }
             Playing = false;
