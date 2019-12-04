@@ -175,7 +175,6 @@ public class Train : MonoBehaviour
 
     float distBetweenStation(EndTrainStation station)
     {
-        // Debug.Log(MaxAcceleration);
         return station.GetPos() - PerfectStopPos.transform.position.x;
     }
 
@@ -243,7 +242,8 @@ public class Train : MonoBehaviour
                 Debug.Log("InWinState");
                 GameDone = true;
                 float timeUsed = Time.realtimeSinceStartup - TimeStarted;
-                // Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScores);
+                StationDone();
+                Menu.ShowWin(MaxAccelerationScores, ParkingJobScores, TimingScores, ScanScores);
             }
             else
             {
@@ -266,6 +266,7 @@ public class Train : MonoBehaviour
                 FindObjectOfType<AudioManager2>().setBells(false);
 
                 StationDone();
+                NextStation();
             }
             Playing = false;
         }
@@ -282,7 +283,7 @@ public class Train : MonoBehaviour
     }
 
     void StationDone()
-    {
+    {        
         ParkingJobScores.Add(GetParkingScore());
         MaxAccelerationScores.Add(GetConfortScore());
         MaxAcceleration = 0;
@@ -298,7 +299,6 @@ public class Train : MonoBehaviour
         {
             TimePenalty = 0;
         }
-        NextStation();
     }
 
     public bool IsInStation()

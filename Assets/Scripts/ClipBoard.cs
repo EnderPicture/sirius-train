@@ -31,6 +31,12 @@ public class ClipBoard : MonoBehaviour
     public StarSystem Confort;
     public StarSystem Bonus;
 
+    [Header("FinalWinStars")]
+    public StarSystem FinalParking;
+    public StarSystem FinalTiming;
+    public StarSystem FinalConfort;
+    public StarSystem FinalBonus;
+
 
     private void Start()
     {
@@ -48,17 +54,17 @@ public class ClipBoard : MonoBehaviour
         if (show == 1)
         {
             // rotZ = Mathf.Lerp(rotZ, onRot, smoothFactor * Time.deltaTime * .5f);
-            transform.DORotate(new Vector3(0,0,onRot), 1);
+            transform.DORotate(new Vector3(0, 0, onRot), 1);
         }
         else if (show == 2)
         {
             // rotZ = Mathf.Lerp(rotZ, onRotOther, smoothFactor * Time.deltaTime * .5f);
-            transform.DORotate(new Vector3(0,0,onRotOther), 1);
+            transform.DORotate(new Vector3(0, 0, onRotOther), 1);
         }
         else
         {
             // rotZ = Mathf.Lerp(rotZ, offRot, smoothFactor * Time.deltaTime * .5f);
-            transform.DORotate(new Vector3(0,0,offRot), 1);
+            transform.DORotate(new Vector3(0, 0, offRot), 1);
         }
         // rot.z = rotZ;
 
@@ -68,32 +74,52 @@ public class ClipBoard : MonoBehaviour
         transform.position = smoothedPos;
     }
 
-    public void ShowWin(float timeUsed, float maxAcc, List<float> parkingJobScore)
+    public void ShowWin(List<int> MaxAccelerationScores, List<int> ParkingJobScores, List<int> TimingScores, List<int> ScanScores)
     {
         WinScreen.SetActive(true);
         MidWinScreen.SetActive(false);
         MenuScreen.SetActive(false);
         DieScreen.SetActive(false);
 
-        float totalParkingScore = 0;
-        foreach (float score in parkingJobScore)
+        int MaxAccelerationScore = 0;
+        int ParkingJobScore = 0;
+        int TimingScore = 0;
+        int ScanScore = 0;
+
+        int sum = 0;
+        for (int i = 0; i < MaxAccelerationScores.Count; i++)
         {
-            totalParkingScore += Mathf.Abs(score);
+            sum += MaxAccelerationScores[i];
         }
-        float avgParkingScore = totalParkingScore / parkingJobScore.Count;
+        MaxAccelerationScore = sum / MaxAccelerationScores.Count;
 
-        float timeScore = Mathf.Round(Mathf.Clamp(map(timeUsed, 50, 250, 40, 0), 0, 40));
-        float accScore = Mathf.Round(Mathf.Clamp(map(maxAcc, 0.01f, 0.03f, 30, 0), 0, 30));
-        float parkingScore = Mathf.Round(Mathf.Clamp(map(avgParkingScore, 0, 7f, 30, 0), 0, 30));
-        Debug.Log(timeUsed + " " + maxAcc + " " + avgParkingScore);
+        sum = 0;
+        for (int i = 0; i < ParkingJobScores.Count; i++)
+        {
+            sum += ParkingJobScores[i];
+        }
+        ParkingJobScore = sum / ParkingJobScores.Count;
 
-        winScreenScoreText.SetText(
-            "Time Used: " + timeScore + "/40\n" +
-            "Confort Level: " + accScore + "/30\n" +
-            "Parking Job: " + parkingScore + "/30\n" +
-            "\n" +
-            "Final Score: " + (timeScore + accScore + parkingScore) + "/100"
-        );
+        sum = 0;
+        for (int i = 0; i < TimingScores.Count; i++)
+        {
+            sum += TimingScores[i];
+        }
+        TimingScore = sum / TimingScores.Count;
+
+        sum = 0;
+        for (int i = 0; i < ScanScores.Count; i++)
+        {
+            sum += ScanScores[i];
+        }
+        ScanScore = sum / ScanScores.Count;
+
+        FinalParking.setScore(ParkingJobScore, .1f);
+        FinalTiming.setScore(TimingScore, .2f);
+        FinalConfort.setScore(MaxAccelerationScore, .3f);
+        FinalBonus.setScore(ScanScore, .4f);
+
+        winScreenScoreText.SetText("");
 
         show = 1;
     }
@@ -110,22 +136,26 @@ public class ClipBoard : MonoBehaviour
         MenuScreen.SetActive(false);
         DieScreen.SetActive(false);
 
-        Parking.setScore(parkingScore);
-        Timing.setScore((int)timeScore);
-        Confort.setScore(conScore);
-        Bonus.setScore((int)scanScore);
+        Parking.setScore(parkingScore, .1f);
+        Timing.setScore(timeScore, .2f);
+        Confort.setScore(conScore, .3f);
+        Bonus.setScore(scanScore, .4f);
 
-        if (TimingText == "Too Early") {
-            TimingText = TimingText+"...";
+        if (TimingText == "Too Early")
+        {
+            TimingText = TimingText + "...";
         }
-        if (TimingText == "Early") {
-            TimingText = TimingText+"?";
+        if (TimingText == "Early")
+        {
+            TimingText = TimingText + "?";
         }
-        if (TimingText == "Perfect") {
-            TimingText = TimingText+"!!";
+        if (TimingText == "Perfect")
+        {
+            TimingText = TimingText + "!!";
         }
-        if (TimingText == "Late") {
-            TimingText = TimingText+"...";
+        if (TimingText == "Late")
+        {
+            TimingText = TimingText + "...";
         }
         midWinScreenScoreText.SetText(TimingText);
 
@@ -146,7 +176,8 @@ public class ClipBoard : MonoBehaviour
         show = 0;
     }
 
-    public void ClickedBack() {
+    public void ClickedBack()
+    {
         show = 1;
 
     }

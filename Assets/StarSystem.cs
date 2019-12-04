@@ -14,7 +14,7 @@ public class StarSystem : MonoBehaviour
     float delay = 1;
     float delayBetween = .25f;
 
-    public void setScore(int score)
+    public void setScore(int score, float extraDelay)
     {
         DOTween.Init();
         star1.color = new Color(star1.color.r, star1.color.g, star1.color.b, 0);
@@ -24,13 +24,19 @@ public class StarSystem : MonoBehaviour
         star5.color = new Color(star5.color.r, star5.color.g, star5.color.b, 0);
 
         score = Mathf.Clamp(score, 0, 5);
+        StartCoroutine(delayAnimation(score, extraDelay));
+    }
+    IEnumerator delayAnimation(int score, float customDelay)
+    {
+        yield return new WaitForSeconds(customDelay);
         StartCoroutine(showStars1(score));
         StartCoroutine(showStars2(score));
         StartCoroutine(showStars3(score));
         StartCoroutine(showStars4(score));
         StartCoroutine(showStars5(score));
     }
-    IEnumerator showStars1(int score){
+    IEnumerator showStars1(int score)
+    {
         yield return new WaitForSeconds(delay);
         if (score > 0)
         {
@@ -38,32 +44,36 @@ public class StarSystem : MonoBehaviour
             FindObjectOfType<AudioManager2>().Play("player", 1);
         }
     }
-    IEnumerator showStars2(int score){
-        yield return new WaitForSeconds(delay+delayBetween);
+    IEnumerator showStars2(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween);
         if (score > 1)
         {
             star2.DOFade(1, 1f);
             FindObjectOfType<AudioManager2>().Play("player", 2);
         }
     }
-    IEnumerator showStars3(int score){
-        yield return new WaitForSeconds(delay+delayBetween*2);
+    IEnumerator showStars3(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween * 2);
         if (score > 2)
         {
             star3.DOFade(1, 1f);
             FindObjectOfType<AudioManager2>().Play("player", 3);
         }
     }
-    IEnumerator showStars4(int score){
-        yield return new WaitForSeconds(delay+delayBetween*3);
+    IEnumerator showStars4(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween * 3);
         if (score > 3)
         {
             star4.DOFade(1, 1f);
             FindObjectOfType<AudioManager2>().Play("player", 4);
         }
     }
-    IEnumerator showStars5(int score){
-        yield return new WaitForSeconds(delay+delayBetween*4);
+    IEnumerator showStars5(int score)
+    {
+        yield return new WaitForSeconds(delay + delayBetween * 4);
         if (score > 4)
         {
             star5.DOFade(1, 1f);
