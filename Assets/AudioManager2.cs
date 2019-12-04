@@ -85,8 +85,8 @@ public class AudioManager2 : MonoBehaviour
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!playerSources[number].isPlaying) {
-					if (number == 2) {
-						playerSources[number].volume = Random.Range(0.8f, 1.0f);
+					if (number == 0) {
+						playerSources[number].volume = Random.Range(0.4f, 0.6f);
 						playerSources[number].pitch = Random.Range(0.8f, 1.1f);
 						playerSources[number].Play();
 					} else {
