@@ -23,10 +23,10 @@ public class Config : MonoBehaviour
     public static readonly int SpeedLimitSteam = 60;
 
 
-    public static readonly float ShortMinDisStation = 100;
-    public static readonly float ShortMaxDisStation = 150;
-    public static readonly float LongMinDisStation = 300;
-    public static readonly float LongMaxDisStation = 350;
+    public static readonly float ShortMinDisStation = 200;
+    public static readonly float ShortMaxDisStation = 400;
+    public static readonly float LongMinDisStation = 600;
+    public static readonly float LongMaxDisStation = 800;
 
 
     // responsible for timing and when should the train arrive at the next station

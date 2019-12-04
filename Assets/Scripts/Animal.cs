@@ -94,7 +94,7 @@ public class Animal : MonoBehaviour
                 train.addScanScore();
                 arrow.DOFade(0,.25f);
             }
-            sprite.DOColor(new Color(0, .5f, 0), .25f);
+            sprite.DOColor(new Color(.7f, 1f, .7f), .25f);
         }
         else
         {
