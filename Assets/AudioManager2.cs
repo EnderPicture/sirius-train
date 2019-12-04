@@ -402,11 +402,12 @@ public class AudioManager2 : MonoBehaviour
 
 
 	public void PlayWindLoop() {
-		// Debug.Log("PlayWindLoop");
+		Debug.Log("PlayWindLoop");
 		anim.Play("wind");
 	}
 
 	public void playWindSound() {
+		Debug.Log("playWindSound");
 		AudioSource[] ambientSources = this.transform.Find("aAmbientManager").GetComponents<AudioSource>();
 		AudioSource windSound = ambientSources[5];
 		if (ambientSources != null) {
@@ -415,7 +416,7 @@ public class AudioManager2 : MonoBehaviour
 			}
 			if (!windSound.isPlaying) {
 				// windSound.pitch = trainSpeed * 0.55f;
-				// Debug.Log("windSound.Play();");
+				Debug.Log("windSound.Play();");
 				windSound.Play();
 			}
 		}

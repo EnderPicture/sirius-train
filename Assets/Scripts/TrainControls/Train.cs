@@ -175,7 +175,7 @@ public class Train : MonoBehaviour
 
     float distBetweenStation(EndTrainStation station)
     {
-        Debug.Log(MaxAcceleration);
+        // Debug.Log(MaxAcceleration);
         return station.GetPos() - PerfectStopPos.transform.position.x;
     }
 
