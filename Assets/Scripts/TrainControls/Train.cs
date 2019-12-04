@@ -178,32 +178,34 @@ public class Train : MonoBehaviour
 
     void StationCheck()
     {
+        int level = FindObjectOfType<AudioManager2>().getLevel();
+
         float dist = nextStation.transform.position.x - transform.position.x;
         DistFromStation = dist;
 
         //play a sound if the player is halfway between stations
         if (DistFromStation < DistFromStationInit/2 && whistleAlreadyPlayed == false) {
           whistleAlreadyPlayed = true;
-          // Debug.Log(DistFromStation);
-          // Debug.Log(DistFromStationInit/2);
-          int level = FindObjectOfType<AudioManager2>().getLevel();
+          //steam/diesel train: play whistle
           if (level == 1 || level == 2) {
             FindObjectOfType<AudioManager2>().Play("train", 1);
           }
-
+          //electric train: play skytrain bells
           if (level == 3) {
-            // FindObjectOfType<AudioManager2>().Play("train", 5);
+            FindObjectOfType<AudioManager2>().Play("train", 6);
           }
         }
 
-      // Debug.Log("Dist from next station: " + DistFromStation);
-      if ((DistFromStationInit > 200) && DistFromStation <= 100 && bellsAlreadyPlayed == false) {
+      //Play bells if close to station
+      if ((DistFromStationInit > 200) && DistFromStation <= 20 && bellsAlreadyPlayed == false) {
         bellsAlreadyPlayed = true;
         FindObjectOfType<AudioManager2>().Play("ambient", 3);
       }
       if ((DistFromStationInit < 200) && DistFromStation < DistFromStationInit/4 && bellsAlreadyPlayed == false) {
-        bellsAlreadyPlayed = true;
-        FindObjectOfType<AudioManager2>().Play("ambient", 3);
+        // bellsAlreadyPlayed = true;
+        // FindObjectOfType<AudioManager2>().Play("ambient", 3);
+        FindObjectOfType<AudioManager2>().setBells(true);
+        FindObjectOfType<AudioManager2>().playBells();
       }
 
         Vector3 iconPos = TrainIcon.transform.localPosition;
@@ -244,6 +246,11 @@ public class Train : MonoBehaviour
                 if (level == 3) {
                   FindObjectOfType<AudioManager2>().Play("train", 5);
                 }
+
+                // Debug.Log("setting bells false");
+                //Stop playing bells if they are parked
+                FindObjectOfType<AudioManager2>().setBells(false);
+
                 StationDone();
             }
             Playing = false;
