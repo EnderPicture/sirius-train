@@ -12,7 +12,7 @@ public class StarSystem : MonoBehaviour
     public SpriteRenderer star5;
 
     float delay = 1;
-    float delayBetween = .25f; 
+    float delayBetween = .25f;
 
     public void setScore(int score)
     {
@@ -36,6 +36,8 @@ public class StarSystem : MonoBehaviour
         {
             star1.DOFade(1, 1f);
         }
+        // FindObjectOfType<AudioManager2>().Play("player", 3);
+        FindObjectOfType<AudioManager2>().Play("player", 1);
     }
     IEnumerator showStars2(int score){
         yield return new WaitForSeconds(delay+delayBetween);
@@ -43,6 +45,8 @@ public class StarSystem : MonoBehaviour
         {
             star2.DOFade(1, 1f);
         }
+        // FindObjectOfType<AudioManager2>().Play("player", 4);
+        FindObjectOfType<AudioManager2>().Play("player", 2);
     }
     IEnumerator showStars3(int score){
         yield return new WaitForSeconds(delay+delayBetween*2);
@@ -50,6 +54,7 @@ public class StarSystem : MonoBehaviour
         {
             star3.DOFade(1, 1f);
         }
+        FindObjectOfType<AudioManager2>().Play("player", 3);
     }
     IEnumerator showStars4(int score){
         yield return new WaitForSeconds(delay+delayBetween*3);
@@ -57,6 +62,8 @@ public class StarSystem : MonoBehaviour
         {
             star4.DOFade(1, 1f);
         }
+        // FindObjectOfType<AudioManager2>().Play("player", 6);
+        FindObjectOfType<AudioManager2>().Play("player", 4);
     }
     IEnumerator showStars5(int score){
         yield return new WaitForSeconds(delay+delayBetween*4);
@@ -64,5 +71,7 @@ public class StarSystem : MonoBehaviour
         {
             star5.DOFade(1, 1f);
         }
+        // FindObjectOfType<AudioManager2>().Play("player", 7);
+        FindObjectOfType<AudioManager2>().Play("player", 5);
     }
 }

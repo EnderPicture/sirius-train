@@ -80,13 +80,18 @@ public class AudioManager2 : MonoBehaviour
 		if (name == "player") {
 			AudioSource[] playerSources = this.transform.Find("aPlayerManager").GetComponents<AudioSource>();
 			if (playerSources != null) {
+				Debug.Log("Playing: " + number);
 				if(number > playerSources.Length) {
 					Debug.Log("Error: number to play > number of sources");
 				}
 				if (!playerSources[number].isPlaying) {
-					playerSources[number].volume = Random.Range(0.8f, 1.0f);
-					playerSources[number].pitch = Random.Range(0.8f, 1.1f);
-					playerSources[number].Play();
+					if (number == 2) {
+						playerSources[number].volume = Random.Range(0.8f, 1.0f);
+						playerSources[number].pitch = Random.Range(0.8f, 1.1f);
+						playerSources[number].Play();
+					} else {
+						playerSources[number].Play();
+					}
 				} else {
 					//IF it's already playing, fade away the sound
 					fade("player", number, 0.35f);
@@ -402,12 +407,12 @@ public class AudioManager2 : MonoBehaviour
 
 
 	public void PlayWindLoop() {
-		Debug.Log("PlayWindLoop");
+		// Debug.Log("PlayWindLoop");
 		anim.Play("wind");
 	}
 
 	public void playWindSound() {
-		Debug.Log("playWindSound");
+		// Debug.Log("playWindSound");
 		AudioSource[] ambientSources = this.transform.Find("aAmbientManager").GetComponents<AudioSource>();
 		AudioSource windSound = ambientSources[5];
 		if (ambientSources != null) {
@@ -416,7 +421,7 @@ public class AudioManager2 : MonoBehaviour
 			}
 			if (!windSound.isPlaying) {
 				// windSound.pitch = trainSpeed * 0.55f;
-				Debug.Log("windSound.Play();");
+				// Debug.Log("windSound.Play();");
 				windSound.Play();
 			}
 		}
