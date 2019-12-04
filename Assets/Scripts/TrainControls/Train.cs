@@ -172,7 +172,7 @@ public class Train : MonoBehaviour
 
     public int GetConfortScore()
     {
-        return Mathf.RoundToInt(map(MaxAcceleration, .003f, .01f, 5, 0));
+        return Mathf.RoundToInt(map(MaxAcceleration, .005f, .01f, 5, 0));
     }
 
     void StationCheck()
