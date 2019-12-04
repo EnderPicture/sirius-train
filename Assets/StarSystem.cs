@@ -14,7 +14,7 @@ public class StarSystem : MonoBehaviour
     float delay = 1;
     float delayBetween = .25f;
 
-    public void setScore(int score)
+    public void setScore(int score, float extraDelay)
     {
         DOTween.Init();
         star1.color = new Color(star1.color.r, star1.color.g, star1.color.b, 0);
@@ -24,6 +24,11 @@ public class StarSystem : MonoBehaviour
         star5.color = new Color(star5.color.r, star5.color.g, star5.color.b, 0);
 
         score = Mathf.Clamp(score, 0, 5);
+        StartCoroutine(delayAnimation(score, extraDelay));
+    }
+    IEnumerator delayAnimation(int score, float customDelay)
+    {
+        yield return new WaitForSeconds(customDelay);
         StartCoroutine(showStars1(score));
         StartCoroutine(showStars2(score));
         StartCoroutine(showStars3(score));

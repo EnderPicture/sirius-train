@@ -114,10 +114,10 @@ public class ClipBoard : MonoBehaviour
         }
         ScanScore = sum / ScanScores.Count;
 
-        FinalParking.setScore(ParkingJobScore);
-        FinalTiming.setScore(TimingScore);
-        FinalConfort.setScore(MaxAccelerationScore);
-        FinalBonus.setScore(ScanScore);
+        FinalParking.setScore(ParkingJobScore, .1f);
+        FinalTiming.setScore(TimingScore, .2f);
+        FinalConfort.setScore(MaxAccelerationScore, .3f);
+        FinalBonus.setScore(ScanScore, .4f);
 
         winScreenScoreText.SetText("");
 
@@ -136,10 +136,10 @@ public class ClipBoard : MonoBehaviour
         MenuScreen.SetActive(false);
         DieScreen.SetActive(false);
 
-        Parking.setScore(parkingScore);
-        Timing.setScore(timeScore);
-        Confort.setScore(conScore);
-        Bonus.setScore(scanScore);
+        Parking.setScore(parkingScore, .1f);
+        Timing.setScore(timeScore, .2f);
+        Confort.setScore(conScore, .3f);
+        Bonus.setScore(scanScore, .4f);
 
         if (TimingText == "Too Early")
         {
