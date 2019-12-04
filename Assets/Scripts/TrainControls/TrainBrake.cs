@@ -15,6 +15,7 @@ public class TrainBrake : Module
     // Start is called before the first frame update
     new void Start()
     {
+        Animate = 1;
         StateText = transform.Find("Panel").Find("StateText").GetComponent<TextMeshPro>();
 
         Lever = transform.Find("Lever");
@@ -57,5 +58,10 @@ public class TrainBrake : Module
     public float GetBrakeValue()
     {
         return Brake;
+    }
+
+    public override float GetStatus()
+    {
+        return Ratio();
     }
 }

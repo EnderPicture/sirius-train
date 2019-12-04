@@ -14,10 +14,12 @@ public class Player : MonoBehaviour
 
     int Mode;
 
-    
+
 
     string WalkName;
     string IdleName;
+    string FLName;
+    string SLName;
 
     Rigidbody rb;
 
@@ -31,16 +33,22 @@ public class Player : MonoBehaviour
         {
             WalkName = "BWalk";
             IdleName = "BIdle";
+            FLName = "BFlever";
+            SLName = "BSlever";
         }
         else if (Mode == Config.DIESEL)
         {
             WalkName = "DWalk";
             IdleName = "DIdle";
+            FLName = "DFlever";
+            SLName = "DSlever";
         }
         else if (Mode == Config.STEAM)
         {
             WalkName = "SWalk";
             IdleName = "SIdle";
+            FLName = "SFlever";
+            SLName = "SSlever";
         }
     }
     void Start()
@@ -82,6 +90,9 @@ public class Player : MonoBehaviour
 
         if (ObjectInHand == null)
         {
+            // if nothing in hand, check for possible actions
+
+            // activate modules of possible
             float shortestDist = float.MaxValue;
             GameObject shortest = null;
             foreach (GameObject module in Modules)
@@ -97,7 +108,27 @@ public class Player : MonoBehaviour
             }
             if (shortest != null && Camera.getCameraMode() == CameraControl.MODE_CAMERA)
             {
-                shortest.GetComponent<Module>().SetActive(true);
+                // set the closest module to active
+                Module module = shortest.GetComponent<Module>();
+                module.SetActive(true);
+                if (Input.GetAxisRaw("HorizontalArrow") != 0)
+                {
+                    if (module.Animate != -1) {
+                        animator.speed = 0f;
+                        Debug.Log(module.GetStatus());
+                        if (module.Animate == 1) {
+                            animator.Play(FLName, 0, Mathf.Clamp(module.GetStatus(),0f,1f));
+                            animator.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                        } else if (module.Animate == 2) {
+                            animator.Play(SLName, 0, Mathf.Clamp(module.GetStatus(),0f,1f));
+                            animator.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                        }
+                    }
+                }
+                else
+                {
+                    animator.speed = 1f;
+                }
             }
 
             // pick up coal logic

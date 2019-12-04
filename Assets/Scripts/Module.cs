@@ -8,6 +8,9 @@ public class Module : MonoBehaviour
     GameObject ToolTip;
 
     protected bool Active = false;
+
+    public int Animate;
+
     // Start is called before the first frame update
     protected void Start()
     {
@@ -16,12 +19,22 @@ public class Module : MonoBehaviour
         ToolTip.SetActive(false);
     }
 
-    public void SetActive(bool active) {
+    public void SetActive(bool active)
+    {
         Active = active;
-        if (Active) {
+        if (Active)
+        {
             ToolTip.SetActive(true);
-        } else {
+        }
+        else
+        {
             ToolTip.SetActive(false);
         }
+    }
+
+    public virtual float GetStatus()
+    {
+        Debug.Log("WRONG ");
+        return 0;
     }
 }
