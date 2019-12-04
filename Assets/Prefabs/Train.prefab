@@ -1557,7 +1557,7 @@ MonoBehaviour:
   trainEnd: {fileID: 8263062041451614173}
   mainCamera: {fileID: 8263062041892312946}
   animal: {fileID: 6450088082299313877, guid: 10d8e045239081a418ea739a83bafa2f, type: 3}
-  amountToSpawn: 3
+  amountToSpawn: 5
 --- !u!1 &3886883975698688499
 GameObject:
   m_ObjectHideFlags: 0
@@ -9277,6 +9277,7 @@ MonoBehaviour:
   Speed: 0
   VisualSpeed: 0
   DragCoefficient: 0.3
+  PerfectStopPos: {fileID: 8263062041124238845}
   Menu: {fileID: 0}
   TrainIcon: {fileID: 7276947895927830085}
   SpeedText: {fileID: 8263062041463051307}

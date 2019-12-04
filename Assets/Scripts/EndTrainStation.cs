@@ -8,6 +8,8 @@ public class EndTrainStation : MonoBehaviour
     bool TrainInEnd = false;
     bool TrainInStart = false;
 
+    public Transform PerfectStop;
+
     private void OnTriggerEnter(Collider other)
     {
         GameObject collided = other.gameObject;
@@ -39,5 +41,10 @@ public class EndTrainStation : MonoBehaviour
     public bool GetTrainInStart()
     {
         return TrainInStart;
+    }
+
+    public float GetPos()
+    {
+        return PerfectStop.position.x;
     }
 }

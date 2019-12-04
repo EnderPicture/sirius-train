@@ -25,6 +25,12 @@ public class ClipBoard : MonoBehaviour
     public TextMeshPro winScreenScoreText;
     public TextMeshPro midWinScreenScoreText;
 
+    [Header("MidWinStars")]
+    public StarSystem Parking;
+    public StarSystem Timing;
+    public StarSystem Confort;
+    public StarSystem Bonus;
+
 
     private void Start()
     {
@@ -104,13 +110,12 @@ public class ClipBoard : MonoBehaviour
         MenuScreen.SetActive(false);
         DieScreen.SetActive(false);
 
-        midWinScreenScoreText.SetText(
-            $"Time Used: {timeScore}/40\n" +
-            $"Confort Level: {accScore}/30\n" +
-            $"Parking Job: {parkingScore}/30\n" +
-            "\n" +
-            "Final Score: " + (timeScore + accScore + parkingScore) + $"/100 with {scanScore} BONUS"
-        );
+        Parking.setScore(5);
+        Timing.setScore(5);
+        Confort.setScore(5);
+        Bonus.setScore(5);
+
+        midWinScreenScoreText.SetText("");
 
         show = 1;
     }
