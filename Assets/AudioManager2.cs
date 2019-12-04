@@ -80,7 +80,7 @@ public class AudioManager2 : MonoBehaviour
 		if (name == "player") {
 			AudioSource[] playerSources = this.transform.Find("aPlayerManager").GetComponents<AudioSource>();
 			if (playerSources != null) {
-				Debug.Log("Playing: " + number);
+				// Debug.Log("Playing: " + number);
 				if(number > playerSources.Length) {
 					Debug.Log("Error: number to play > number of sources");
 				}

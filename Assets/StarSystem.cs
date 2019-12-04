@@ -35,39 +35,39 @@ public class StarSystem : MonoBehaviour
         if (score > 0)
         {
             star1.DOFade(1, 1f);
+            FindObjectOfType<AudioManager2>().Play("player", 1);
         }
-        FindObjectOfType<AudioManager2>().Play("player", 1);
     }
     IEnumerator showStars2(int score){
         yield return new WaitForSeconds(delay+delayBetween);
         if (score > 1)
         {
             star2.DOFade(1, 1f);
+            FindObjectOfType<AudioManager2>().Play("player", 2);
         }
-        FindObjectOfType<AudioManager2>().Play("player", 2);
     }
     IEnumerator showStars3(int score){
         yield return new WaitForSeconds(delay+delayBetween*2);
         if (score > 2)
         {
             star3.DOFade(1, 1f);
+            FindObjectOfType<AudioManager2>().Play("player", 3);
         }
-        FindObjectOfType<AudioManager2>().Play("player", 3);
     }
     IEnumerator showStars4(int score){
         yield return new WaitForSeconds(delay+delayBetween*3);
         if (score > 3)
         {
             star4.DOFade(1, 1f);
+            FindObjectOfType<AudioManager2>().Play("player", 4);
         }
-        FindObjectOfType<AudioManager2>().Play("player", 4);
     }
     IEnumerator showStars5(int score){
         yield return new WaitForSeconds(delay+delayBetween*4);
         if (score > 4)
         {
             star5.DOFade(1, 1f);
+            FindObjectOfType<AudioManager2>().Play("player", 5);
         }
-        FindObjectOfType<AudioManager2>().Play("player", 5);
     }
 }
