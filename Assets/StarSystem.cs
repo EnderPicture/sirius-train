@@ -36,7 +36,6 @@ public class StarSystem : MonoBehaviour
         {
             star1.DOFade(1, 1f);
         }
-        // FindObjectOfType<AudioManager2>().Play("player", 3);
         FindObjectOfType<AudioManager2>().Play("player", 1);
     }
     IEnumerator showStars2(int score){
@@ -45,7 +44,6 @@ public class StarSystem : MonoBehaviour
         {
             star2.DOFade(1, 1f);
         }
-        // FindObjectOfType<AudioManager2>().Play("player", 4);
         FindObjectOfType<AudioManager2>().Play("player", 2);
     }
     IEnumerator showStars3(int score){
@@ -62,7 +60,6 @@ public class StarSystem : MonoBehaviour
         {
             star4.DOFade(1, 1f);
         }
-        // FindObjectOfType<AudioManager2>().Play("player", 6);
         FindObjectOfType<AudioManager2>().Play("player", 4);
     }
     IEnumerator showStars5(int score){
@@ -71,7 +68,6 @@ public class StarSystem : MonoBehaviour
         {
             star5.DOFade(1, 1f);
         }
-        // FindObjectOfType<AudioManager2>().Play("player", 7);
         FindObjectOfType<AudioManager2>().Play("player", 5);
     }
 }
