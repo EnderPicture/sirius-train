@@ -81,11 +81,11 @@ public class Train : MonoBehaviour
     float MaxAcceleration;
     float TimeStarted;
 
-    float scanScore;
-    List<float> MaxAccelerationScores = new List<float>();
-    List<float> ParkingJobScores = new List<float>();
-    List<float> TimingScores = new List<float>();
-    List<float> ScanScores = new List<float>();
+    int scanScore;
+    List<int> MaxAccelerationScores = new List<int>();
+    List<int> ParkingJobScores = new List<int>();
+    List<int> TimingScores = new List<int>();
+    List<int> ScanScores = new List<int>();
 
     bool GameDone = false;
 
@@ -125,7 +125,8 @@ public class Train : MonoBehaviour
 
     }
 
-    public void addScanScore() {
+    public void addScanScore()
+    {
         scanScore++;
     }
 
@@ -174,14 +175,19 @@ public class Train : MonoBehaviour
 
     float distBetweenStation(EndTrainStation station)
     {
+        Debug.Log(MaxAcceleration);
         return station.GetPos() - PerfectStopPos.transform.position.x;
+    }
+
+    public int GetConfortScore()
+    {
+        return Mathf.RoundToInt(map(MaxAcceleration, .003f, .01f, 5, 0));
     }
 
     void StationCheck()
     {
         int level = FindObjectOfType<AudioManager2>().getLevel();
-
-        float dist = nextStation.transform.position.x - transform.position.x;
+        float dist = distBetweenStation(nextStation);
         DistFromStation = dist;
 
         //play a sound if the player is halfway between stations
@@ -217,7 +223,10 @@ public class Train : MonoBehaviour
         TrainIcon.transform.localPosition = iconPos;
     }
 
-
+    float map(float value, float start1, float stop1, float start2, float stop2)
+    {
+        return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+    }
     void WinCheck()
     {
         if (IsInStation())
@@ -234,11 +243,13 @@ public class Train : MonoBehaviour
                 Debug.Log("InWinState");
                 GameDone = true;
                 float timeUsed = Time.realtimeSinceStartup - TimeStarted;
-                Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScores);
+                // Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScores);
             }
             else
             {
-                Menu.ShowMidWin(DistFromStation, MaxAcceleration, GetTimeRemaining(), scanScore);
+                // score calc
+
+                Menu.ShowMidWin(GetParkingScore(), GetConfortScore(), TimingScore(), scanScore, GetTimingText());
 
                 //play a sound if the player just parked
                 int level = FindObjectOfType<AudioManager2>().getLevel();
@@ -265,12 +276,17 @@ public class Train : MonoBehaviour
         }
     }
 
+    public int GetParkingScore()
+    {
+        return Mathf.RoundToInt(map(Mathf.Abs(DistFromStation), 0, 6, 5, 0));
+    }
+
     void StationDone()
     {
-        ParkingJobScores.Add(DistFromStation);
-        MaxAccelerationScores.Add(MaxAcceleration);
+        ParkingJobScores.Add(GetParkingScore());
+        MaxAccelerationScores.Add(GetConfortScore());
         MaxAcceleration = 0;
-        TimingScores.Add(GetTimeRemaining());
+        TimingScores.Add(TimingScore());
         ScanScores.Add(scanScore);
         scanScore = 0;
 
@@ -423,6 +439,7 @@ public class Train : MonoBehaviour
     void Timing()
     {
         TimeText.SetText(GetTimeRemaining().ToString("F2") + "");
+        string text = GetTimingText();
         if (GetTimeRemaining() > 50)
         {
             TimeStatusText.SetText("Too Early");
@@ -438,6 +455,48 @@ public class Train : MonoBehaviour
         else
         {
             TimeStatusText.SetText("Late");
+        }
+    }
+    public int TimingScore()
+    {
+        if (GetTimeRemaining() > 100)
+        {
+            return 1;
+        }
+        else if (GetTimeRemaining() > 50)
+        {
+            return 2;
+        }
+        else if (GetTimeRemaining() > 20)
+        {
+            return 3;
+        }
+        else if (GetTimeRemaining() > 0)
+        {
+            return 5;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    public string GetTimingText()
+    {
+        if (GetTimeRemaining() > 50)
+        {
+            return "Too Early";
+        }
+        else if (GetTimeRemaining() > 20)
+        {
+            return "Early";
+        }
+        else if (GetTimeRemaining() > 0)
+        {
+            return "Perfect";
+        }
+        else
+        {
+            return "Late";
         }
     }
 

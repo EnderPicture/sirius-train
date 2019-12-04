@@ -103,19 +103,31 @@ public class ClipBoard : MonoBehaviour
         return start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
     }
 
-    public void ShowMidWin(float parkingScore, float accScore, float timeScore, float scanScore)
+    public void ShowMidWin(int parkingScore, int conScore, int timeScore, int scanScore, string TimingText)
     {
         WinScreen.SetActive(false);
         MidWinScreen.SetActive(true);
         MenuScreen.SetActive(false);
         DieScreen.SetActive(false);
 
-        Parking.setScore(5);
-        Timing.setScore(5);
-        Confort.setScore(5);
-        Bonus.setScore(5);
+        Parking.setScore(parkingScore);
+        Timing.setScore((int)timeScore);
+        Confort.setScore(conScore);
+        Bonus.setScore((int)scanScore);
 
-        midWinScreenScoreText.SetText("");
+        if (TimingText == "Too Early") {
+            TimingText = TimingText+"...";
+        }
+        if (TimingText == "Early") {
+            TimingText = TimingText+"?";
+        }
+        if (TimingText == "Perfect") {
+            TimingText = TimingText+"!!";
+        }
+        if (TimingText == "Late") {
+            TimingText = TimingText+"...";
+        }
+        midWinScreenScoreText.SetText(TimingText);
 
         show = 1;
     }
