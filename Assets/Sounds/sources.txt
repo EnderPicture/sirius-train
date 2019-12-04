@@ -1,0 +1,33 @@
+Audio sources:
+(most, if not all of these sounds were edited in post for usage)
+
+https://freesound.org/people/astronaut_13579/sounds/117081/
+https://freesound.org/people/cognito%20perceptu/sounds/181868/
+https://freesound.org/people/nikohfb/sounds/59523/
+https://freesound.org/people/kyles/sounds/453333/
+https://freesound.org/people/AslakHostaker/sounds/395042/
+https://freesound.org/people/AslakHostaker/sounds/395041/
+https://freesound.org/people/Cell31_Sound_Productions/sounds/264014/
+https://freesound.org/people/Vurca/sounds/315753/
+https://freesound.org/people/Claire.H/sounds/182348/
+https://freesound.org/people/Phil25/sounds/208101/
+https://freesound.org/people/coldwellw/sounds/172748/
+https://freesound.org/people/scarbelly25/sounds/33943/
+https://freesound.org/people/Piggimon/sounds/366387/
+https://freesound.org/people/AGC66/sounds/393865/
+https://freesound.org/people/Pastabra/sounds/366010/
+https://freesound.org/people/Ryding/sounds/338963/
+https://freesound.org/people/Diboz/sounds/212104/
+https://freesound.org/people/DNAudio_UK/sounds/263809/
+https://freesound.org/people/jittels/sounds/366603/
+https://freesound.org/people/Doctor_Jekyll/sounds/254064/
+https://freesound.org/people/zaphodikus/sounds/342989/
+https://freesound.org/people/-Hero_of_the_Winds-/sounds/127910/
+https://freesound.org/people/tiredoldwhiteman/sounds/95376/
+https://freesound.org/people/SamuelGremaud/sounds/457443/
+https://freesound.org/people/brunoboselli/sounds/457294/
+https://freesound.org/people/adamamazing/sounds/274478/
+https://freesound.org/people/kyles/sounds/453444/
+https://freesound.org/people/kwahmah_02/sounds/260138/ https://freesound.org/people/InspectorJ/sounds/456440/
+https://www.youtube.com/watch?v=6OT43pvUyfY
+https://docs.unity3d.com/ScriptReference/AudioSource-pitch.html
