@@ -23,6 +23,7 @@ public class AudioManager2 : MonoBehaviour
 	int screechTimeInterval = 2000;
 
 	private bool playingBells = false;
+	private bool stars = false;
 
 	public void Play(string name, int number) {
 
@@ -475,7 +476,7 @@ public class AudioManager2 : MonoBehaviour
 
 		int screechSound = Random.Range(0, 3);
 		if ((trainSpeed >= 2.0f) && screechTimePassed >= screechTimeInterval) {
-			Debug.Log("Screech Sound: " + screechSound);
+			// Debug.Log("Screech Sound: " + screechSound);
 			screechTimePassed = 0;
 			screechTimeInterval = Random.Range(1000, 3000);
 			if (screechSound == 0) {
@@ -490,6 +491,11 @@ public class AudioManager2 : MonoBehaviour
 		}
 	}
 
+	//takes in values between 1 to 5 and plays it that many times through recursion
+	void playStarSounds() {
+		Debug.Log("star sounds");
+	}
+
 	// Start is called before the first frame update
     void Start()
     {
@@ -500,13 +506,12 @@ public class AudioManager2 : MonoBehaviour
     void Update()
     {
         PlayWheelLoop(trainSpeed);
-
 				if(level == 1 || level == 2 ) {
 					playPressureRandomly();
 				}
 				playScreechRandomly();
-
 				PlayWindLoop();
+
 
 		}
 
