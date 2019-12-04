@@ -17,8 +17,10 @@ public class AudioManager2 : MonoBehaviour
 	public AudioSource source4;
 
 	public int level = 1;
-	int timePassed = 0;
-	int timeInterval = 1000;
+	int pressureTimePassed = 0;
+	int screechTimePassed = 0;
+	int pressureTimeInterval = 1000;
+	int screechTimeInterval = 2000;
 
 	private bool playingBells = false;
 
@@ -51,7 +53,7 @@ public class AudioManager2 : MonoBehaviour
 		if (name == "train") {
 			AudioSource[] trainSources = this.transform.Find("aTrainManager").GetComponents<AudioSource>();
 			if (trainSources != null) {
-				// Debug.Log(number);
+				// Debug.Log("Playing: " + number);
 				// Debug.Log(trainSources.Length);
 				// Debug.Log(trainSources[number].isPlaying);
 				if(number > trainSources.Length) {
@@ -363,30 +365,6 @@ public class AudioManager2 : MonoBehaviour
 
 	}
 
-	//for levels 1 and 2 (not electric)
-	void playPressureRandomly(){
-		timePassed++;
-		// Debug.Log(timePassed);
-		if ((level == 1 || level == 2) && timePassed >= timeInterval) {
-			timePassed = 0;
-			timeInterval = Random.Range(700, 1500);
-			int pressureSound = Random.Range(0, 4);
-			if (pressureSound == 0) {
-				// Debug.Log("pressure 0");
-				FindObjectOfType<AudioManager2>().Play("pressure", 0);
-			}
-			if (pressureSound == 1) {
-				FindObjectOfType<AudioManager2>().Play("pressure", 1);
-			}
-			if (pressureSound == 2) {
-				FindObjectOfType<AudioManager2>().Play("pressure", 3);
-			}
-			if (pressureSound == 3) {
-				FindObjectOfType<AudioManager2>().Play("pressure", 5);
-			}
-		}
-	}
-
 	public void playBells(){
 		// Debug.Log("playBellLoop");
 		anim.Play("bell");
@@ -425,17 +403,6 @@ public class AudioManager2 : MonoBehaviour
 	public void PlayWindLoop() {
 		// Debug.Log("PlayWindLoop");
 		anim.Play("wind");
-
-		// AudioSource[] ambientSources = this.transform.Find("aAmbientManager").GetComponents<AudioSource>();
-		// if (ambientSources != null) {
-		// 	if (5 > ambientSources.Length) {
-		// 		Debug.Log("Error: number to play > number of sources");
-		// 	}
-		// 	if (!ambientSources[5].isPlaying) {
-		// 		Debug.Log("playWindSound");
-		// 		playWindSound();
-		// 	}
-		// }
 	}
 
 	public void playWindSound() {
@@ -447,7 +414,7 @@ public class AudioManager2 : MonoBehaviour
 			}
 			if (!windSound.isPlaying) {
 				// windSound.pitch = trainSpeed * 0.55f;
-				Debug.Log("windSound.Play();");
+				// Debug.Log("windSound.Play();");
 				windSound.Play();
 			}
 		}
@@ -476,6 +443,53 @@ public class AudioManager2 : MonoBehaviour
 
 	}
 
+	//for levels 1 and 2 (not electric)
+	void playPressureRandomly(){
+		pressureTimePassed++;
+		// Debug.Log(pressureTimePassed);
+		if ((level == 1 || level == 2) && pressureTimePassed >= pressureTimeInterval) {
+			pressureTimePassed = 0;
+			pressureTimeInterval = Random.Range(700, 1500);
+			int pressureSound = Random.Range(0, 4);
+			if (pressureSound == 0) {
+				// Debug.Log("pressure 0");
+				FindObjectOfType<AudioManager2>().Play("pressure", 0);
+			}
+			if (pressureSound == 1) {
+				FindObjectOfType<AudioManager2>().Play("pressure", 1);
+			}
+			if (pressureSound == 2) {
+				FindObjectOfType<AudioManager2>().Play("pressure", 3);
+			}
+			if (pressureSound == 3) {
+				FindObjectOfType<AudioManager2>().Play("pressure", 5);
+			}
+		}
+	}
+
+	void playScreechRandomly() {
+
+		screechTimePassed++;
+		// Debug.Log("Screech Time Passed: " + screechTimePassed);
+		// Debug.Log("Screech Interval: " + screechTimeInterval);
+
+		int screechSound = Random.Range(0, 3);
+		if ((trainSpeed >= 2.0f) && screechTimePassed >= screechTimeInterval) {
+			Debug.Log("Screech Sound: " + screechSound);
+			screechTimePassed = 0;
+			screechTimeInterval = Random.Range(1000, 3000);
+			if (screechSound == 0) {
+				FindObjectOfType<AudioManager2>().Play("train", 7);
+			}
+			if (screechSound == 1) {
+				FindObjectOfType<AudioManager2>().Play("train", 8);
+			}
+			if (screechSound == 2) {
+				FindObjectOfType<AudioManager2>().Play("train", 9);
+			}
+		}
+	}
+
 	// Start is called before the first frame update
     void Start()
     {
@@ -490,37 +504,10 @@ public class AudioManager2 : MonoBehaviour
 				if(level == 1 || level == 2 ) {
 					playPressureRandomly();
 				}
+				playScreechRandomly();
 
 				PlayWindLoop();
 
-				// timePassed++;
-				// // Debug.Log(timePassed);
-				// if ((level == 1 || level == 2) && timePassed >= timeInterval) {
-				// 	timePassed = 0;
-				// 	timeInterval = Random.Range(700, 1500);
-				// 	int pressureSound = Random.Range(0, 4);
-				// 	if (pressureSound == 0) {
-				// 		// Debug.Log("pressure 0");
-				// 		FindObjectOfType<AudioManager2>().Play("pressure", 0);
-				// 	}
-				// 	if (pressureSound == 1) {
-				// 		FindObjectOfType<AudioManager2>().Play("pressure", 1);
-				// 	}
-				// 	if (pressureSound == 2) {
-				// 		FindObjectOfType<AudioManager2>().Play("pressure", 3);
-				// 	}
-				// 	if (pressureSound == 3) {
-				// 		FindObjectOfType<AudioManager2>().Play("pressure", 5);
-				// 	}
-				// }
-
-		// //Debug.Log(trainSpeed);
-		// if(Input.GetKeyDown("i")) {
-		// 	// Debug.Log("speed up");
-		// 	trainSpeed+=0.2f;
-		// } else if (Input.GetKeyDown("o")){
-		// 	// Debug.Log("speed down");
-		// 	trainSpeed-=0.2f;
 		}
 
 }
