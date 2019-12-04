@@ -16,6 +16,8 @@ public class WorldGen : MonoBehaviour
     public GameObject Track;
     public GameObject Wires;
 
+    public Camera CameraComponent;
+
     public Color[] scheme1 = {
         new Color(0.213726f,0.117647f,0.072549f),
         new Color(0.347059f,0.264706f,0.186275f),
@@ -58,6 +60,9 @@ public class WorldGen : MonoBehaviour
         {
             colorScheme = scheme3;
         }
+
+        CameraComponent.backgroundColor = colorScheme[4];
+
         GameObject Terrain = new GameObject();
         Terrain.transform.parent = transform;
         Terrain.name = "Terrain";
@@ -167,6 +172,8 @@ public class WorldGen : MonoBehaviour
         GameObject Track;
         GameObject Wires;
 
+        
+
         public Chunk(GameObject parent, float width, Color[] color, GameObject track, GameObject wires, int mode)
         {
             Wires = wires;
@@ -174,6 +181,8 @@ public class WorldGen : MonoBehaviour
             Width = width;
 
             ColorScheme = color;
+
+    
 
             // main container for the whole chunk
             Con = new GameObject();
