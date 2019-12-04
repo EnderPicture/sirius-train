@@ -115,7 +115,6 @@ public class Player : MonoBehaviour
                 {
                     if (module.Animate != -1) {
                         animator.speed = 0f;
-                        Debug.Log(module.GetStatus());
                         if (module.Animate == 1) {
                             animator.Play(FLName, 0, Mathf.Clamp(module.GetStatus(),0f,1f));
                             animator.gameObject.GetComponent<SpriteRenderer>().flipX = true;
