@@ -63,6 +63,7 @@ MonoBehaviour:
   Station: {fileID: 396579718559918292, guid: 00d87e97a32f1414dac1b28477988787, type: 3}
   Locator: {fileID: 0}
   Track: {fileID: 2287137848486947066, guid: 65919ace5f3882a41a7b9ffafd7d25ab, type: 3}
+  Wires: {fileID: 3134450157928299199, guid: 3166bdbf2a9430f4eacdfe85c13c1748, type: 3}
   scheme1:
   - {r: 0.21176472, g: 0.10196079, b: 0.06666667, a: 1}
   - {r: 0.427451, g: 0.20784315, b: 0.13333334, a: 1}

@@ -14,6 +14,7 @@ public class WorldGen : MonoBehaviour
     Chunk[] Chunks = new Chunk[3];
     public Transform Locator;
     public GameObject Track;
+    public GameObject Wires;
 
     public Color[] scheme1 = {
         new Color(0.213726f,0.117647f,0.072549f),
@@ -62,7 +63,7 @@ public class WorldGen : MonoBehaviour
         Terrain.name = "Terrain";
         for (int i = 0; i < Chunks.Length; i++)
         {
-            Chunks[i] = new Chunk(Terrain, ChunkWidth, colorScheme, Track, Manager.level);
+            Chunks[i] = new Chunk(Terrain, ChunkWidth, colorScheme, Track, Wires, Manager.level);
         }
 
     }
@@ -138,6 +139,10 @@ public class WorldGen : MonoBehaviour
         GameObject MountainsLayer;
         float[] MountainsDepth = { 50, 100 };
 
+        GameObject[] Clouds;
+        GameObject CloudsLayer;
+        float[] CloudsDepth = { 39, 49 };
+
         GameObject[] Hills;
         GameObject HillsLayer;
         float[] HillsDepth = { 13, 49 };
@@ -148,6 +153,7 @@ public class WorldGen : MonoBehaviour
 
 
         GameObject TracksLayer;
+        GameObject WiresLayer;
 
 
         float MaxBrightness = 100;
@@ -159,9 +165,11 @@ public class WorldGen : MonoBehaviour
         float Width;
 
         GameObject Track;
+        GameObject Wires;
 
-        public Chunk(GameObject parent, float width, Color[] color, GameObject track, int mode)
+        public Chunk(GameObject parent, float width, Color[] color, GameObject track, GameObject wires, int mode)
         {
+            Wires = wires;
             Track = track;
             Width = width;
 
@@ -184,6 +192,11 @@ public class WorldGen : MonoBehaviour
             MountainsLayer.transform.position = new Vector3(0, 2.48f, MountainsDepth[0]);
             MountainsLayer.name = "Mountains";
 
+            CloudsLayer = new GameObject();
+            CloudsLayer.transform.parent = Con.transform;
+            CloudsLayer.transform.position = new Vector3(0, 2.48f, CloudsDepth[0]);
+            CloudsLayer.name = "Clouds";
+
             HillsLayer = new GameObject();
             HillsLayer.transform.parent = Con.transform;
             HillsLayer.transform.position = new Vector3(0, -1.21f, HillsDepth[0]);
@@ -194,11 +207,29 @@ public class WorldGen : MonoBehaviour
             HillsFrontLayer.transform.position = new Vector3(0, -0.27f, HillsFrontDepth[0]);
             HillsFrontLayer.name = "HillsFront";
 
+            Clouds = LoadSprites("Clouds", 10, CloudsLayer, new Vector3(2, 1, 1), "Background");
             Mountains = LoadSprites("Mountains/LessCalm", 10, MountainsLayer, new Vector3(2, 1, 1), "Background");
             Trees = LoadSprites("Trees", 5, TreesLayer, new Vector3(0.6f, 0.6f, 0.6f), "Background");
             Hills = LoadSprites("Mountains/Calm", 10, HillsLayer, new Vector3(2, 1, 1), "Background");
             HillsFront = LoadSprites("Mountains/Calm", 10, HillsFrontLayer, new Vector3(2, 1, 1), "Foreground");
 
+            if (mode == Config.BULLET)
+            {
+                WiresLayer = new GameObject();
+                WiresLayer.transform.parent = Con.transform;
+                WiresLayer.transform.position = new Vector3(0, 0.321f, 0);
+                WiresLayer.name = "Wires";
+                int number = 11;
+                for (int c = 0; c < number; c++)
+                {
+                    GameObject newWires = Object.Instantiate(Wires);
+                    newWires.transform.parent = WiresLayer.transform;
+                    newWires.transform.localScale = new Vector3(0.5781811f-.018f, 0.5781811f, 0.5781811f);
+                    SpriteRenderer spriteRenderer = newWires.GetComponent<SpriteRenderer>();
+                    spriteRenderer.sortingOrder = -2;
+                    newWires.transform.localPosition = new Vector3(width/number*c, 0, 0);
+                }
+            }
 
             TracksLayer = new GameObject();
             TracksLayer.transform.parent = Con.transform;
@@ -236,6 +267,7 @@ public class WorldGen : MonoBehaviour
             position.x = CurrentIndex * Width;
             Con.transform.position = position;
 
+            RandomSpriteMix(Clouds, CloudsDepth, 10, .4f, new Color(ColorScheme[4].r, ColorScheme[4].g, ColorScheme[4].b, .5f));
             RandomSpriteMix(Mountains, MountainsDepth, 10, .2f, ColorScheme[3]);
             RandomSpriteMix(Trees, TreesDepth, 0, .2f, ColorScheme[2]);
             RandomSpriteMix(Hills, HillsDepth, 5, .2f, ColorScheme[1]);
@@ -257,7 +289,7 @@ public class WorldGen : MonoBehaviour
 
                     SpriteRenderer spriteRenderer = sprite.GetComponent<SpriteRenderer>();
                     float brightness = .3f * (spritePos.z / zRange);
-                    spriteRenderer.color = new Color(color.r + brightness, color.g + brightness, color.b + brightness);
+                    spriteRenderer.color = new Color(color.r + brightness, color.g + brightness, color.b + brightness, color.a);
                     spriteRenderer.sortingOrder = -(int)sprite.transform.position.z;
                     sprite.SetActive(true);
                 }
