@@ -35,6 +35,7 @@ public class Train : MonoBehaviour
     public float VisualSpeed = 0;
 
     public float DragCoefficient = 013f;
+    public Transform PerfectStopPos;
 
     [Header("Display")]
     public ClipBoard Menu;
@@ -173,7 +174,7 @@ public class Train : MonoBehaviour
 
     float distBetweenStation(EndTrainStation station)
     {
-        return station.transform.position.x - transform.position.x;
+        return station.GetPos() - PerfectStopPos.transform.position.x;
     }
 
     void StationCheck()
