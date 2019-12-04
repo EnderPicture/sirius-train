@@ -48,7 +48,7 @@ public class AudioManager2 : MonoBehaviour
 			AudioSource[] trainSources = this.transform.Find("aTrainManager").GetComponents<AudioSource>();
 			if (trainSources != null) {
 				// Debug.Log(number);
-				Debug.Log(trainSources.Length);
+				// Debug.Log(trainSources.Length);
 				// Debug.Log(trainSources[number].isPlaying);
 				if(number > trainSources.Length) {
 					Debug.Log("Error: number to play > number of sources");
@@ -120,7 +120,8 @@ public class AudioManager2 : MonoBehaviour
 		// Debug.Log(speed);
 
 		//if level 3 (steam train)
-		if(level == 3) {
+		//numbers swapped last minute, 1 <----> 3
+		if(level == 1) {
 			//steam
 			//set animation volume and pitch
 			// Debug.Log("source1.pitch" + source1.pitch);
@@ -129,7 +130,7 @@ public class AudioManager2 : MonoBehaviour
 			// Debug.Log("source2.volume " + source2.volume);
 			//play animation
 			anim.Play("dieselSound");
-			anim.Play("sound");
+			anim.Play("sound 1");
 		}
 
 		//else if level 2 (diesel train)
@@ -145,18 +146,18 @@ public class AudioManager2 : MonoBehaviour
 			// Debug.Log("source1.volume " + source1.volume);
 			// Debug.Log("source2.volume " + source2.volume);
 			//play animation
-			anim.Play("sound");
+			anim.Play("sound 1");
 		}
 
 		//else if level 1 (electric train)
-
-		if (level == 1) {
+		//numbers swapped last minute, 1 <----> 3
+		if (level == 3) {
 			//set animation volume and pitch
 			// Debug.Log("source4.pitch " + source4.pitch);
 			// Debug.Log("source4.volume " + source4.volume);
 			//play animation
 			anim.Play("electricSound");
-			anim.Play("sound");
+			anim.Play("sound 1");
 		}
 
 	}
