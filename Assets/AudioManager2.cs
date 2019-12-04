@@ -170,10 +170,6 @@ public class AudioManager2 : MonoBehaviour
 
 	}
 
-	public void bellLoop() {
-
-	}
-
 	public void playWheel1() {
 		if (!source1.isPlaying) {
 			source1.pitch = trainSpeed*0.55f;
@@ -425,6 +421,61 @@ public class AudioManager2 : MonoBehaviour
 		playingBells = setting;
 	}
 
+
+	public void PlayWindLoop() {
+		// Debug.Log("PlayWindLoop");
+		anim.Play("wind");
+
+		// AudioSource[] ambientSources = this.transform.Find("aAmbientManager").GetComponents<AudioSource>();
+		// if (ambientSources != null) {
+		// 	if (5 > ambientSources.Length) {
+		// 		Debug.Log("Error: number to play > number of sources");
+		// 	}
+		// 	if (!ambientSources[5].isPlaying) {
+		// 		Debug.Log("playWindSound");
+		// 		playWindSound();
+		// 	}
+		// }
+	}
+
+	public void playWindSound() {
+		AudioSource[] ambientSources = this.transform.Find("aAmbientManager").GetComponents<AudioSource>();
+		AudioSource windSound = ambientSources[5];
+		if (ambientSources != null) {
+			if (5 > ambientSources.Length) {
+				Debug.Log("Error: number to play > number of sources");
+			}
+			if (!windSound.isPlaying) {
+				// windSound.pitch = trainSpeed * 0.55f;
+				Debug.Log("windSound.Play();");
+				windSound.Play();
+			}
+		}
+
+		windSound.pitch = (trainSpeed* 1.2f) + Random.Range(-0.6f, 0.6f);;
+		// windSound.volume = trainSpeed * 0.45f;
+
+		if (windSound.pitch >= 8.0f) {
+			windSound.pitch = 8.0f + Random.Range(-0.6f, 0.6f);
+			// windSound.pitch = 8.0f;
+		}
+		if (windSound.pitch <= 1.0f) {
+			windSound.pitch = 1.0f + Random.Range(-0.6f, 0.6f);;
+		}
+
+		if (windSound.volume <= 0.5f) {
+			windSound.volume = 0.5f;
+		}
+
+		// Debug.Log("train speed: " + trainSpeed);
+		if (trainSpeed <= 2.0) {
+			windSound.volume = 0.0f;
+		} else if (trainSpeed > 2.0f) {
+			windSound.volume = trainSpeed*0.25f;
+		}
+
+	}
+
 	// Start is called before the first frame update
     void Start()
     {
@@ -439,6 +490,8 @@ public class AudioManager2 : MonoBehaviour
 				if(level == 1 || level == 2 ) {
 					playPressureRandomly();
 				}
+
+				PlayWindLoop();
 
 				// timePassed++;
 				// // Debug.Log(timePassed);

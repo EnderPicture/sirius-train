@@ -197,15 +197,17 @@ public class Train : MonoBehaviour
         }
 
       //Play bells if close to station
-      if ((DistFromStationInit > 200) && DistFromStation <= 20 && bellsAlreadyPlayed == false) {
-        bellsAlreadyPlayed = true;
-        FindObjectOfType<AudioManager2>().Play("ambient", 3);
-      }
-      if ((DistFromStationInit < 200) && DistFromStation < DistFromStationInit/4 && bellsAlreadyPlayed == false) {
-        // bellsAlreadyPlayed = true;
-        // FindObjectOfType<AudioManager2>().Play("ambient", 3);
-        FindObjectOfType<AudioManager2>().setBells(true);
-        FindObjectOfType<AudioManager2>().playBells();
+      if (level != 3) {
+        if ((DistFromStationInit > 200) && DistFromStation <= 20 && bellsAlreadyPlayed == false) {
+          bellsAlreadyPlayed = true;
+          FindObjectOfType<AudioManager2>().Play("ambient", 3);
+        }
+        if ((DistFromStationInit < 200) && DistFromStation < DistFromStationInit/4 && bellsAlreadyPlayed == false) {
+          // bellsAlreadyPlayed = true;
+          // FindObjectOfType<AudioManager2>().Play("ambient", 3);
+          FindObjectOfType<AudioManager2>().setBells(true);
+          FindObjectOfType<AudioManager2>().playBells();
+        }
       }
 
         Vector3 iconPos = TrainIcon.transform.localPosition;
