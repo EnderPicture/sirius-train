@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpeedMultiplier: 0.5
+  Camera: {fileID: 0}
 --- !u!1001 &5464557630397195208
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -107,6 +108,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Graphics
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876833318936919513, guid: 5f9510ecd89fc784f85047c2048728fe,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876833318936919513, guid: 5f9510ecd89fc784f85047c2048728fe,
+        type: 3}
+      propertyPath: m_FlipY
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5616786603898226036, guid: 5f9510ecd89fc784f85047c2048728fe,
         type: 3}
@@ -177,16 +188,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.4354243
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876833318936919513, guid: 5f9510ecd89fc784f85047c2048728fe,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4876833318936919513, guid: 5f9510ecd89fc784f85047c2048728fe,
-        type: 3}
-      propertyPath: m_FlipY
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 7243324766535440047, guid: 5f9510ecd89fc784f85047c2048728fe,

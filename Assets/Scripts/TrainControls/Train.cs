@@ -6,28 +6,62 @@ using UnityEditor;
 
 public class Train : MonoBehaviour
 {
+
     public static readonly int TRAIN_MODE_BULLET = 1;
+
     public static readonly int TRAIN_MODE_DIESEL = 2;
+
     public static readonly int TRAIN_MODE_STEAM = 3;
 
-    int Mode = TRAIN_MODE_BULLET;
 
-
+    [Header("Train Controls")]
     public TrainThrottle Throttle;
+
     public TrainBrake Brake;
+
     public TrainTemperature Temperature;
+
     public TrainPressure Pressure;
+
     public CoalSpawn Coal;
+
     public TrainGearbox Gearbox;
 
-
+    [Header("Train Settings")]
     public float FuelAmount = 100;
 
-
     public float Speed = 0;
+
     public float VisualSpeed = 0;
+
     public float DragCoefficient = 013f;
 
+    [Header("Display")]
+    public ClipBoard Menu;
+
+    public GameObject TrainIcon;
+
+    public TextMeshPro SpeedText;
+
+    public TextMeshPro StationText;
+
+    public TextMeshPro TimeText;
+
+    public TextMeshPro TimeStatusText;
+
+
+    public TextMeshPro SpeedLimitText;
+
+    public TextMeshPro FuelText;
+
+    [Header("Other")]
+    public bool Playing = false;
+
+    public AnimalSpawner animalSpawner;
+
+
+
+    int Mode = TRAIN_MODE_BULLET;
 
     AudioManager2 AudioMan;
 
@@ -36,18 +70,7 @@ public class Train : MonoBehaviour
 
     int CoalUsed = 0;
 
-    public ClipBoard Menu;
-
-    public GameObject TrainIcon;
-
     float NextStationTime;
-
-    public TextMeshPro SpeedText;
-    public TextMeshPro StationText;
-    public TextMeshPro TimeText;
-    public TextMeshPro TimeStatusText;
-
-    public bool Playing = false;
 
     int NextStationID = -1;
     List<EndTrainStation> Stations;
@@ -56,15 +79,16 @@ public class Train : MonoBehaviour
     // score system values
     float MaxAcceleration;
     float TimeStarted;
-    List<float> ParkingJobScore = new List<float>();
-    List<float> TimingScore = new List<float>();
+
+    float scanScore;
+    List<float> MaxAccelerationScores = new List<float>();
+    List<float> ParkingJobScores = new List<float>();
+    List<float> TimingScores = new List<float>();
+    List<float> ScanScores = new List<float>();
 
     bool GameDone = false;
 
     float SpeedLimit;
-
-    public TextMeshPro SpeedLimitText;
-    public TextMeshPro FuelText;
 
     float TimePenalty = 0;
 
@@ -94,6 +118,10 @@ public class Train : MonoBehaviour
         }
         SpeedLimitText.SetText(SpeedLimit + "");
 
+    }
+
+    public void addScanScore() {
+        scanScore++;
     }
 
     public void SetupStations(List<EndTrainStation> stations)
@@ -129,6 +157,9 @@ public class Train : MonoBehaviour
             DistFromStationInit = dist;
             DistFromStation = dist;
             StationText.SetText("Station " + (NextStationID + 1) + "/" + Stations.Count);
+
+
+            animalSpawner.ActivateSpawn(transform.position, nextStation.transform.position);
         }
     }
 
@@ -165,22 +196,12 @@ public class Train : MonoBehaviour
                 Debug.Log("InWinState");
                 GameDone = true;
                 float timeUsed = Time.realtimeSinceStartup - TimeStarted;
-                Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScore);
+                Menu.ShowWin(timeUsed, MaxAcceleration, ParkingJobScores);
             }
             else
             {
-                Menu.ShowMidWin();
-                ParkingJobScore.Add(DistFromStation);
-                TimingScore.Add(GetTimeRemaining());
-                if (GetTimeRemaining() < 0)
-                {
-                    TimePenalty = -GetTimeRemaining();
-                }
-                else
-                {
-                    TimePenalty = 0;
-                }
-                NextStation();
+                Menu.ShowMidWin(DistFromStation, MaxAcceleration, GetTimeRemaining(), scanScore);
+                StationDone();
             }
             Playing = false;
         }
@@ -189,6 +210,26 @@ public class Train : MonoBehaviour
             Menu.ShowDieScreen();
             Playing = false;
         }
+    }
+
+    void StationDone()
+    {
+        ParkingJobScores.Add(DistFromStation);
+        MaxAccelerationScores.Add(MaxAcceleration);
+        MaxAcceleration = 0;
+        TimingScores.Add(GetTimeRemaining());
+        ScanScores.Add(scanScore);
+        scanScore = 0;
+
+        if (GetTimeRemaining() < 0)
+        {
+            TimePenalty = -GetTimeRemaining();
+        }
+        else
+        {
+            TimePenalty = 0;
+        }
+        NextStation();
     }
 
     public bool IsInStation()
@@ -393,5 +434,13 @@ public class Train : MonoBehaviour
     public float GetSpeed()
     {
         return Speed;
+    }
+    public float GetVisualSpeed()
+    {
+        return VisualSpeed;
+    }
+    public float GetSpeedLimit()
+    {
+        return SpeedLimit;
     }
 }

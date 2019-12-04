@@ -8,8 +8,8 @@ public class GameManager : MonoBehaviour
     /*
 
     level 1 = bullet
-    level 1 = diesel
-    level 1 = steam
+    level 2 = diesel
+    level 3 = steam
     
     part 1 = 2 short station
     part 1 = 3 long station
@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        part = PlayerPrefs.GetInt("Level");
+        
         Gen = GetComponent<WorldGen>();
         Gen.SetStyle(level);
 

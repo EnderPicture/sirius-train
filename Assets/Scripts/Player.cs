@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float SpeedMultiplier = .1f;
+    public CameraControl Camera;
 
     List<GameObject> Modules = new List<GameObject>();
     List<GameObject> Coals = new List<GameObject>();
@@ -13,8 +14,12 @@ public class Player : MonoBehaviour
 
     int Mode;
 
+
+
     string WalkName;
     string IdleName;
+    string FLName;
+    string SLName;
 
     Rigidbody rb;
 
@@ -28,16 +33,22 @@ public class Player : MonoBehaviour
         {
             WalkName = "BWalk";
             IdleName = "BIdle";
+            FLName = "BFlever";
+            SLName = "BSlever";
         }
         else if (Mode == Config.DIESEL)
         {
             WalkName = "DWalk";
             IdleName = "DIdle";
+            FLName = "DFlever";
+            SLName = "DSlever";
         }
         else if (Mode == Config.STEAM)
         {
             WalkName = "SWalk";
             IdleName = "SIdle";
+            FLName = "SFlever";
+            SLName = "SSlever";
         }
     }
     void Start()
@@ -51,7 +62,7 @@ public class Player : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetAxisRaw("HorizontalArrow") == 0)
+        if (Input.GetAxisRaw("HorizontalArrow") == 0 && Camera.getCameraMode() == CameraControl.MODE_CAMERA)
         {
             float input = Input.GetAxisRaw("Horizontal");
             Vector3 velocity = rb.velocity;
@@ -74,14 +85,14 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-            {
-                animator.Play("Idle");
-            }
+            animator.Play(IdleName);
         }
 
         if (ObjectInHand == null)
         {
+            // if nothing in hand, check for possible actions
+
+            // activate modules of possible
             float shortestDist = float.MaxValue;
             GameObject shortest = null;
             foreach (GameObject module in Modules)
@@ -95,13 +106,33 @@ public class Player : MonoBehaviour
                     shortest = module;
                 }
             }
-            if (shortest != null)
+            if (shortest != null && Camera.getCameraMode() == CameraControl.MODE_CAMERA)
             {
-                shortest.GetComponent<Module>().SetActive(true);
+                // set the closest module to active
+                Module module = shortest.GetComponent<Module>();
+                module.SetActive(true);
+                if (Input.GetAxisRaw("HorizontalArrow") != 0)
+                {
+                    if (module.Animate != -1) {
+                        animator.speed = 0f;
+                        Debug.Log(module.GetStatus());
+                        if (module.Animate == 1) {
+                            animator.Play(FLName, 0, Mathf.Clamp(module.GetStatus(),0f,1f));
+                            animator.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                        } else if (module.Animate == 2) {
+                            animator.Play(SLName, 0, Mathf.Clamp(module.GetStatus(),0f,1f));
+                            animator.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+                        }
+                    }
+                }
+                else
+                {
+                    animator.speed = 1f;
+                }
             }
 
             // pick up coal logic
-            if (Input.GetKeyDown("space"))
+            if (Input.GetKeyDown("space") && Camera.getCameraMode() == CameraControl.MODE_CAMERA)
             {
                 // reset those values to be used again
                 shortestDist = float.MaxValue;

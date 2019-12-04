@@ -9,15 +9,18 @@ public class PressureRelease : Module
     // Start is called before the first frame update
     new void Start()
     {
+        Animate = -1;
         base.Start();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (base.Active) {
-            if (Input.GetAxisRaw("HorizontalArrow") < 0) {
-                Pressure.ReleasePressure(-Input.GetAxisRaw("HorizontalArrow")*Time.deltaTime*2);
+        if (base.Active)
+        {
+            if (Input.GetAxisRaw("HorizontalArrow") < 0)
+            {
+                Pressure.ReleasePressure(-Input.GetAxisRaw("HorizontalArrow") * Time.deltaTime * 2);
             }
         }
     }
