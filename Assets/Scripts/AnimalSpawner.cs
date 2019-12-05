@@ -51,16 +51,17 @@ public class AnimalSpawner : MonoBehaviour
                 spawnLocations.Remove(location);
                 // lost an item
                 c--;
+                // Debug.Log(location);
             }
         }
         for (int c = 0; c < animals.Count; c++) {
-            GameObject animal = animals[c];
-            float xPos = transform.InverseTransformPoint(animal.transform.position).x;
-            if (xPos - spawnInnerPadding < end || xPos > start + spawnInnerPadding) {
-                animals.Remove(animal);
-                Object.Destroy(animal);
-                c--;
-            }
+            // GameObject animal = animals[c];
+            // float xPos = transform.InverseTransformPoint(animal.transform.position).x;
+            // if (xPos - spawnInnerPadding < end || xPos > start + spawnInnerPadding) {
+            //     animals.Remove(animal);
+            //     Object.Destroy(animal);
+            //     c--;
+            // }
         }
     }
 
