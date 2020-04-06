@@ -9,9 +9,9 @@ public class Config : MonoBehaviour
     };
 
 
-    public static readonly int CoalToUseP1 = 30;
-    public static readonly int CoalToUseP2 = 50;
-    public static readonly int CoalToUseP3 = 80;
+    public static readonly int CoalToUseP1 = 600;
+    public static readonly int CoalToUseP2 = 1000;
+    public static readonly int CoalToUseP3 = 1600;
 
     public static readonly float FuelToUseP1 = 50;
     public static readonly float FuelToUseP2 = 100;
